@@ -5,5 +5,7 @@
 
 3.Team Overview
    Benjamin McCann (GitHub: naginipython) Samuel High (GitHub:SammyPie), Yangyang Lin (GitHub: 326-YL)
+   
 4. Innovative Idea
+
 5. Important Components    
