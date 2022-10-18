@@ -21,7 +21,7 @@
 
 
 **<font size="6"> 
-   Part 1: wireframes
+   Part 1: Wireframes
 </font>**
 <font size="2">
 >created by [name]
