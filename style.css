@@ -1,0 +1,35 @@
+#header {
+    width: 40%;
+    margin: auto;
+    border: 1px solid black; /* this is temporary, until we have color */
+}
+
+#temp-title {
+    width: fit-content;
+    margin: auto;
+}
+
+#title {
+    text-align: center;
+}
+
+#title-info {
+    display: block;
+    text-align: center;
+}
+
+nav {
+    text-align: center;
+    padding: 10px;
+}
+
+nav a {
+    padding: 10px 75px;
+    border: 1px solid black;
+    color: blue; /* feel free to change */
+    text-decoration:none;
+}
+
+nav a:visited {
+    color: blue; /* feel free to change */
+}
