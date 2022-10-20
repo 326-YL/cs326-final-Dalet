@@ -47,6 +47,7 @@ article {
 
 .console-box-row {
     padding: 15px;
+    padding-bottom: 0;
     margin: auto;
     height: 110px;
     /* border: 1px solid black; */
@@ -115,4 +116,23 @@ article {
     width: 20%;
     height: 110px;
     position: relative;
+}
+
+.game-box-row {
+    padding-bottom: 15px;
+    margin: auto;
+    height: fit-content;
+    overflow: auto;
+    border: 1px solid black;
+}
+
+.game-box {
+    width: 40%;
+    height: 150px;
+    position: relative;
+    border: 1px solid black;
+}
+
+.game-hidden {
+    display: none;
 }
