@@ -42,19 +42,18 @@ article {
     margin: auto;
     margin-top: 10px;
     border: 1px solid black;
-    overflow: auto;
+    overflow: visible;
 }
 
 .console-box-row {
-    padding: 25px;
+    padding: 15px;
     margin: auto;
-    padding-top: 30px;
+    height: 110px;
     /* border: 1px solid black; */
 }
 
 .console-box-2-row {
     width: 700px;
-    padding-bottom: 100px;
 }
 
 .console-box {
@@ -64,6 +63,10 @@ article {
 }
 
 .console-box-L {
+    float: left;
+}
+
+.console-box-C {
     float: left;
 }
 
@@ -81,7 +84,7 @@ article {
 .console-shelf {
     width: 100%;
     height: 35px;
-    background-color:saddlebrown;
+    background-color:saddlebrown; /* feel free to change */
     position: absolute;
     bottom: 0;
     z-index: -1;
@@ -104,6 +107,12 @@ article {
 
 .console-box-1 {
     width: auto;
+    height: 110px;
+    position: relative;
+}
+
+.console-box-3 {
+    width: 20%;
     height: 110px;
     position: relative;
 }
