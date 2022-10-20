@@ -48,6 +48,8 @@ article {
 .console-box-row {
     padding: 25px;
     margin: auto;
+    padding-top: 30px;
+    /* border: 1px solid black; */
 }
 
 .console-box-2-row {
@@ -57,8 +59,7 @@ article {
 
 .console-box {
     width: 40%;
-    height: 100px;
-    border: 1px solid blue;
+    height: 110px;
     position: relative;
 }
 
@@ -73,14 +74,13 @@ article {
 .console-img {
     width: 100px;
     padding-left: 20px;
-    z-index: 2;
     display: block;
     float: left;
 }
 
 .console-shelf {
     width: 100%;
-    height: 25px;
+    height: 35px;
     background-color:saddlebrown;
     position: absolute;
     bottom: 0;
@@ -88,9 +88,22 @@ article {
     border: 1px solid black;
 }
 
+.console-shelf-title {
+    position: relative;
+    width: fit-content;
+    height: 0;
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+    color: white;
+}
+
 .console-box-1-row {
     width: 70%;
-    height: 100px;
-    overflow: auto;
-    border: 1px solid blue;
+}
+
+.console-box-1 {
+    width: auto;
+    height: 110px;
+    position: relative;
 }
