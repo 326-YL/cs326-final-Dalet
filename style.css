@@ -46,19 +46,20 @@ article {
 }
 
 .console-box-row {
-    padding: 15px;
-    padding-bottom: 0;
+    padding-top: 15px;
     margin: auto;
     height: 110px;
     /* border: 1px solid black; */
 }
 
 .console-box-2-row {
-    width: 700px;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 800px;
 }
 
 .console-box {
-    width: 40%;
+    width: 45%;
     height: 110px;
     position: relative;
 }
@@ -123,11 +124,11 @@ article {
     margin: auto;
     height: fit-content;
     overflow: auto;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 .game-box {
-    width: 40%;
+    width: 45%;
     height: 150px;
     position: relative;
     border: 1px solid black;
@@ -135,4 +136,17 @@ article {
 
 .game-hidden {
     display: none;
+}
+
+.game-item {
+    border: 1px solid blue;
+    height: 75px;
+    width: auto;
+}
+
+.game-img {
+    width: auto;
+    height: inherit;
+    display: block;
+    float: left;
 }
