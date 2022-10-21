@@ -130,9 +130,10 @@ article {
 
 .game-box {
     width: auto;
-    height: 150px;
+    height: auto;
     position: relative;
     border: 1px solid black;
+    
 }
 
 .game-hidden {
@@ -145,9 +146,37 @@ article {
     width: auto;
 }
 
+.game-item-box {
+    width: auto;
+    height: inherit;
+    display: inline-block;
+    position: relative;
+}
+
+.game-img-item {
+    float: left;
+}
+
 .game-img {
     width: auto;
     height: inherit;
-    display: block;
+}
+
+.game-txt-item {
     float: left;
+    width: 70%;
+    text-align: center;
+}
+
+.game-status {
+    float: right;
+    border: 1px solid black;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.game-status p {
+    margin: 0;
+    position: absolute;
+    top: 50%;
 }
