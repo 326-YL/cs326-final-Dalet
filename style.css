@@ -1,3 +1,49 @@
+#nav {
+    border: 1px solid black;
+    width: 100px;
+    height: 75px;
+}
+
+#news-header {
+    border: 1px solid black;
+    width: 100%;
+    height: 400px;
+}
+
+.news-item {
+    border: 1px solid black;
+    margin: auto;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+}
+
+#content {
+    border: 1px solid black;
+    float: left;
+    height: 500px;
+    width: 70%;
+    margin-left: 5%;
+}
+
+#trending {
+    border: 1px solid black;
+    height: 300px;
+    float: right;
+    width: 20%;
+    margin-right: 5%;
+    text-align: center;
+}
+
+#temp-img {
+    border: 1px solid black;
+    width: 200px;
+    height: 150px;
+}
+
+
+/*---------- Collection.html -------------*/
+
 #header {
     width: 750px;
     margin: auto;
