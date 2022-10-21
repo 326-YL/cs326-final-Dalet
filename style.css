@@ -48,7 +48,8 @@ article {
 .console-box-row {
     padding-top: 15px;
     margin: auto;
-    height: 110px;
+    height: auto;
+    overflow: hidden;
     /* border: 1px solid black; */
 }
 
@@ -58,21 +59,21 @@ article {
     width: 800px;
 }
 
-.console-box {
+.entire-box {
     width: 45%;
+}
+
+.console-box {
+    width: auto;
     height: 110px;
     position: relative;
 }
 
-.console-box-L {
+.entire-box-L {
     float: left;
 }
 
-.console-box-C {
-    float: left;
-}
-
-.console-box-R {
+.entire-box-R {
     float: right;
 }
 
@@ -84,7 +85,7 @@ article {
 }
 
 .console-shelf {
-    width: 100%;
+    width: 99.5%;
     height: 35px;
     background-color:saddlebrown; /* feel free to change */
     position: absolute;
@@ -128,7 +129,7 @@ article {
 }
 
 .game-box {
-    width: 45%;
+    width: auto;
     height: 150px;
     position: relative;
     border: 1px solid black;
