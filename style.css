@@ -41,7 +41,7 @@ body {
 
 #trending {
     border: 1px solid black;
-    height: 300px;
+    height: auto;
     float: right;
     width: 20%;
     margin-right: 5%;
@@ -78,6 +78,18 @@ body {
     padding: 5px;
     border: 1px solid black;
     border-radius: 5px;
+}
+
+.example-item {
+    width: auto;
+    height: 100px;
+    border: 1px solid black;
+}
+
+#user-forum {
+    width: 90%;
+    margin: auto;
+    margin-top: 25px;
 }
 
 /*---------- Collection.html -------------*/
