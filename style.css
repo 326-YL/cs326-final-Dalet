@@ -139,7 +139,9 @@ article {
 }
 
 .game-item {
-    border: 1px solid saddlebrown;
+    border: 2px solid saddlebrown;
+    border-bottom: 2px solid saddlebrown;
+    border-top: 0px solid saddlebrown;
     height: 75px;
     width: auto;
 }
@@ -148,22 +150,33 @@ article {
     width: auto;
     height: inherit;
     position: relative;
-    border-right: 1px solid saddlebrown;
 }
 
 .game-img-item {
     float: left;
+    display: block;
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid saddlebrown;
 }
 
 .game-img {
-    width: auto;
-    height: inherit;
+    width: 100%;
+    height: auto;
+    z-index: -1;
 }
 
 .game-txt-item {
     float: left;
     width: 70%;
     text-align: center;
+    border-right: 1px solid saddlebrown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .game-status {
@@ -175,7 +188,7 @@ article {
     margin: 0;
     position: absolute;
     top: 27%;
-    left: 3px;
+    left: 4px;
     padding: 4px;
     border: 1px solid black;
     border-radius: 50px;
