@@ -278,14 +278,14 @@ article {
 .game-status {
     float: right;
     width: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .game-status p {
     margin: 0;
-    position: absolute;
-    top: 27%;
-    left: 4px;
-    padding: 4px;
+    padding: 5px;
     border: 1px solid black;
     border-radius: 50px;
 }
