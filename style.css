@@ -142,31 +142,34 @@ article {
 }
 
 .console-box-row {
-    padding: 15px;
+    padding-top: 15px;
     margin: auto;
-    height: 110px;
+    height: auto;
+    overflow: hidden;
     /* border: 1px solid black; */
 }
 
 .console-box-2-row {
-    width: 700px;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 800px;
+}
+
+.entire-box {
+    width: 45%;
 }
 
 .console-box {
-    width: 40%;
+    width: auto;
     height: 110px;
     position: relative;
 }
 
-.console-box-L {
+.entire-box-L {
     float: left;
 }
 
-.console-box-C {
-    float: left;
-}
-
-.console-box-R {
+.entire-box-R {
     float: right;
 }
 
@@ -188,11 +191,10 @@ article {
 }
 
 .console-shelf-title {
-    position: relative;
     width: fit-content;
-    height: 0;
+    height: fit-content;
     position: absolute;
-    bottom: 10px;
+    bottom: -10px;
     left: 5px;
     color: white;
 }
@@ -211,4 +213,91 @@ article {
     width: 20%;
     height: 110px;
     position: relative;
+}
+
+.game-box-row {
+    padding-bottom: 15px;
+    margin: auto;
+    height: fit-content;
+    overflow: auto;
+    /* border: 1px solid black; */
+}
+
+.game-box {
+    width: auto;
+    height: auto;
+    position: relative;
+    
+}
+
+.game-hidden {
+    display: none;
+}
+
+.game-item {
+    border: 2px solid saddlebrown;
+    border-bottom: 2px solid saddlebrown;
+    border-top: 0px solid saddlebrown;
+    height: 75px;
+    width: auto;
+}
+
+.game-item-box {
+    width: auto;
+    height: inherit;
+    position: relative;
+}
+
+.game-img-item {
+    float: left;
+    display: block;
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid saddlebrown;
+}
+
+.game-img {
+    width: 100%;
+    height: auto;
+    z-index: -1;
+}
+
+.game-txt-item {
+    float: left;
+    width: 70%;
+    text-align: center;
+    border-right: 1px solid saddlebrown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-status {
+    float: right;
+    width: 15px;
+}
+
+.game-status p {
+    margin: 0;
+    position: absolute;
+    top: 27%;
+    left: 4px;
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+.game-status:hover {
+    cursor: default;
+}
+
+.game-played {
+    background-color: yellow;
+}
+
+.game-beat {
+    background-color: deepskyblue;
 }

@@ -5,7 +5,15 @@
         <title>Game Shelf - Collection</title>
 
         <link rel="stylesheet" href="style.css">
-        <script type="module" src="script.js" defer></script>
+        <script src="script.js" defer></script>
+
+        <!-- Bootstrap stuff -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     </head>
     <body>
         <header id="header">
@@ -25,16 +33,82 @@
 
             <!-- 2 box template -->
             <div class="console-box-row console-box-2-row">
-                <div class="console-box console-box-L">
-                    <img class="console-img" src="img/nes.webp">
-                    <img class="console-img" src="img/nes-2.webp">
-                    <h2 class="console-shelf-title">NES</h2>
-                    <div class="console-shelf"></div>
+                <div class="entire-box entire-box-L">
+                    <div id="NES" class="console-box " onclick="gameDropdown('NES')">
+                        <img class="console-img" src="img/nes.webp">
+                        <img class="console-img" src="img/nes-2.webp">
+                        <h2 class="console-shelf-title">NES</h2>
+                        <div class="console-shelf"></div>
+                    </div>
+                    <!-- The Game Dropdown -->
+                    <div id="NES-game" class="game-box container text-center game-hidden">
+                        <div class="game-item row">
+                            <div class="game-item-box game-img-item col-4">
+                                <img class="game-img" src="img/mario-game.webp">
+                            </div>
+                            <div class="game-item-box game-txt-item col">
+                                <p>Super Mario Bros</p>
+                            </div>
+                            <div class="game-item-box game-status col-1">
+                                <p class="game-beat" title="Beat">B</p>
+                            </div>
+                        </div>
+                        <div class="game-item row">
+                            <div class="game-item-box game-img-item col-4">
+                                <img class="game-img" src="img/mario-3-game.webp">
+                            </div>
+                            <div class="game-item-box game-txt-item col">
+                                <p>Super Mario Bros 3</p>
+                            </div>
+                            <div class="game-item-box game-status col-1">
+                                <p class="game-played" title="Played">P</p>
+                            </div>
+                        </div>
+                        <div class="game-item row">
+                            <div class="game-item-box game-img-item col-4">
+                                <img class="game-img" src="img/mario-3-game.webp">
+                            </div>
+                            <div class="game-item-box game-txt-item col">
+                                <p>Super Mario Bros 3</p>
+                            </div>
+                            <div class="game-item-box game-status col-1">
+                                <p class="game-played" title="Played">P</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="console-box console-box-R">
-                    <img class="console-img" src="img/gba-sp.png">
-                    <h2 class="console-shelf-title">Gameboy Advance</h2>
-                    <div class="console-shelf"></div>
+                
+                <div class="entire-box entire-box-R">
+                    <div id="gba" class="console-box"  onclick="gameDropdown('gba')">
+                        <img class="console-img" src="img/gba-sp.png">
+                        <h2 class="console-shelf-title">Gameboy Advance</h2>
+                        <div class="console-shelf"></div>
+                    </div>
+                    <!-- The Game Dropdown -->
+                    <div id="gba-game" class="game-box container text-center game-hidden">
+                        <div class="game-item row">
+                            <div class="game-item-box game-img-item col-4">
+                                <img class="game-img" src="img/firered.png">
+                            </div>
+                            <div class="game-item-box game-txt-item col">
+                                <p>Pokemon Firered</p>
+                            </div>
+                            <div class="game-item-box game-status col-1">
+                                <p class="game-played" title="Played">P</p>
+                            </div>
+                        </div>
+                        <div class="game-item row">
+                            <div class="game-item-box game-img-item col-4">
+                                <img class="game-img" src="img/firered.png">
+                            </div>
+                            <div class="game-item-box game-txt-item col">
+                                <p>Pokemon Firered</p>
+                            </div>
+                            <div class="game-item-box game-status col-1">
+                                <p class="game-played" title="Played">P</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
