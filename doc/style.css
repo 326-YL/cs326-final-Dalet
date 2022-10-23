@@ -1,0 +1,207 @@
+#header {
+    width: 750px;
+    margin: auto;
+    border: 1px solid black; /* this is temporary, until we have color */
+}
+
+#temp-title {
+    width: fit-content;
+    margin: auto;
+}
+
+#title {
+    text-align: center;
+}
+
+#title-info {
+    display: block;
+    text-align: center;
+}
+
+nav {
+    text-align: center;
+    padding: 10px;
+}
+
+nav a {
+    padding: 10px 75px;
+    border: 1px solid black;
+    color: blue; /* feel free to change */
+    text-decoration:none;
+}
+
+nav a:visited {
+    color: blue; /* feel free to change */
+}
+
+/* ARTICLE */
+
+article {
+    width: 900px;
+    height: auto;
+    margin: auto;
+    margin-top: 10px;
+    border: 1px solid black;
+    overflow: visible;
+}
+
+.console-box-row {
+    padding-top: 15px;
+    margin: auto;
+    height: auto;
+    overflow: hidden;
+    /* border: 1px solid black; */
+}
+
+.console-box-2-row {
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 800px;
+}
+
+.entire-box {
+    width: 45%;
+}
+
+.console-box {
+    width: auto;
+    height: 110px;
+    position: relative;
+}
+
+.entire-box-L {
+    float: left;
+}
+
+.entire-box-R {
+    float: right;
+}
+
+.console-img {
+    width: 100px;
+    padding-left: 20px;
+    display: block;
+    float: left;
+}
+
+.console-shelf {
+    width: 100%;
+    height: 35px;
+    background-color:saddlebrown; /* feel free to change */
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    border: 1px solid black;
+}
+
+.console-shelf-title {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    bottom: -10px;
+    left: 5px;
+    color: white;
+}
+
+.console-box-1-row {
+    width: 70%;
+}
+
+.console-box-1 {
+    width: auto;
+    height: 110px;
+    position: relative;
+}
+
+.console-box-3 {
+    width: 20%;
+    height: 110px;
+    position: relative;
+}
+
+.game-box-row {
+    padding-bottom: 15px;
+    margin: auto;
+    height: fit-content;
+    overflow: auto;
+    /* border: 1px solid black; */
+}
+
+.game-box {
+    width: auto;
+    height: auto;
+    position: relative;
+    
+}
+
+.game-hidden {
+    display: none;
+}
+
+.game-item {
+    border: 2px solid saddlebrown;
+    border-bottom: 2px solid saddlebrown;
+    border-top: 0px solid saddlebrown;
+    height: 75px;
+    width: auto;
+}
+
+.game-item-box {
+    width: auto;
+    height: inherit;
+    position: relative;
+}
+
+.game-img-item {
+    float: left;
+    display: block;
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid saddlebrown;
+}
+
+.game-img {
+    width: 100%;
+    height: auto;
+    z-index: -1;
+}
+
+.game-txt-item {
+    float: left;
+    width: 70%;
+    text-align: center;
+    border-right: 1px solid saddlebrown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-status {
+    float: right;
+    width: 15px;
+}
+
+.game-status p {
+    margin: 0;
+    position: absolute;
+    top: 27%;
+    left: 4px;
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+.game-status:hover {
+    cursor: default;
+}
+
+.game-played {
+    background-color: yellow;
+}
+
+.game-beat {
+    background-color: deepskyblue;
+}
