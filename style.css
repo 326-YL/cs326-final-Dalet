@@ -225,7 +225,12 @@ article {
     background-color: rgba(114, 204, 234, 0.686);
 }
 
+#explore-header {
+    text-align: center;
+}
+
 .explore-title {
+    text-align: center;
     position: relative;
     font-size: 50px;
     margin: min(5%, 50px);
