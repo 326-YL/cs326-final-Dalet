@@ -142,31 +142,34 @@ article {
 }
 
 .console-box-row {
-    padding: 15px;
+    padding-top: 15px;
     margin: auto;
-    height: 110px;
+    height: auto;
+    overflow: hidden;
     /* border: 1px solid black; */
 }
 
 .console-box-2-row {
-    width: 700px;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 800px;
+}
+
+.entire-box {
+    width: 45%;
 }
 
 .console-box {
-    width: 40%;
+    width: auto;
     height: 110px;
     position: relative;
 }
 
-.console-box-L {
+.entire-box-L {
     float: left;
 }
 
-.console-box-C {
-    float: left;
-}
-
-.console-box-R {
+.entire-box-R {
     float: right;
 }
 
@@ -188,11 +191,10 @@ article {
 }
 
 .console-shelf-title {
-    position: relative;
     width: fit-content;
-    height: 0;
+    height: fit-content;
     position: absolute;
-    bottom: 10px;
+    bottom: -10px;
     left: 5px;
     color: white;
 }
@@ -212,10 +214,180 @@ article {
     height: 110px;
     position: relative;
 }
+.game-box-row {
+    padding-bottom: 15px;
+    margin: auto;
+    height: fit-content;
+    overflow: auto;
+    /* border: 1px solid black; */
+}
+
+.game-box {
+    width: auto;
+    height: auto;
+    position: relative;
+    
+}
+
+.game-hidden {
+    display: none;
+}
+
+.game-item {
+    border: 2px solid saddlebrown;
+    border-bottom: 2px solid saddlebrown;
+    border-top: 0px solid saddlebrown;
+    height: 75px;
+    width: auto;
+}
+
+.game-item-box {
+    width: auto;
+    height: inherit;
+    position: relative;
+}
+
+.game-img-item {
+    float: left;
+    display: block;
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid saddlebrown;
+}
+
+.game-img {
+    width: 100%;
+    height: auto;
+    z-index: -1;
+}
+
+.game-txt-item {
+    float: left;
+    width: 70%;
+    text-align: center;
+    border-right: 1px solid saddlebrown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-status {
+    float: right;
+    width: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-status p {
+    margin: 0;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+.game-status:hover {
+    cursor: default;
+}
+
+.game-played {
+    background-color: yellow;
+}
+
+.game-beat {
+    background-color: deepskyblue;
+}
+
 
 /* explore.html */
 
-/*  */
+/* Temporary */
+.explore-temp-navigation {
+    text-align: right;
+    margin: 1px;
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(40, 169, 255);
+    background-color: rgba(114, 204, 234, 0.686);
+}
+
+#explore-header {
+    text-align: center;
+}
+
+.explore-title {
+    text-align: center;
+    position: relative;
+    font-size: 50px;
+    margin: min(5%, 50px);
+    margin-bottom: 10px;
+}
+
+.explore-title-line {
+    width: max(600px, 60%);
+    height: 0px;
+    position: relative;
+    left: calc(50% - max(600px, 60%) / 2);
+    border-width: 1px;
+    border-style: solid;
+    border-color: gray;
+    border-bottom-style: solid;
+    margin-bottom: 10px;
+}
+
+.explore-search {
+    text-align: center;
+}
+
+.explore-search-textbox {
+    width: max(400px, 40%);
+    height: 40px;
+    text-align: left;
+    font-size: 20px;
+    text-indent: 2%;
+    margin-top: min(5%, 10px);
+    margin-right: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 12px;
+    border-color: rgb(172, 172, 172);
+}
+
+.explore-search-button {
+    margin-left: 10px;
+    font-size: 20px;
+    background-color: white;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 5px;
+    padding: 10px 10px;
+}
+
+.explore-search-button:hover {
+    background-color: lightgray;
+    border-color: rgb(123, 123, 123);
+}
+
+.explore-gallery {
+    text-align: center;
+}
+
+.explore-gallery-container {
+    text-align: center;
+    margin-top: 40px
+}
+
+.explore-gallery-element {
+    width: 50%;
+    height: 50px;
+}
+
+/* explore.html */
+
+/* Temporary */
 .explore-temp-navigation {
     text-align: right;
     margin: 1px;
