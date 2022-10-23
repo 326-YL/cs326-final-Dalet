@@ -85,7 +85,7 @@ article {
 }
 
 .console-shelf {
-    width: 99.5%;
+    width: 100%;
     height: 35px;
     background-color:saddlebrown; /* feel free to change */
     position: absolute;
@@ -95,11 +95,10 @@ article {
 }
 
 .console-shelf-title {
-    position: relative;
     width: fit-content;
-    height: 0;
+    height: fit-content;
     position: absolute;
-    bottom: 10px;
+    bottom: -10px;
     left: 5px;
     color: white;
 }
@@ -132,7 +131,6 @@ article {
     width: auto;
     height: auto;
     position: relative;
-    border: 1px solid black;
     
 }
 
@@ -141,7 +139,7 @@ article {
 }
 
 .game-item {
-    border: 1px solid blue;
+    border: 1px solid saddlebrown;
     height: 75px;
     width: auto;
 }
@@ -149,8 +147,8 @@ article {
 .game-item-box {
     width: auto;
     height: inherit;
-    display: inline-block;
     position: relative;
+    border-right: 1px solid saddlebrown;
 }
 
 .game-img-item {
@@ -170,13 +168,27 @@ article {
 
 .game-status {
     float: right;
-    border: 1px solid black;
-    padding-left: 10px;
-    padding-right: 10px;
+    width: 15px;
 }
 
 .game-status p {
     margin: 0;
     position: absolute;
-    top: 50%;
+    top: 27%;
+    left: 3px;
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+.game-status:hover {
+    cursor: default;
+}
+
+.game-played {
+    background-color: yellow;
+}
+
+.game-beat {
+    background-color: deepskyblue;
 }
