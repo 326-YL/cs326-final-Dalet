@@ -20,28 +20,28 @@
    
    we have two major parts: collection and community, community will be embeded into home page.
 
-   <img src="img/homePage.png" style="height:300px;width:600px">
-   (Yangyang Lin)
+   <img src="img/homePage.png" style="height:300px;width:600px">(Yangyang Lin)
+
    
    
    <br>
-   <img src="img/first.png" style="height:300px;width:600px">
-   (Ben)
+   <img src="img/first.png" style="height:300px;width:600px"> (BenJamin McCann)
+
    
    
    <br>
-   <img src="img/second.png" style="height:300px;width:600px">
-   (Ben)
+   <img src="img/second.png" style="height:300px;width:600px"> (BenJamin McCann)
+
    
    
    <br>
-   <img src="img/third.png" style="height:300px;width:600px">
-   (Ben)
+   <img src="img/third.png" style="height:300px;width:600px"> (BenJamin McCann)
+
    
    
    <br>
-   <img src="img/forth.png" style="height:300px;width:600px">
-   (Ben)
+   <img src="img/forth.png" style="height:300px;width:600px">  (BenJamin McCann)
+  
 
 
 
@@ -56,11 +56,11 @@
 </font>**
 <font size="2">
    <p> this is the home page of website</p>
-   <img src="img/mainPage.png" style="height:300px;width:600px">
-   (BenJamin McCann and Yangyang Lin)
+   <img src="img/mainPage.png" style="height:300px;width:600px">. (BenJamin McCann and Yangyang Lin)
+   
    <p>this is collection page of website</p>
-   <img src="img/collection.png" style="height:300px;width:600px">
-   (BenJamin McCann and Samuel High)
+   <img src="img/collection.png" style="height:300px;width:600px">. (BenJamin McCann and Samuel High)
+   
    <p> this is the explore page of website</p>
-   <img src="img/explore.png" style="height:300px;width:600px">
-   (Samuel High)
+   <img src="img/explore.png" style="height:300px;width:600px">.   (Samuel High)
+ 
