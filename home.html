@@ -63,16 +63,13 @@
           <div class="header">
             <span>latest threads</span>
           </div>
-          <div class="search row mb-2 mt-2 mx-3"
-               style="width:400px;
-                      height: auto">
-            <div class="col-1" style="display:block;border:solid 0.5px black;height:30px;
-                                       padding:auto">
+          <div class="search row mb-2 mt-2 mx-3">
+            <div id="searchBar" class="col-1">
               <i class="fa fa-search" aria-hidden="true"></i>
              </div>
-            <input id="input" type="text" placeholder="search" class="col-10" style="display:inline;width:inherit;height:auto">
+            <input id="inputText" type="text" placeholder="search" class="col-10">
         </div>
-          <!--it is going to display the recent discussion from community part-->
+          <!--the following are just examples what it might look like,it is going to display the recent discussion from community part-->
           <!--we are not going to create 10 div in html, we are going to use javascript to generate the thread divs-->
           <div class="threadList">
           <div class="thread">
@@ -133,11 +130,10 @@
       </div>
         </div>
         <div class="trending-news mt-5 col-xs-7 col-md-8 col-lg-8">
-          <table class="newsList pt-3" style="padding: 3px">
+          <table class="newsList pt-3">
             <tr class="news">
               <td class="image">
-                <img src="./img/fort.jpg" alt="fort" style="width:150px;height:90px">
-              </td>
+                <img id="newsImg" src="./img/fort.jpg" alt="fort">
               </td>
               <td class="content">
                 <span><a href="https://www.gamespot.com/articles/fortnite-candy-where-to-find-zero-point-pretzels-and-more-in-fortnitemares/1100-6508536/">
@@ -146,7 +142,7 @@
             </tr>
             <tr class="news">
               <td class="image">
-                <img src="./img/fort.jpg" alt="fort" style="width:150px;height:90px">
+                <img id="newsImg" src="./img/fort.jpg" alt="fort">
                 </td>
               <td class="content">
                 <span><a href="https://www.gamespot.com/articles/fortnite-candy-where-to-find-zero-point-pretzels-and-more-in-fortnitemares/1100-6508536/">
