@@ -17,11 +17,11 @@
    Part 1: Wireframes
 </font>**
 <font size="2">
+   
+   we have two major parts: collection and community, community will be embeded into home page.
 
+   <img src="image/homePage.png" style="height:100px;width:200px">
 
-we have two major parts: collection and community, community will be embeded into home page.
-
-![home page](./image/IMG_2346.HEIC)
 
 
 
