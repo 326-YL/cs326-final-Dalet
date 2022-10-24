@@ -23,15 +23,23 @@
    <img src="image/homePage.png" style="height:300px;width:600px">
    (Yangyang Lin)
    
+   
+   <br>
    <img src="image/first.png" style="height:300px;width:600px">
    (Ben)
    
+   
+   <br>
    <img src="image/second.png" style="height:300px;width:600px">
    (Ben)
    
+   
+   <br>
    <img src="image/third.png" style="height:300px;width:600px">
    (Ben)
    
+   
+   <br>
    <img src="image/forth.png" style="height:300px;width:600px">
    (Ben)
 
