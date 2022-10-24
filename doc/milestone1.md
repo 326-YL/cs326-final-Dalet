@@ -21,6 +21,14 @@
    we have two major parts: collection and community, community will be embeded into home page.
 
    <img src="image/homePage.png" style="height:300px;width:600px">
+   
+   <img src="image/2022-10-18(1).png" style="height:300px;width:600px">
+   
+   <img src="image/2022-10-18(2).png" style="height:300px;width:600px">
+   
+   <img src="image/2022-10-18(3).png" style="height:300px;width:600px">
+   
+   <img src="image/2022-10-18(4).png" style="height:300px;width:600px">
 
 
 
