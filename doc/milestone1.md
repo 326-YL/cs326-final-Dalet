@@ -21,14 +21,19 @@
    we have two major parts: collection and community, community will be embeded into home page.
 
    <img src="image/homePage.png" style="height:300px;width:600px">
+   (Yangyang Lin)
    
    <img src="image/first.png" style="height:300px;width:600px">
+   (Ben)
    
    <img src="image/second.png" style="height:300px;width:600px">
+   (Ben)
    
    <img src="image/third.png" style="height:300px;width:600px">
+   (Ben)
    
    <img src="image/forth.png" style="height:300px;width:600px">
+   (Ben)
 
 
 
