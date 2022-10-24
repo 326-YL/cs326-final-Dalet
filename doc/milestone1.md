@@ -57,8 +57,10 @@
 <font size="2">
    <p> this is the home page of website</p>
    <img src="img/mainPage.png" style="height:300px;width:600px">
-   
+   (BenJamin McCann and Yangyang Lin)
    <p>this is collection page of website</p>
    <img src="img/collection.png" style="height:300px;width:600px">
+   (BenJamin McCann and Samuel High)
    <p> this is the explore page of website</p>
    <img src="img/explore.png" style="height:300px;width:600px">
+   (Samuel High)
