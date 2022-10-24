@@ -25,22 +25,22 @@
    
    
    <br>
-   <img src="/cs326-final-Dalet/img/first.png" style="height:300px;width:600px">
+   <img src="cs326-final-Dalet/img/first.png" style="height:300px;width:600px">
    (Ben)
    
    
    <br>
-   <img src="/cs326-final-Dalet/img/second.png" style="height:300px;width:600px">
+   <img src="cs326-final-Dalet/img/second.png" style="height:300px;width:600px">
    (Ben)
    
    
    <br>
-   <img src="/cs326-final-Dalet/img/third.png" style="height:300px;width:600px">
+   <img src="cs326-final-Dalet/img/third.png" style="height:300px;width:600px">
    (Ben)
    
    
    <br>
-   <img src="/cs326-final-Dalet/img/forth.png" style="height:300px;width:600px">
+   <img src="cs326-final-Dalet/img/forth.png" style="height:300px;width:600px">
    (Ben)
 
 
