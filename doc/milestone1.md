@@ -56,7 +56,7 @@
 </font>**
 <font size="2">
    <p> this is the home page of website</p>
-   <img src="img/mainPage.png" style="height:300px;width:600px">
+   <img src="./img/mainPage.png" style="height:300px;width:600px">
    
    <p>this is collection page of website</p>
-   <img src="img/collection.png" style="height:300px;width:600px">
+   <img src="./img/collection.png" style="height:300px;width:600px">
