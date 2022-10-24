@@ -1,0 +1,469 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+#nav {
+    border: 1px solid black;
+    width: 100px;
+    height: 75px;
+}
+
+#news-header {
+    border: 1px solid black;
+    width: 100%;
+    height: 400px;
+}
+
+.news-item {
+    border: 1px solid black;
+    margin: auto;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+}
+
+#content {
+    border: 1px solid black;
+    float: left;
+    height: 500px;
+    width: 70%;
+    margin-left: 5%;
+}
+
+#content-center {
+    width: 40%;
+    height: fit-content;
+    overflow: auto;
+    margin: auto;
+    position: relative;
+}
+
+#trending {
+    border: 1px solid black;
+    height: auto;
+    float: right;
+    width: 20%;
+    margin-right: 5%;
+    text-align: center;
+}
+
+#temp-img {
+    border: 1px solid black;
+    width: 200px;
+    height: 150px;
+    float: left;
+}
+
+#forum-filter {
+    height: fit-content;
+    width: fit-content;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-gap: 2px;
+    float: right;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+#search {
+    padding: 0;
+}
+
+#glass {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.example-item {
+    width: auto;
+    height: 100px;
+    border: 1px solid black;
+}
+
+#user-forum {
+    width: 90%;
+    margin: auto;
+    margin-top: 25px;
+}
+
+/*---------- Collection.html -------------*/
+
+#header {
+    width: 750px;
+    margin: auto;
+    border: 1px solid black; /* this is temporary, until we have color */
+}
+
+#temp-title {
+    width: fit-content;
+    margin: auto;
+}
+
+#title {
+    text-align: center;
+}
+
+#title-info {
+    display: block;
+    text-align: center;
+}
+
+nav {
+    text-align: center;
+    padding: 10px;
+}
+
+nav a {
+    padding: 10px 75px;
+    border: 1px solid black;
+    color: blue; /* feel free to change */
+    text-decoration:none;
+}
+
+nav a:visited {
+    color: blue; /* feel free to change */
+}
+
+/* ARTICLE */
+
+article {
+    width: 900px;
+    height: auto;
+    margin: auto;
+    margin-top: 10px;
+    border: 1px solid black;
+    overflow: visible;
+}
+
+.console-box-row {
+    padding-top: 15px;
+    margin: auto;
+    height: auto;
+    overflow: hidden;
+    /* border: 1px solid black; */
+}
+
+.console-box-2-row {
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 800px;
+}
+
+.entire-box {
+    width: 45%;
+}
+
+.console-box {
+    width: auto;
+    height: 110px;
+    position: relative;
+}
+
+.entire-box-L {
+    float: left;
+}
+
+.entire-box-R {
+    float: right;
+}
+
+.console-img {
+    width: 100px;
+    padding-left: 20px;
+    display: block;
+    float: left;
+}
+
+.console-shelf {
+    width: 100%;
+    height: 35px;
+    background-color:saddlebrown; /* feel free to change */
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    border: 1px solid black;
+}
+
+.console-shelf-title {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    bottom: -10px;
+    left: 5px;
+    color: white;
+}
+
+.console-box-1-row {
+    width: 70%;
+}
+
+.console-box-1 {
+    width: auto;
+    height: 110px;
+    position: relative;
+}
+
+.console-box-3 {
+    width: 20%;
+    height: 110px;
+    position: relative;
+}
+.game-box-row {
+    padding-bottom: 15px;
+    margin: auto;
+    height: fit-content;
+    overflow: auto;
+    /* border: 1px solid black; */
+}
+
+.game-box {
+    width: auto;
+    height: auto;
+    position: relative;
+    
+}
+
+.game-hidden {
+    display: none;
+}
+
+.game-item {
+    border: 2px solid saddlebrown;
+    border-bottom: 2px solid saddlebrown;
+    border-top: 0px solid saddlebrown;
+    height: 75px;
+    width: auto;
+}
+
+.game-item-box {
+    width: auto;
+    height: inherit;
+    position: relative;
+}
+
+.game-img-item {
+    float: left;
+    display: block;
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid saddlebrown;
+}
+
+.game-img {
+    width: 100%;
+    height: auto;
+    z-index: -1;
+}
+
+.game-txt-item {
+    float: left;
+    width: 70%;
+    text-align: center;
+    border-right: 1px solid saddlebrown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-status {
+    float: right;
+    width: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-status p {
+    margin: 0;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+.game-status:hover {
+    cursor: default;
+}
+
+.game-played {
+    background-color: yellow;
+}
+
+.game-beat {
+    background-color: deepskyblue;
+}
+
+
+/* explore.html */
+
+/* Temporary */
+.explore-temp-navigation {
+    text-align: right;
+    margin: 1px;
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(40, 169, 255);
+    background-color: rgba(114, 204, 234, 0.686);
+}
+
+#explore-header {
+    text-align: center;
+}
+
+.explore-title {
+    text-align: center;
+    position: relative;
+    font-size: 50px;
+    margin: min(5%, 50px);
+    margin-bottom: 10px;
+}
+
+.explore-title-line {
+    width: max(600px, 60%);
+    height: 0px;
+    position: relative;
+    left: calc(50% - max(600px, 60%) / 2);
+    border-width: 1px;
+    border-style: solid;
+    border-color: gray;
+    border-bottom-style: solid;
+    margin-bottom: 10px;
+}
+
+.explore-search {
+    text-align: center;
+}
+
+.explore-search-textbox {
+    width: max(400px, 40%);
+    height: 40px;
+    text-align: left;
+    font-size: 20px;
+    text-indent: 2%;
+    margin-top: min(5%, 10px);
+    margin-right: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 12px;
+    border-color: rgb(172, 172, 172);
+}
+
+.explore-search-button {
+    margin-left: 10px;
+    font-size: 20px;
+    background-color: white;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 5px;
+    padding: 10px 10px;
+}
+
+.explore-search-button:hover {
+    background-color: lightgray;
+    border-color: rgb(123, 123, 123);
+}
+
+.explore-gallery {
+    text-align: center;
+}
+
+.explore-gallery-container {
+    text-align: center;
+    margin-top: 40px
+}
+
+.explore-gallery-element {
+    width: 50%;
+    height: 50px;
+}
+
+/* explore.html */
+
+/* Temporary */
+.explore-temp-navigation {
+    text-align: right;
+    margin: 1px;
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(40, 169, 255);
+    background-color: rgba(114, 204, 234, 0.686);
+}
+
+#explore-header {
+    text-align: center;
+}
+
+.explore-title {
+    text-align: center;
+    position: relative;
+    font-size: 50px;
+    margin: min(5%, 50px);
+    margin-bottom: 10px;
+}
+
+.explore-title-line {
+    width: max(600px, 60%);
+    height: 0px;
+    position: relative;
+    left: calc(50% - max(600px, 60%) / 2);
+    border-width: 1px;
+    border-style: solid;
+    border-color: gray;
+    border-bottom-style: solid;
+    margin-bottom: 10px;
+}
+
+.explore-search {
+    text-align: center;
+}
+
+.explore-search-textbox {
+    width: max(400px, 40%);
+    height: 40px;
+    text-align: left;
+    font-size: 20px;
+    text-indent: 2%;
+    margin-top: min(5%, 10px);
+    margin-right: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 12px;
+    border-color: rgb(172, 172, 172);
+}
+
+.explore-search-button {
+    margin-left: 10px;
+    font-size: 20px;
+    background-color: white;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 5px;
+    padding: 10px 10px;
+}
+
+.explore-search-button:hover {
+    background-color: lightgray;
+    border-color: rgb(123, 123, 123);
+}
+
+.explore-gallery {
+    text-align: center;
+}
+
+.explore-gallery-container {
+    text-align: center;
+    margin-top: 40px
+}
+
+.explore-gallery-element {
+    width: 50%;
+    height: 50px;
+}
