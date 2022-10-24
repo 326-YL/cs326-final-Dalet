@@ -55,6 +55,8 @@
    Part 2: HTML and CSS
 </font>**
 <font size="2">
->created by [name]
-    
-    type here
+   <p> this is the home page of website</p>
+   <img src="image/mainPage.png" style="height:300px;width:600px">
+   
+   <p>this is collection page of website</p>
+   <img src="image/collection.png" style="height:300px;width:600px">
