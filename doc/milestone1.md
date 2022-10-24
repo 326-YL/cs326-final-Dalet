@@ -22,13 +22,13 @@
 
    <img src="image/homePage.png" style="height:300px;width:600px">
    
-   <img src="image/2022-10-18(1).png" style="height:300px;width:600px">
+   <img src="image/first.png" style="height:300px;width:600px">
    
-   <img src="image/2022-10-18(2).png" style="height:300px;width:600px">
+   <img src="image/second.png" style="height:300px;width:600px">
    
-   <img src="image/2022-10-18(3).png" style="height:300px;width:600px">
+   <img src="image/third.png" style="height:300px;width:600px">
    
-   <img src="image/2022-10-18(4).png" style="height:300px;width:600px">
+   <img src="image/forth.png" style="height:300px;width:600px">
 
 
 
