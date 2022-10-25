@@ -323,32 +323,32 @@ article {
     position: relative;
     font-size: 50px;
     margin: min(5%, 50px);
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
-.explore-title-line {
+.explore-line {
     width: max(600px, 60%);
     height: 0px;
     position: relative;
-    left: calc(50% - max(600px, 60%) / 2);
+    left: calc(50% - max(600px, 60%) / 2 - 10px);
     border-width: 1px;
     border-style: solid;
     border-color: gray;
     border-bottom-style: solid;
-    margin-bottom: 10px;
+    margin: 10px;
 }
 
-.explore-search {
+#explore-search {
     text-align: center;
 }
 
-.explore-search-textbox {
+#explore-search-input {
     width: max(400px, 40%);
     height: 40px;
     text-align: left;
     font-size: 20px;
     text-indent: 2%;
-    margin-top: min(5%, 10px);
+    margin-left: 0px;
     margin-right: 10px;
     border-style: solid;
     border-width: 2px;
@@ -358,6 +358,7 @@ article {
 
 .explore-search-button {
     margin-left: 10px;
+    margin-right: 0px;
     font-size: 20px;
     background-color: white;
     border-style: solid;
@@ -371,16 +372,51 @@ article {
     border-color: rgb(123, 123, 123);
 }
 
-.explore-gallery {
-    text-align: center;
+#explore-gallery {
+    position: relative;
+    left: calc(50% - min(70%, 600px) / 2 - 5px);
 }
 
-.explore-gallery-container {
-    text-align: center;
-    margin-top: 40px
+.explore-gallery-container {    
+    display: grid;
+    width: min(70%, 600px);
+    grid-template-columns: repeat(4, 25%);
 }
 
 .explore-gallery-element {
-    width: 50%;
-    height: 50px;
+    margin: 20px;
+    margin-top: 10px;
+    height: 100px;
+    /* width = height + margin / 2 */
+    width: 110px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgb(186, 186, 186);
+    border-radius: 12px;
+    /* for now */
+    text-align: center;
+}
+
+.explore-gallery-element:hover {
+    border-color: rgb(67, 67, 67);
+}
+
+.explore-type-game {
+    background-color: rgba(255, 255, 0, 0.242);
+}
+
+.explore-type-game:hover {
+    background-color: rgba(255, 255, 0, 0.7);
+}
+
+.explore-type-console {
+    background-color: rgba(255, 0, 0, 0.294);
+}
+
+.explore-type-console:hover {
+    background-color: rgba(255, 0, 0, 0.7);
+}
+
+.explore-hiden {
+    display: none;
 }
