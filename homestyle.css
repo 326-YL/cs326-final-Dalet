@@ -110,3 +110,24 @@
     width:150px;
     height:90px
 }
+
+#forum-filter {
+    height: fit-content;
+    width: 100%;
+    padding-top: 5px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-gap: 2px;
+}
+
+#search {
+    width: 100%;
+}
+
+#glass {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
