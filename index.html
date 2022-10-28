@@ -1,128 +1,145 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
 
-  <!-- For user icon? -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
-  <title>Game Shelf - Home</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container top">
-    <div class="row">
-      <nav class="navbar navbar-expand-xl headerGrid">
-        <div class="container-fluid bumpRight">
-          <a class="navbar-brand navTitle" href="#">Game Shelf</a>
-          <ul class="navbar-nav navBar">
-            <li class="navbar-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-            </li>
-            <li class="navbar-item">
-              <a class="nav-link" href="#">Community</a>
-            </li>
-            <li class="navbar-item">
-              <a class="nav-link" href="collection.html">My Collection</a>
-            </li>
-            <li class="navbar-item">
-              <a class="nav-link" href="explore.html">Explore</a>
-            </li>
-            <li class="navbar-item dropdown">
-              <a class="login-icon nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-thin fa-user-o fa-2x icon"></i>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>      
-            </li>
-          </ul>
-        </div>
-      
-      </nav>
-    </div>
-    
-    <!-- Below code mostly made by Yangyang -->
+    <!-- For user icon? -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-   <div class="row">
-   <div id="gameSlides" class="carousel slide col-lg-12" data-ride="carousel">
-      <ul class="carousel-indicators">
-        <li data-target="#gameSlides" data-slide-to="0" class="active"></li>
-        <li data-target="#gameSlides" data-slide-to="1"></li>
-        <li data-target="#gameSlides" data-slide-to="2"></li>
-      </ul>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="img/marios.jpeg" alt="marios">
+    <title>Game Shelf - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- Login Box -->
+    <div id="greyBackground">
+        <div id="login">
+            <form id="login-form">
+                <h3>Login</h3>
+                <label for="uname">Username:</label><br>
+                <input type="text" id="uname" name="uname"><br>
+                <label for="lname">Password:</label><br>
+                <input type="password" id="pword" name="pword"><br><br>
+                <input id="loginBtn" type="submit" value="Sign In">
+            </form>
         </div>
-        <div class="carousel-item">
-          <img  src="img/gun.jpg" alt="gun">
-        </div>
-        <div class="carousel-item">
-          <img src="img/dark.webp" alt="dark">
-        </div>
-      </div>
-      <a class="carousel-control-prev" href="#gameSlides" data-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-      </a>
-      <a class="carousel-control-next" href="#gameSlides" data-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </a>
     </div>
-    </div>
-    <div class="row mt-3">
-        <div class="latestNews col-xs-6 col-md-7 col-lg-8">
-          <div class="header">
-            <span>latest video game news</span>
+
+    <!-- Nav Bar -->
+    <div class="container top">
+      <div class="row">
+        <nav class="navbar navbar-expand-xl headerGrid">
+          <div class="container-fluid bumpRight">
+            <a class="navbar-brand navTitle" href="#">Game Shelf</a>
+            <ul class="navbar-nav navBar">
+              <li class="navbar-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              </li>
+              <li class="navbar-item">
+                <a class="nav-link" href="#">Community</a>
+              </li>
+              <li class="navbar-item">
+                <a class="nav-link" href="collection.html">My Collection</a>
+              </li>
+              <li class="navbar-item">
+                <a class="nav-link" href="explore.html">Explore</a>
+              </li>
+              <li class="navbar-item dropdown">
+                <a class="login-icon nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa fa-thin fa-user-o fa-2x icon"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Sign In</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" onclick="login(1)">Login</a></li>
+                </ul>      
+              </li>
+            </ul>
           </div>
-          <form id="forum-filter">
-            <input id="search" type="text" placeholder="Search.." name="search" class="">
-            <!-- found this somewhere -->
-            <input id="glass" type="image" src="data:image/svg+xml;charset=UTF-8, <svg xmlns='http://www.w3.org/2000/svg'><path d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'></path></svg>" alt="Search">
-          </form>
-          <table class="newsList pt-3" style="padding: 3px">
-            <tr class="news">
-              <td class="content">
-                <img src="img/fort.jpg" alt="fort" style="width:150px;height: 90px;">
-              </td>
-              <td class="content">
-                <span><a href="https://www.gamespot.com/articles/fortnite-candy-where-to-find-zero-point-pretzels-and-more-in-fortnitemares/1100-6508536/">
-                  <strong>Fortnite candy where to find zero point pretzels and more in fortnitemares</strong></a></span>
-               </td>
-            </tr>
-            <tr class="news">
-              <td class="content">
-                <img src="img/fort.jpg" alt="fort" style="width:150px;height: 90px;">
-              </td>
-              <td class="content">
-                <span><a href="https://www.gamespot.com/articles/fortnite-candy-where-to-find-zero-point-pretzels-and-more-in-fortnitemares/1100-6508536/">
-                  <strong>Fortnite candy where to find zero point pretzels and more in fortnitemares</strong></a></span>
-               </td>
-            </tr>
-          </table>
-        </div>
-        <div class="topTrending col-xs-6 col-md-5 col-lg-4">
-            <div class="card border-0 text-center">
-              <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item"
-                        src="https://www.youtube.com/embed/hF6X2ap_6Q8"
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen></iframe>
-              </div>
-                <a href="https://www.youtube.com/watch?v=hF6X2ap_6Q8"><small>Game Airsoft Battle</small></a>
-            </div>
-        </div>
-    </div>
+        
+        </nav>
+      </div>
 
-    </div>
-   </div>
-</body>
+      <!-- Below code mostly made by Yangyang -->
+
+     <div class="row">
+     <div id="gameSlides" class="carousel slide col-lg-12" data-ride="carousel">
+        <ul class="carousel-indicators">
+          <li data-target="#gameSlides" data-slide-to="0" class="active"></li>
+          <li data-target="#gameSlides" data-slide-to="1"></li>
+          <li data-target="#gameSlides" data-slide-to="2"></li>
+        </ul>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="img/marios.jpeg" alt="marios">
+          </div>
+          <div class="carousel-item">
+            <img  src="img/gun.jpg" alt="gun">
+          </div>
+          <div class="carousel-item">
+            <img src="img/dark.webp" alt="dark">
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#gameSlides" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#gameSlides" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+      </div>
+      <div class="row mt-3">
+          <div class="latestNews col-xs-6 col-md-7 col-lg-8">
+            <div class="header">
+              <span>latest video game news</span>
+            </div>
+            <form id="forum-filter">
+              <input id="search" type="text" placeholder="Search.." name="search" class="">
+              <!-- found this somewhere -->
+              <input id="glass" type="image" src="data:image/svg+xml;charset=UTF-8, <svg xmlns='http://www.w3.org/2000/svg'><path d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'></path></svg>" alt="Search">
+            </form>
+            <table class="newsList pt-3" style="padding: 3px">
+              <tr class="news">
+                <td class="content">
+                  <img src="img/fort.jpg" alt="fort" style="width:150px;height: 90px;">
+                </td>
+                <td class="content">
+                  <span><a href="https://www.gamespot.com/articles/fortnite-candy-where-to-find-zero-point-pretzels-and-more-in-fortnitemares/1100-6508536/">
+                    <strong>Fortnite candy where to find zero point pretzels and more in fortnitemares</strong></a></span>
+                 </td>
+              </tr>
+              <tr class="news">
+                <td class="content">
+                  <img src="img/fort.jpg" alt="fort" style="width:150px;height: 90px;">
+                </td>
+                <td class="content">
+                  <span><a href="https://www.gamespot.com/articles/fortnite-candy-where-to-find-zero-point-pretzels-and-more-in-fortnitemares/1100-6508536/">
+                    <strong>Fortnite candy where to find zero point pretzels and more in fortnitemares</strong></a></span>
+                 </td>
+              </tr>
+            </table>
+          </div>
+          <div class="topTrending col-xs-6 col-md-5 col-lg-4">
+              <div class="card border-0 text-center">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item"
+                          src="https://www.youtube.com/embed/hF6X2ap_6Q8"
+                          title="YouTube video player" 
+                          frameborder="0" 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                          allowfullscreen></iframe>
+                </div>
+                  <a href="https://www.youtube.com/watch?v=hF6X2ap_6Q8"><small>Game Airsoft Battle</small></a>
+              </div>
+          </div>
+      </div>
+
+      </div>
+     </div>
+  </body>
+</html>

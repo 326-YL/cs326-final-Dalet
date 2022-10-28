@@ -1,24 +1,37 @@
-<!--designed by Ben and Samuel-->
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Game Shelf - Collection</title>
-
-        <link rel="stylesheet" href="style.css">
-        <script src="script.js" defer></script>
-
-        <!-- Bootstrap stuff -->
+        <!-- Bootstrap Stuff -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-
+        
         <!-- For user icon? -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  </head>
+    
+        <title>Game Shelf - Collection</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
     <body>
+        <!-- Login Box -->
+        <div id="greyBackground">
+            <div id="login">
+                <form id="login-form">
+                    <h3>Login</h3>
+                    <label for="uname">Username:</label><br>
+                    <input type="text" id="uname" name="uname"><br>
+                    <label for="lname">Password:</label><br>
+                    <input type="password" id="pword" name="pword"><br><br>
+                    <input id="loginBtn" type="submit" value="Sign In">
+                </form>
+            </div>
+        </div>
+
+        <!-- Nav Bar -->
         <div class="container top">
             <div class="row">
                 <nav class="navbar navbar-expand-xl headerGrid">
@@ -44,7 +57,7 @@
                               <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Action</a></li>
                                 <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" onclick="login(1)">Login</a></li>
                               </ul>      
                             </li>
                         </ul>
@@ -54,8 +67,8 @@
         </div>
         <header id="header">
             <div id="temp-title">
-                <h1 id="title">Game Shelf</h1>
-                <span id="title-info">soon to be img logo</span>
+                <h1 id="title">Your Game Shelf Banner</h1>
+                <span id="title-info">Custom Text</span>
             </div>
         </header>
 

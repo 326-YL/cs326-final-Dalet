@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head> 
     <meta charset="UTF-8">
@@ -12,18 +11,29 @@
     <!-- For user icon? -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
+    <title>Game Shelf - Explore</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer>
       window.onload = onload_explore_gallery;
     </script>
-    
-    <title>Game Shelf - Explore</title>
-    
   </head>
   <body onload="onload_explore_gallery()">
 
-    <!-- I may change most of the classes to id styles rather than class ones. -->
-
+    <!-- Login Box -->
+    <div id="greyBackground">
+      <div id="login">
+        <form id="login-form">
+          <h3>Login</h3>
+          <label for="uname">Username:</label><br>
+          <input type="text" id="uname" name="uname"><br>
+          <label for="lname">Password:</label><br>
+          <input type="password" id="pword" name="pword"><br><br>
+          <input id="loginBtn" type="submit" value="Sign In">
+        </form>
+      </div>
+    </div>
+      
+      <!-- Nav Bar -->
     <div class="container top">
       <div class="row">
           <nav class="navbar navbar-expand-xl headerGrid">
@@ -49,7 +59,7 @@
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="#">Action</a></li>
                           <li><a class="dropdown-item" href="#">Another action</a></li>
-                          <li><a class="dropdown-item" href="#">Something else here</a></li>
+                          <li><a class="dropdown-item" onclick="login(1)">Login</a></li>
                         </ul>      
                       </li>
                   </ul>
@@ -57,6 +67,11 @@
           </nav>
       </div>
     </div>
+
+    <!-- Below code mostly made by Samuel -->
+
+    <!-- I may change most of the classes to id styles rather than class ones. -->
+
     <div id="explore-header">
       <div id="explore-header-title" class="explore-title"><b><i>Explore</i></b></div>
       <div id="explore-header-line" class="explore-line"></div>

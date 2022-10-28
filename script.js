@@ -31,3 +31,18 @@ function onload_explore_gallery() {
         element.appendChild(newelm);
     });
 }
+
+document.getElementById("greyBackground").addEventListener("click", (e) => { 
+    if(e.target === document.getElementById("greyBackground")){ 
+      login(0);
+    } 
+   }); 
+//login screen appearance
+function login(val) {
+    let loginDiv = document.getElementById("greyBackground");
+    if (val===0) {
+        loginDiv.style.display = "none";
+    } else if (val===1) {
+        loginDiv.style.display = "block";
+    }
+}
