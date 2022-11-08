@@ -10,13 +10,13 @@ function gameDropdown(console) {
   
 // Get games or something?
 const explore_items = [
-{ image: 'img1', name: 'console1', type: 'console' },
-{ image: 'img2', name: 'console2', type: 'console' },
-{ image: 'img3', name: 'game1', type: 'game' },
-{ image: 'img4', name: 'game2', type: 'game' },
-{ image: 'img5', name: 'game3', type: 'game' },
-{ image: 'img6', name: 'game4', type: 'game' },
-{ image: 'img7', name: 'game5', type: 'game' }
+    { image: 'img1', name: 'console1', type: 'console' },
+    { image: 'img2', name: 'console2', type: 'console' },
+    { image: 'img3', name: 'game1', type: 'game' },
+    { image: 'img4', name: 'game2', type: 'game' },
+    { image: 'img5', name: 'game3', type: 'game' },
+    { image: 'img6', name: 'game4', type: 'game' },
+    { image: 'img7', name: 'game5', type: 'game' }
 ];
 function onload_explore_gallery() {
     const element = document.getElementById('explore-gallery');
