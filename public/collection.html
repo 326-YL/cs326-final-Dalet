@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- Bootstrap Stuff -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+        
+        <!-- For user icon? -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+        <title>Game Shelf - Collection</title>
+        <link rel="stylesheet" href="/static/style.css">
+        <script src="/static/script.js" defer></script>
+    </head>
+    <body>
+        <!-- Login Box -->
+        <div id="greyBackground">
+            <div id="login">
+                <form id="login-form">
+                    <h3>Login</h3>
+                    <label for="uname">Username:</label><br>
+                    <input type="text" id="uname" name="uname"><br>
+                    <label for="lname">Password:</label><br>
+                    <input type="password" id="pword" name="pword"><br><br>
+                    <input id="loginBtn" type="submit" value="Sign In">
+                </form>
+            </div>
+        </div>
+
+        <!-- Nav Bar -->
+        <div class="container top">
+            <div class="row">
+                <nav class="navbar navbar-expand-xl headerGrid">
+                    <div class="container-fluid bumpRight" style="padding-right: 0;">
+                        <a class="navbar-brand navTitle" href="#">Game Shelf</a>
+                        <ul class="navbar-nav navBar">
+                            <li class="navbar-item">
+                              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                            </li>
+                            <li class="navbar-item">
+                              <a class="nav-link" href="#">Community</a>
+                            </li>
+                            <li class="navbar-item">
+                              <a class="nav-link" href="collection.html">My Collection</a>
+                            </li>
+                            <li class="navbar-item">
+                              <a class="nav-link" href="explore.html">Explore</a>
+                            </li>
+                            <li class="navbar-item dropdown">
+                              <a class="login-icon nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-thin fa-user-o fa-2x icon"></i>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" onclick="login(1)">Login</a></li>
+                              </ul>      
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <header id="header">
+            <div id="temp-title">
+                <h1 id="title">Your Game Shelf Banner</h1>
+                <span id="title-info">Custom Text</span>
+            </div>
+        </header>
+
+        <div id="collection-header-line"></div>
+
+        <article id="article">
+
+            <!-- 2 box template -->
+            <div class="console-box-row console-box-2-row">
+                <div class="entire-box entire-box-L">
+                    <div id="NES" class="console-box " onclick="gameDropdown('NES')">
+                        <img class="console-img" src=".public/img/nes.webp">
+                        <img class="console-img" src=".public/img/nes-2.webp">
+                        <h2 class="console-shelf-title">NES</h2>
+                        <div class="console-shelf"></div>
+                    </div>
+                    <!-- The Game Dropdown -->
+                    <div id="NES-game" class="game-box container text-center game-hidden">
+                        <div class="game-item row">
+                            <div class="game-item-box game-img-item col-4">
+                                <img class="game-img" src=".public/img/mario-game.webp">
+                            </div>
+                            <div class="game-item-box game-txt-item col">
+                                <p>Super Mario Bros</p>
+                            </div>
+                            <div class="game-item-box game-status col-1">
+                                <p class="game-beat" title="Beat">B</p>
+                            </div>
+                        </div>
+                        <div class="game-item row">
+                            <div class="game-item-box game-img-item col-4">
+                                <img class="game-img" src=".public/img/mario-3-game.webp">
+                            </div>
+                            <div class="game-item-box game-txt-item col">
+                                <p>Super Mario Bros 3</p>
+                            </div>
+                            <div class="game-item-box game-status col-1">
+                                <p class="game-played" title="Played">P</p>
+                            </div>
+                        </div>
+                        <div class="game-item row">
+                            <div class="game-item-box game-img-item col-4">
+                                <img class="game-img" src=".public/img/mario-3-game.webp">
+                            </div>
+                            <div class="game-item-box game-txt-item col">
+                                <p>Super Mario Bros 3</p>
+                            </div>
+                            <div class="game-item-box game-status col-1">
+                                <p class="game-played" title="Played">P</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="entire-box entire-box-R">
+                    <div id="gba" class="console-box"  onclick="gameDropdown('gba')">
+                        <img class="console-img" src=".public/img/gba-sp.png">
+                        <h2 class="console-shelf-title">Gameboy Advance</h2>
+                        <div class="console-shelf"></div>
+                    </div>
+                    <!-- The Game Dropdown -->
+                    <div id="gba-game" class="game-box container text-center game-hidden">
+                        <div class="game-item row">
+                            <div class="game-item-box game-img-item col-4">
+                                <img class="game-img" src=".public/img/firered.png">
+                            </div>
+                            <div class="game-item-box game-txt-item col">
+                                <p>Pokemon Firered</p>
+                            </div>
+                            <div class="game-item-box game-status col-1">
+                                <p class="game-played" title="Played">P</p>
+                            </div>
+                        </div>
+                        <div class="game-item row">
+                            <div class="game-item-box game-img-item col-4">
+                                <img class="game-img" src=".public/img/firered.png">
+                            </div>
+                            <div class="game-item-box game-txt-item col">
+                                <p>Pokemon Firered</p>
+                            </div>
+                            <div class="game-item-box game-status col-1">
+                                <p class="game-played" title="Played">P</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <!-- 1 box template (one layer) -->
+            <div class="console-box-row console-box-1-row"  onclick="gameDropdown('3ds')">
+                <div id="3ds" class="console-box-1">
+                    <img class="console-img" src="img/3ds.JPG">
+                    <img class="console-img" src="img/3ds.JPG">
+                    <img class="console-img" src="img/3ds.JPG">
+                    <img class="console-img" src="img/3ds.JPG">
+                    <img class="console-img" src="img/3ds.JPG">
+                    <h2 class="console-shelf-title">New 3DS</h2>
+                    <div class="console-shelf"></div>
+                </div>
+                <!-- The Game Dropdown -->
+                <div id="3ds-game" class="game-box container text-center game-hidden">
+                    <div class="game-item row">
+                        <div class="game-item-box game-img-item col-2">
+                            <img class="game-img" src="img/ultra-sun.png">
+                        </div>
+                        <div class="game-item-box game-txt-item col">
+                            <p>Pokemon Ultra Sun</p>
+                        </div>
+                        <div class="game-item-box game-status col-1">
+                            <p class="game-beat" title="Beat">B</p>
+                        </div>
+                    </div>
+                    <div class="game-item row">
+                        <div class="game-item-box game-img-item col-2">
+                            <img class="game-img" src="img/mario-3d-land.jpg">
+                        </div>
+                        <div class="game-item-box game-txt-item col">
+                            <p>Super Mario 3D Land</p>
+                        </div>
+                        <div class="game-item-box game-status col-1">
+                            <p class="game-played" title="Beat">P</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <!-- Note: multishelf goes here -->
+        </article>
+    </body>
+</html>

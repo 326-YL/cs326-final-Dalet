@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
+    <!-- For user icon? -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <title>Game Shelf - Explore</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer>
+      window.onload = onload_explore_gallery;
+    </script>
+  </head>
+  <body onload="onload_explore_gallery()">
+
+    <!-- Login Box -->
+    <div id="greyBackground">
+      <div id="login">
+        <form id="login-form">
+          <h3>Login</h3>
+          <label for="uname">Username:</label><br>
+          <input type="text" id="uname" name="uname"><br>
+          <label for="lname">Password:</label><br>
+          <input type="password" id="pword" name="pword"><br><br>
+          <input id="loginBtn" type="submit" value="Sign In">
+        </form>
+      </div>
+    </div>
+      
+      <!-- Nav Bar -->
+    <div class="container top">
+      <div class="row">
+          <nav class="navbar navbar-expand-xl headerGrid">
+              <div class="container-fluid bumpRight" style="padding-right: 0;">
+                  <a class="navbar-brand navTitle" href="#">Game Shelf</a>
+                  <ul class="navbar-nav navBar">
+                      <li class="navbar-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                      </li>
+                      <li class="navbar-item">
+                        <a class="nav-link" href="#">Community</a>
+                      </li>
+                      <li class="navbar-item">
+                        <a class="nav-link" href="collection.html">My Collection</a>
+                      </li>
+                      <li class="navbar-item">
+                        <a class="nav-link" href="explore.html">Explore</a>
+                      </li>
+                      <li class="navbar-item dropdown">
+                        <a class="login-icon nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fa fa-thin fa-user-o fa-2x icon"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Action</a></li>
+                          <li><a class="dropdown-item" href="#">Another action</a></li>
+                          <li><a class="dropdown-item" onclick="login(1)">Login</a></li>
+                        </ul>      
+                      </li>
+                  </ul>
+              </div>
+          </nav>
+      </div>
+    </div>
+
+    <!-- Below code mostly made by Samuel -->
+
+    <!-- I may change most of the classes to id styles rather than class ones. -->
+
+    <div id="explore-header">
+      <div id="explore-header-title" class="explore-title"><b><i>Explore</i></b></div>
+      <div id="explore-header-line" class="explore-line"></div>
+    </div>
+
+    <div id="explore-search">
+      <input id="explore-search-input" type="text" placeholder="Try searching for something...">
+      <button id="explore-search-consolesfilter" class="explore-search-button">img1</button>
+      <button id="explore-search-gamesfilter" class="explore-search-button">img2</button>
+      <!-- /\ Just temporary names for the classes. /\ -->
+    </div>
+
+    <div class="explore-line"></div>
+
+    <div id="explore-gallery" class="explore-gallery-container"></div>
+
+  </body>
+</html>
