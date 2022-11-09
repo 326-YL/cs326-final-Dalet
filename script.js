@@ -166,26 +166,36 @@ function displayCollection(collectionArr) {
                     gPic.appendChild(img);
 
                     const gTitle = document.createElement("div");
-                    gPic.classList.add("game-item-box");
-                    gPic.classList.add("game-img-item");
-                    gPic.classList.add("col");
+                    gTitle.classList.add("game-item-box");
+                    gTitle.classList.add("game-img-item");
+                    gTitle.classList.add("col");
                     gDiv.appendChild(gTitle);
 
                     const t = document.createElement("p");
-                    t.value = e[1];
+                    t.innerHTML = e[1];
                     gTitle.appendChild(t);
 
                     const gStat = document.createElement("div");
-                    gPic.classList.add("game-item-box");
-                    gPic.classList.add("game-img-item");
-                    gPic.classList.add("col-1");
+                    gStat.classList.add("game-item-box");
+                    gStat.classList.add("game-status");
+                    gStat.classList.add("col-1");
                     gDiv.appendChild(gStat);
 
                     const t2 = document.createElement("p");
-                    t2.classList.add("game-beat") //  <----------------- change later
-                    t2.title = "Beat"
-                    t2.value = e[2];
-                    gTitle.appendChild(t);
+                    switch (e[2]) {
+                        case 'B':
+                            t2.classList.add("game-beat");
+                            t2.title = "Beat";
+                            t2.innerHTML = 'B';
+                            break;
+                        case 'P':
+                            t2.classList.add("game-played");
+                            t2.title = "Played";
+                            t2.innerHTML = 'P';
+                            break;
+                        default:
+                    }
+                    gStat.appendChild(t2);
                 });
             }
 
