@@ -59,21 +59,21 @@ let cArr = [
         ]
     },
     {
-        name: "gba",
-        title: "Gameboy Advance",
-        consoles: ["gba-sp.png"],
-        games: [
-            ["firered.png", "Pokemon FireRed", "P"],
-            ["firered.png", "Pokemon FireRed", "P"]
-        ]
-    },
-    {
         name: "3ds",
         title: "New 3DS",
         consoles: ["3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG"],
         games: [
             ["ultra-sun.png", "Pokemon Ultra Sun", "B"],
             ["mario-3d-land.jpg", "Super Mario 3D Land", "P"]
+        ]
+    },
+    {
+        name: "gba",
+        title: "Gameboy Advance",
+        consoles: ["gba-sp.png"],
+        games: [
+            ["firered.png", "Pokemon FireRed", "P"],
+            ["firered.png", "Pokemon FireRed", "P"]
         ]
     }
 ];
@@ -122,6 +122,7 @@ function displayCollection(collectionArr) {
                 conDiv1.addEventListener("click", () => {gameDropdown(data[i].name)})
                 div1.appendChild(conDiv1);
 
+                //console imgs
                 data[i].consoles.forEach(e => {
                     const img = document.createElement("img");
                     img.classList.add("console-img");
@@ -139,20 +140,20 @@ function displayCollection(collectionArr) {
                 shelf1.classList.add("console-shelf");
                 conDiv1.appendChild(shelf1);
 
-                //games1
-                const gameDiv1 = document.createElement("div");
-                gameDiv1.id = data[i].name + "-game";
-                gameDiv1.classList.add("game-box");
-                gameDiv1.classList.add("container");
-                gameDiv1.classList.add("text-center");
-                gameDiv1.classList.add("game-hidden");
-                div1.appendChild(gameDiv1);
+                //games
+                const gameDiv = document.createElement("div");
+                gameDiv.id = data[i].name + "-game";
+                gameDiv.classList.add("game-box");
+                gameDiv.classList.add("container");
+                gameDiv.classList.add("text-center");
+                gameDiv.classList.add("game-hidden");
+                div1.appendChild(gameDiv);
 
                 data[i].games.forEach(e => {
                     const gDiv = document.createElement("div");
                     gDiv.classList.add("game-item");
                     gDiv.classList.add("row");
-                    gameDiv1.appendChild(gDiv);
+                    gameDiv.appendChild(gDiv);
 
                     const gPic = document.createElement("div");
                     gPic.classList.add("game-item-box");
@@ -198,23 +199,97 @@ function displayCollection(collectionArr) {
                     gStat.appendChild(t2);
                 });
             }
+            document.getElementById("article").appendChild(mDiv);
+            document.getElementById("article").appendChild(document.createElement("br"));
+        } else if (collectionArr[item].consoles.length >= 4) { //1 box template
+            const data = collectionArr[item];
 
-            // <div id="gba-game" class="game-box container text-center game-hidden">
-            //     <div class="game-item row">
-            //         <div class="game-item-box game-img-item col-4">
-            //             <img class="game-img" src="./img/firered.png">
-            //         </div>
-            //         <div class="game-item-box game-txt-item col">
-            //             <p>Pokemon Firered</p>
-            //         </div>
-            //         <div class="game-item-box game-status col-1">
-            //             <p class="game-played" title="Played">P</p>
-            //         </div>
-            //     </div>
+            const mDiv = document.createElement("div");
+            mDiv.classList.add("console-box-row");
+            mDiv.classList.add("console-box-1-row");
+            mDiv.addEventListener("click", () => {gameDropdown(data.name)});
             document.getElementById("article").appendChild(mDiv);
 
-        } else { //1 box template
+            const conDiv = document.createElement("div");
+            conDiv.classList.add("console-box-1");
+            conDiv.id = data.name;
+            mDiv.appendChild(conDiv);
+            //console imgs
+            data.consoles.forEach(e => {
+                const img = document.createElement("img");
+                img.classList.add("console-img");
+                img.src = "./img/" + e;
+                conDiv.appendChild(img);
+            });
 
+            const title = document.createElement("h2");
+            title.classList.add("console-shelf-title");
+            const titleTxt = document.createTextNode(data.title);
+            title.appendChild(titleTxt);
+            conDiv.appendChild(title);
+
+            const shelf = document.createElement("div");
+            shelf.classList.add("console-shelf");
+            conDiv.appendChild(shelf);
+
+            //GAMES
+            const gameDiv = document.createElement("div");
+            gameDiv.id = data.name + "-game";
+            gameDiv.classList.add("game-box");
+            gameDiv.classList.add("container");
+            gameDiv.classList.add("text-center");
+            gameDiv.classList.add("game-hidden");
+            mDiv.appendChild(gameDiv);
+
+            data.games.forEach(e => {
+                const gDiv = document.createElement("div");
+                gDiv.classList.add("game-item");
+                gDiv.classList.add("row");
+                gameDiv.appendChild(gDiv);
+
+                const gPic = document.createElement("div");
+                gPic.classList.add("game-item-box");
+                gPic.classList.add("game-img-item");
+                gPic.classList.add("col-2");
+                gDiv.appendChild(gPic);
+
+                const img = document.createElement("img");
+                img.classList.add("game-img");
+                img.src = "./img/" + e[0];
+                gPic.appendChild(img);
+
+                const gTitle = document.createElement("div");
+                gTitle.classList.add("game-item-box");
+                gTitle.classList.add("game-img-item");
+                gTitle.classList.add("col");
+                gDiv.appendChild(gTitle);
+
+                const t = document.createElement("p");
+                t.innerHTML = e[1];
+                gTitle.appendChild(t);
+
+                const gStat = document.createElement("div");
+                gStat.classList.add("game-item-box");
+                gStat.classList.add("game-status");
+                gStat.classList.add("col-1");
+                gDiv.appendChild(gStat);
+
+                const t2 = document.createElement("p");
+                switch (e[2]) {
+                    case 'B':
+                        t2.classList.add("game-beat");
+                        t2.title = "Beat";
+                        t2.innerHTML = 'B';
+                        break;
+                    case 'P':
+                        t2.classList.add("game-played");
+                        t2.title = "Played";
+                        t2.innerHTML = 'P';
+                        break;
+                    default:
+                }
+                gStat.appendChild(t2);
+            });
         }
     }
 }
