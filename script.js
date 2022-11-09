@@ -191,7 +191,7 @@ function displayCollection(collectionArr) {
 
                     const gTitle = document.createElement("div");
                     gTitle.classList.add("game-item-box");
-                    gTitle.classList.add("game-img-item");
+                    gTitle.classList.add("game-txt-item");
                     gTitle.classList.add("col");
                     gDiv.appendChild(gTitle);
 
