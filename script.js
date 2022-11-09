@@ -75,6 +75,14 @@ let cArr = [
             ["firered.png", "Pokemon FireRed", "P"],
             ["firered.png", "Pokemon FireRed", "P"]
         ]
+    },
+    {
+        name: "n64",
+        title: "n64",
+        consoles: ["n64.webp"],
+        games: [
+            ["mario-64-game.webp", "Super Mario 64", "W"]
+        ]
     }
 ];
 
@@ -85,42 +93,56 @@ function displayCollection(collectionArr) {
     const twoDisplay = collectionArr.filter(x => {
         return x.consoles.length < 4;
     });
-    console.log(twoDisplay.length);
     for (item in collectionArr) {
         //2 box template | checks if has been displayed
         if (collectionArr[item].consoles.length < 4 && !displayed.some((t)=>t===collectionArr[item].name)) {
             displayed.push(collectionArr[item].name);
             //finds next availble one for display
-            let next = null;
-            let count = 0;
-            while (next===null) {
-                if (!displayed.some((t)=>t===twoDisplay[count].name)) {
-                    next = twoDisplay[count];
-                }
-                count++;
+            let data = null;
+            let num = 0;
+            if (displayed.length !== twoDisplay.length) {
+                let next = twoDisplay[displayed.length];
+                displayed.push(next.name);
+                data = [collectionArr[item], next];
+                num = 2;
+            } else {
+                data = [collectionArr[item]];
+                num = 1;
             }
-            displayed.push(next.name);
-
-            const data = [collectionArr[item], next];
+            //I wanted to do 2-box together-ver and singer-ver separately but just 
+            // made this work instead using num
 
             //Displays them.
             const mDiv = document.createElement("div");
-            mDiv.classList.add("console-box-row");
-            mDiv.classList.add("console-box-2-row");
-            for (let i=0; i < 2; i++) {
-                //shelf1
+            if (num === 1) {
+                mDiv.classList.add("console-box-row");
+                mDiv.classList.add("entire-box");
+                mDiv.addEventListener("click", () => {gameDropdown(data[0].name)});
+                document.getElementById("article").appendChild(mDiv);
+            } else if (num === 2) {
+                mDiv.classList.add("console-box-row");
+                mDiv.classList.add("console-box-2-row");
+                document.getElementById("article").appendChild(mDiv);
+            }
+            for (let i=0; i < num; i++) {
+                //shelf
                 const div1 = document.createElement("div");
-                div1.classList.add("entire-box");
-                if (i===0) {div1.classList.add("entire-box-L");}
-                else if (i===1) {div1.classList.add("entire-box-R");}
-                
-                mDiv.appendChild(div1);
-
                 const conDiv1 = document.createElement("div");
-                conDiv1.classList.add("console-box");
-                conDiv1.id = data[i].name;
-                conDiv1.addEventListener("click", () => {gameDropdown(data[i].name)})
-                div1.appendChild(conDiv1);
+                if (num === 1) {
+                    conDiv1.classList.add("console-box-1");
+                    conDiv1.id = data[i].name;
+                    mDiv.appendChild(conDiv1);
+                } else if (num === 2) {
+                    div1.classList.add("entire-box");
+                    if (i===0) {div1.classList.add("entire-box-L");}
+                    else if (i===1) {div1.classList.add("entire-box-R");}
+                    mDiv.appendChild(div1);
+
+                    conDiv1.classList.add("console-box");
+                    conDiv1.id = data[i].name;
+                    conDiv1.addEventListener("click", () => {gameDropdown(data[i].name)})
+                    div1.appendChild(conDiv1);
+                }
 
                 //console imgs
                 data[i].consoles.forEach(e => {
@@ -147,7 +169,8 @@ function displayCollection(collectionArr) {
                 gameDiv.classList.add("container");
                 gameDiv.classList.add("text-center");
                 gameDiv.classList.add("game-hidden");
-                div1.appendChild(gameDiv);
+                num===1? mDiv.appendChild(gameDiv) : div1.appendChild(gameDiv);
+                console.log("here");
 
                 data[i].games.forEach(e => {
                     const gDiv = document.createElement("div");
@@ -195,11 +218,14 @@ function displayCollection(collectionArr) {
                             t2.innerHTML = 'P';
                             break;
                         default:
+                            t2.classList.add("game-want");
+                            t2.title = "Want to play";
+                            t2.innerHTML = "W";
+                            break;
                     }
                     gStat.appendChild(t2);
                 });
             }
-            document.getElementById("article").appendChild(mDiv);
             document.getElementById("article").appendChild(document.createElement("br"));
         } else if (collectionArr[item].consoles.length >= 4) { //1 box template
             const data = collectionArr[item];
@@ -287,9 +313,14 @@ function displayCollection(collectionArr) {
                         t2.innerHTML = 'P';
                         break;
                     default:
+                        t2.classList.add("game-want");
+                        t2.title = "Want to play";
+                        t2.innerHTML = "W";
+                        break;
                 }
                 gStat.appendChild(t2);
             });
+            document.getElementById("article").appendChild(document.createElement("br"));
         }
     }
 }
