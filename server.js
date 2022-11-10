@@ -7,8 +7,8 @@ const http=require('http');
 const { loadObject } = require('./public/js/gameView');
 const httpServer=http.createServer(app);
 const gameFile='./vedioGame.json'
-const deployment="https://boiling-lake-51546.herokuapp.com"
-const localtesting='http://localhost:8000/'
+const production="https://git.heroku.com/damp-reaches-70694.com"
+const development='http://localhost:8000/'
 const url = (process.env.NODE_ENV ? production : development);
 
 //to include all assets (css files and images)
@@ -42,7 +42,7 @@ router.get('/collection',function(req,res){
 //CRUD operation
 
 //allow user to login, will pop out the log in page
-router.get('/*/login',function(req,res){
+router.get('/login',function(req,res){
    res.send('<h>Plase Login</h>')
 
 })
