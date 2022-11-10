@@ -86,7 +86,7 @@ router.get('/search',function(req,res){
    console.log(req.protocol);
    console.log(req.baseUrl);
    console.log(process.env.NODE_ENV)
-   res.send(res.json());
+   res.send(req.query);
    //const url="https://boiling-lake-51546.herokuapp.com"+req.url
    console.log("url:"+url);
    //url=url+req.url;
@@ -94,11 +94,5 @@ router.get('/search',function(req,res){
    //loadObject.Loaded(url)
    res.sendFile(path.join(__dirname+'/public/game.html'));
 })
-router.post('/search',function(req,res){
-  let title=req.query.title;
-  let edition=req.query.edition;
-  console.log(title);
 
-  res.json({'title':title,'edition':edition});
- })
 httpServer.listen(process.env.PORT|| 443)
