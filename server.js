@@ -28,6 +28,9 @@ router.get('/index',function(req,res){
   res.redirect('/')
   //res.sendFile(path.join(__dirname+'/public/index.html'));
   //__dirname : It will resolve to the project folder.
+  if (req.query.page === "test") {
+    res.redirect('/collection');
+  }
 });
 
 
