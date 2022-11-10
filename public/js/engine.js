@@ -1,6 +1,6 @@
 let data={}
-async function Loaded(url){
-    const response= await fetch(url);
+async function Loaded(){
+    const response= await fetch('/search');
     if(response.ok){
         const json=await response.json();
         //console.log(typeof json);
