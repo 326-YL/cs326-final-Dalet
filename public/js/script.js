@@ -51,8 +51,7 @@ function login(val) {
 async function getData() {
     let d = await fetch("https://"+window.location.hostname+"/thedata");
     if (d.ok) {
-        let data = await d.json();
-        console.log(data);
+        return await d.json();
     } else {
         return [];
     }
@@ -61,7 +60,7 @@ async function getData() {
 displayCollection();
 
 function displayCollection() {
-    let collectionArr = JSON.parse(getData());
+    let collectionArr = getData();
     console.log("test");
     console.log(collectionArr);
     let displayed = [];
