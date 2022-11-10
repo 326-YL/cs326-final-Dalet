@@ -52,7 +52,7 @@ async function getData() {
     let d = await fetch("https://"+window.location.hostname+"/thedata");
     if (d.ok) {
         let data = await d.json();
-        console.log(JSON.parse(data));
+        console.log(data);
     } else {
         return [];
     }
