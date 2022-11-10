@@ -5,6 +5,7 @@ const router = express.Router();
 const database=require("./database")
 const http=require('http');
 const loadObject= require('./public/js/engine');
+const { send } = require('process');
 const httpServer=http.createServer(app);
 const gameFile='./vedioGame.json'
 const production="https://git.heroku.com/damp-reaches-70694.com"
@@ -86,11 +87,12 @@ router.post('/search',function(req,res){
    console.log(req.baseUrl);
    console.log(process.env.NODE_ENV)
    res.json(req.query);
+   res.send(res.json());
    //const url="https://boiling-lake-51546.herokuapp.com"+req.url
    console.log("url:"+url);
-   url=url+req.url;
-   console.log("url:"+url);
-   loadObject.Loaded(url)
+   //url=url+req.url;
+   //console.log("url:"+url);
+   //loadObject.Loaded(url)
    res.sendFile(path.join(__dirname+'/public/game.html'));
 })
 
