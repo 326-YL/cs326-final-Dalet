@@ -51,7 +51,7 @@ function login(val) {
 async function getData() {
     let d = await fetch("https://"+window.location.hostname+"/thedata");
     if (d.ok) {
-        return JPSON.parse(await d.json());
+        return await d.json();
     } else {
         return [];
     }
@@ -60,8 +60,9 @@ async function getData() {
 displayCollection();
 
 function displayCollection() {
-    let collectionArr = getData();
+    let collectionArr = JSON.parse(getData());
     console.log("test");
+    console.log(collectionArr);
     let displayed = [];
     const twoDisplay = collectionArr.filter(x => {
         return x.consoles.length < 4;
