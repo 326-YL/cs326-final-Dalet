@@ -86,8 +86,8 @@ let cArr = [
     }
 ];
 async function test() {
-    console.log(window.location.href);
-    let d = await fetch(window.location.href+"/thedata");
+    console.log(window.location.hostname);
+    let d = await fetch(window.location.hostname+"/thedata");
     if (d.ok) {
         let test2 = d.json();
         console.log(test2);
