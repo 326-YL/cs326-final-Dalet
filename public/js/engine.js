@@ -11,4 +11,4 @@ async function Loaded(url){
         return Promise.reject(response.statusText);
     }
 }
-module.exports={dictionaryLoaded,data}
+module.exports={Loaded,data}
