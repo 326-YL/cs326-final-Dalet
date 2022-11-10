@@ -29,7 +29,7 @@
    
    
    
-   we are still working on our APIs, we are having roubles on server things and still learning how to work on it, but we will
+   we are still working on our APIs, we are having troubles on server things and still learning how to work on it, but we will
    get through it, we will learn from what we did.
    
    
