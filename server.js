@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use('/', router);
 
 router.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/public/index.html'));
+  res.sendFile(path.join(__dirname+'/index.html'));
   //__dirname : It will resolve to the project folder.
 });
 
