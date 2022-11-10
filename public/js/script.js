@@ -59,6 +59,7 @@ async function getData() {
 
 function displayCollection() {
     let collectionArr = getData();
+    console.log("test");
     let displayed = [];
     const twoDisplay = collectionArr.filter(x => {
         return x.consoles.length < 4;
