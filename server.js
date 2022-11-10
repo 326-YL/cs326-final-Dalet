@@ -45,7 +45,7 @@ router.get('/collection',function(req,res){
 });
 
 router.get('/thedata', function(req, res) {
-  res.send(JSON.stringify([1, 2, 3, 4]));
+  res.sendData(JSON.stringify([1, 2, 3, 4]));
 })
 
 //CRUD operation
