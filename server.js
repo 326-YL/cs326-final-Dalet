@@ -44,6 +44,10 @@ router.get('/collection',function(req,res){
   res.sendFile(path.join(__dirname+'/public/collection.html'));
 });
 
+router.get('/thedata', function(req, res) {
+  res.send(JSON.stringify([1, 2, 3, 4]));
+})
+
 //CRUD operation
 
 //allow user to login, will pop out the log in page
