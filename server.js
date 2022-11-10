@@ -78,7 +78,7 @@ router.get('/user/:id/delete',function(req,res){
 
 //place * before/search will allow any users or visitors on client side at 
 //any pages do search operation
-router.post('/search',function(req,res){
+router.get('/search',function(req,res){
    //let title=req.query.title;
    //let edition=req.query.edition;
    
@@ -86,7 +86,10 @@ router.post('/search',function(req,res){
    console.log(req.protocol);
    console.log(req.baseUrl);
    console.log(process.env.NODE_ENV)
-   res.json(req.query);
+   router.post('/search',function(req,res){
+    res.json(req.query);
+   })
+   
    res.send(res.json());
    //const url="https://boiling-lake-51546.herokuapp.com"+req.url
    console.log("url:"+url);
