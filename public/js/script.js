@@ -85,12 +85,15 @@ let cArr = [
         ]
     }
 ];
-console.log( async () => {
+async function test() {
+    console.log(window.location.href);
     let d = await fetch(window.location.href+"/thedata");
     if (d.ok) {
-        return d.json();
+        let test2 = d.json();
+        console.log(test2);
     }
-})
+}
+console.log(test());
 
 displayCollection(cArr);
 
