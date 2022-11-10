@@ -2,6 +2,8 @@
    Part 0: Project API Planning
 </font>**
 <font size="4" >
+   
+   APIs we plan to use CRUD, obviously as well as the API provided by <a href="https://rawg.io/apidocs">RAWG</a>.
   
   <img src="img/md2-1.png" style="height:300px;width:600px">
   
