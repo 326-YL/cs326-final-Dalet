@@ -1,12 +1,12 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+    background-color: green;
 }
 
 .body{
     width:1200px;
     height:100%;
-    background-color: green;
 }
 
 .bumpRight {
