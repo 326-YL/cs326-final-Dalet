@@ -37,8 +37,7 @@ router.get('/index',function(req,res){
 
 router.get('/explore',function(req,res){
   
-  // res.sendFile(path.join(__dirname+'/public/explore.html'));
-  res.send("test");
+  res.sendFile(path.join(__dirname+'/public/explore.html'));
 });
 
 router.get('/collection',function(req,res){
