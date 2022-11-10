@@ -309,7 +309,7 @@ article {
     width: auto;
     height: auto;
     position: relative;
-    
+    overflow: hidden;
 }
 
 .game-hidden {
@@ -328,13 +328,14 @@ article {
     width: auto;
     height: inherit;
     position: relative;
+    overflow: hidden;
 }
 
 .game-img-item {
     float: left;
     display: block;
     width: auto;
-    height: auto;
+    height: inherit;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -342,8 +343,8 @@ article {
 }
 
 .game-img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: inherit;
     z-index: -1;
 }
 
@@ -355,6 +356,10 @@ article {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.game-txt-item p {
+    margin-bottom: 0;
 }
 
 .game-status {
@@ -382,6 +387,10 @@ article {
 
 .game-beat {
     background-color: deepskyblue;
+}
+
+.game-want {
+    background-color: grey;
 }
 
 
