@@ -51,7 +51,8 @@ function login(val) {
 async function getData() {
     let d = await fetch("https://"+window.location.hostname+"/thedata");
     if (d.ok) {
-        return await d.json();
+        let data = await d.json();
+        return data;
     } else {
         return [];
     }
