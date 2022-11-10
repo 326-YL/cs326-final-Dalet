@@ -95,6 +95,10 @@ router.get('/search',function(req,res){
    res.sendFile(path.join(__dirname+'/public/game.html'));
 })
 router.post('/search',function(req,res){
-  res.json(req.query);
+  let title=req.query.title;
+  let edition=req.query.edition;
+  console.log(title);
+
+  res.json({'title':title,'edition':edition});
  })
 httpServer.listen(process.env.PORT|| 443)
