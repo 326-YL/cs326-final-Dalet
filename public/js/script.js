@@ -87,6 +87,7 @@ let cArr = [
 ];
 async function test() {
     let d = await fetch(window.location.hostname+"/thedata");
+    console.log(d.ok);
     if (d.ok) {
         let test2 = await d.json();
         console.log(test2);
@@ -178,7 +179,6 @@ function displayCollection(collectionArr) {
                 gameDiv.classList.add("text-center");
                 gameDiv.classList.add("game-hidden");
                 num===1? mDiv.appendChild(gameDiv) : div1.appendChild(gameDiv);
-                console.log("here");
 
                 data[i].games.forEach(e => {
                     const gDiv = document.createElement("div");
