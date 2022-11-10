@@ -57,6 +57,8 @@ async function getData() {
     }
 }
 
+displayCollection();
+
 function displayCollection() {
     let collectionArr = getData();
     console.log("test");
