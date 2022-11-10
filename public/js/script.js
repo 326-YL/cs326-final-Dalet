@@ -51,7 +51,7 @@ function login(val) {
 async function getData() {
     let d = await fetch("https://"+window.location.hostname+"/thedata");
     if (d.ok) {
-        return await d.json();
+        return JPSON.parse(await d.json());
     } else {
         return [];
     }
