@@ -62,7 +62,7 @@ async function getData() {
 displayCollection();
 
 async function displayCollection() {
-    let collectionArr = getData();
+    let collectionArr = await getData();
     console.log("test");
     console.log(collectionArr);
     let displayed = [];
