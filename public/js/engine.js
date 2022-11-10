@@ -1,6 +1,5 @@
 let data={}
-async function Loaded(url){  
-    const url="https://raw.githubusercontent.com/web-programming-org/web-programming/master/homeworks/dictionary.json";
+async function Loaded(url){
     const response= await fetch(url);
     if(response.ok){
         const json=await response.json();
