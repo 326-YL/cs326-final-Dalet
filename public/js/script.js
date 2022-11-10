@@ -52,7 +52,6 @@ async function getData() {
     let d = await fetch("https://"+window.location.hostname+"/thedata");
     if (d.ok) {
         let data = await d.json();
-        console.log(data);
         return data;
     } else {
         return [];
@@ -63,8 +62,6 @@ displayCollection();
 
 async function displayCollection() {
     let collectionArr = await getData();
-    console.log("test");
-    console.log(collectionArr);
     let displayed = [];
     const twoDisplay = collectionArr.filter(x => {
         return x.consoles.length < 4;
