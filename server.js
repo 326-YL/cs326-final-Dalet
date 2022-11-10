@@ -9,7 +9,7 @@ const httpServer=http.createServer(app);
 const gameFile='./vedioGame.json'
 const production="https://git.heroku.com/damp-reaches-70694.com"
 const development='http://localhost:8000/'
-const url = (process.env.NODE_ENV ? production : development);
+let url = (process.env.NODE_ENV ? production : development);
 
 //to include all assets (css files and images)
 app.use(express.static(path.join(__dirname,'public')));
