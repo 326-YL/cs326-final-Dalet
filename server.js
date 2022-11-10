@@ -19,9 +19,9 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use('/', router);
 
 router.get('/',function(req,res){
-  // res.sendFile(path.join(__dirname+'/public/index.html'));
+  res.sendFile(path.join(__dirname+'/public/index.html'));
   //__dirname : It will resolve to the project folder.
-  res.send("test");
+  // res.send("test");
   if (req.query.page === "test") {
     res.redirect('/collection');
   }
@@ -36,7 +36,7 @@ router.get('/index',function(req,res){
 
 
 router.get('/explore',function(req,res){
-
+  res.send("test");
   res.sendFile(path.join(__dirname+'/public/explore.html'));
 });
 
