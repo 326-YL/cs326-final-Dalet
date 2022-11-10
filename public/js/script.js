@@ -47,57 +47,18 @@ function login(val) {
     }
 }
 
-let cArr = [
-    {
-        name: "NES",
-        title: "NES",
-        consoles: ["nes.webp", "nes-2.webp"],
-        games: [
-            ["mario-game.webp", "Super Mario Bros", "B"],
-            ["mario-3-game.webp", "Super Mario Bros 3", "P"],
-            ["mario-3-game.webp", "Super Mario Bros 3", "P"]
-        ]
-    },
-    {
-        name: "3ds",
-        title: "New 3DS",
-        consoles: ["3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG"],
-        games: [
-            ["ultra-sun.png", "Pokemon Ultra Sun", "B"],
-            ["mario-3d-land.jpg", "Super Mario 3D Land", "P"]
-        ]
-    },
-    {
-        name: "gba",
-        title: "Gameboy Advance",
-        consoles: ["gba-sp.png"],
-        games: [
-            ["firered.png", "Pokemon FireRed", "P"],
-            ["firered.png", "Pokemon FireRed", "P"]
-        ]
-    },
-    {
-        name: "n64",
-        title: "n64",
-        consoles: ["n64.webp"],
-        games: [
-            ["mario-64-game.webp", "Super Mario 64", "W"]
-        ]
-    }
-];
-async function test() {
+
+async function getData() {
     let d = await fetch("https://"+window.location.hostname+"/thedata");
-    console.log(d.ok);
     if (d.ok) {
-        let test2 = await d.json();
-        console.log(test2);
+        return await d.json();
+    } else {
+        return [];
     }
 }
-test();
 
-displayCollection(cArr);
-
-function displayCollection(collectionArr) {
+function displayCollection() {
+    let collectionArr = getData();
     let displayed = [];
     const twoDisplay = collectionArr.filter(x => {
         return x.consoles.length < 4;
