@@ -31,7 +31,6 @@ router.get('/index',function(req,res){
 
 
 router.get('/explore',function(req,res){
-
   res.sendFile(path.join(__dirname+'/explore.html'));
 });
 
