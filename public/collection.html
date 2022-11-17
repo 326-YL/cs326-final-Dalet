@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="css/style.css">
         <script src="js/script.js" defer></script>
     </head>
-    <body>
+    <body onload="displayCollection()">
         <!-- Login Box -->
         <div id="greyBackground">
             <div id="login">
@@ -39,16 +39,13 @@
                         <a class="navbar-brand navTitle" href="#">Game Shelf</a>
                         <ul class="navbar-nav navBar">
                             <li class="navbar-item">
-                              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                              <a class="nav-link active" aria-current="/" href="/">Home</a>
                             </li>
                             <li class="navbar-item">
-                              <a class="nav-link" href="#">Community</a>
+                              <a class="nav-link" href="/collection">My Collection</a>
                             </li>
                             <li class="navbar-item">
-                              <a class="nav-link" href="collection.html">My Collection</a>
-                            </li>
-                            <li class="navbar-item">
-                              <a class="nav-link" href="explore.html">Explore</a>
+                              <a class="nav-link" href="/explore">Explore</a>
                             </li>
                             <li class="navbar-item dropdown">
                               <a class="login-icon nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -74,7 +71,7 @@
 
         <div id="collection-header-line"></div>
 
-        <article id="article" onload="displayCollection()">
+        <article id="article">
 
             <!-- <div class="console-box-row entire-box"  onclick="gameDropdown('n64')">
                 <div id="3ds" class="console-box-1">

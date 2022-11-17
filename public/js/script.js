@@ -58,8 +58,6 @@ async function getData() {
     }
 }
 
-displayCollection();
-
 async function displayCollection() {
     let collectionArr = await getData();
     let displayed = [];
