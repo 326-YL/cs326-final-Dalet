@@ -6,7 +6,6 @@ const database=require("./database")
 const http=require('http');
 const loadObject= require('./public/js/engine');
 const { send } = require('process');
-const httpServer=http.createServer(app);
 const gameFile='./vedioGame.json'
 const production="https://git.heroku.com/damp-reaches-70694.com"
 const development='http://localhost:8000/'
@@ -81,7 +80,7 @@ router.get('/thedata', function(req, res) {
             ["mario-64-game.webp", "Super Mario 64", "W"]
         ]
     }
-];
+  ];
   res.send(JSON.stringify(cArr));
 })
 
@@ -140,4 +139,5 @@ router.get('/search',function(req,res){
    res.sendFile(path.join(__dirname+'/public/game.html'));
 })
 
-httpServer.listen(process.env.PORT|| 443)
+const httpServer = http.createServer(app);
+httpServer.listen(process.env.PORT || 443);

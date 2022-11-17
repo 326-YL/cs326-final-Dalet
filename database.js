@@ -34,5 +34,4 @@ return object;
 
 }
 
-module.exports={createData,searchData}
- 
+module.exports={ createData, searchData }
