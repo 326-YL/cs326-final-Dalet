@@ -84,8 +84,19 @@ router.get('/thedata', function(req, res) {
   res.send(JSON.stringify(cArr));
 });
 
-router.post('/test', function(req, res) {
-  console.log('test');
+app.post('/', function(req,res) {
+  let body = '';
+  req.on('data', data => body += data);
+  req.on('end', () => {
+    let uname = body.match(/(uname=(.*)&)/g)[0];
+    uname = uname.slice(6, uname.length-1);
+    let pword = body.match(/(pword=(.*))/g)[0];
+    pword = pword.slice(6, pword.length);
+    console.log(uname);
+    console.log(pword);
+    console.log(body);
+  });
+  res.redirect('/')
 });
 
 //CRUD operation
