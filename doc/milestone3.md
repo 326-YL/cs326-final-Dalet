@@ -1,6 +1,6 @@
 **<font size="6"> 
    Part 0: Database Implementation
-</font>**
+</font>**<br>
 <font size="4" >
    Ben's comments for later: I implemented login POST
 
