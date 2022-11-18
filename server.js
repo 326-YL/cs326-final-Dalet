@@ -116,7 +116,7 @@ router.get('/db', async (req, res) => {
     //   password varchar(255),
     //   PRIMARY KEY(uid)
     //   );`);
-    const result = await client.query("INSERT INTO test (username,password) VALUES ('test', 'test');");
+    const result = await client.query("INSERT INTO test (username,password) VALUES (1, 'test', 'test');");
     const results = { 'results': (result) ? result.rows : null};
     res.render('pages/db', results );
     client.release();
