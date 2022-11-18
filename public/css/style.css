@@ -170,6 +170,25 @@ body {
     display: block;
 }
 
+#signup {
+    width: 350px;
+    height: 300px;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid black;
+    display: block;
+}
+
+#signup-form {
+    margin: auto;
+    margin-top: 30px;
+    width: fit-content;
+    display: block;
+}
+
 #login-form h3 {
     text-align: center;
 }

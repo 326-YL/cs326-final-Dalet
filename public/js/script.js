@@ -39,11 +39,26 @@ document.getElementById("greyBackground").addEventListener("click", (e) => {
    }); 
 //login screen appearance
 function login(val) {
-    let loginDiv = document.getElementById("greyBackground");
+    let greyDiv = document.getElementById("greyBackground");
+    switch (val) {
+        case 0:
+            greyDiv.style.display = "none";
+            document.getElementById('login').style.display = "none";
+            document.getElementById('signup').style.display = "none";
+            break;
+        case 1:
+            greyDiv.style.display = "block";
+            document.getElementById('login').style.display = "block";
+            break;
+        case 2:
+            greyDiv.style.display = "block";
+            document.getElementById('signup').style.display = "block";
+            break;
+    }
     if (val===0) {
-        loginDiv.style.display = "none";
+        
     } else if (val===1) {
-        loginDiv.style.display = "block";
+        
     }
 }
 
