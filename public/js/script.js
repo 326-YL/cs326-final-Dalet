@@ -59,6 +59,10 @@ async function onload_explore_gallery() {
     document.getElementById('explore-more').addEventListener('click', () => { render(8); });
 }
 
+async function explore_onload() {
+    await onload_explore_gallery();
+}
+
 document.getElementById("greyBackground").addEventListener("click", (e) => { 
     if(e.target === document.getElementById("greyBackground")){ 
       login(0);
