@@ -82,7 +82,11 @@ router.get('/thedata', function(req, res) {
     }
   ];
   res.send(JSON.stringify(cArr));
-})
+});
+
+router.post('/test', function(req, res) {
+  console.log('test');
+});
 
 //CRUD operation
 
@@ -90,7 +94,7 @@ router.get('/thedata', function(req, res) {
 router.get('/login',function(req,res){
    res.send('<h>Plase Login</h>')
 
-})
+});
 
 //create operation after users login their account , get endpoint 'create'
 router.get('/create/:id',function(req,res){
