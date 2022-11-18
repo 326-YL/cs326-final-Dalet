@@ -437,6 +437,19 @@ article {
     border-color: rgb(172, 172, 172);
 }
 
+#explore-more {
+    width: 100px;
+    margin-top: 10px;
+    background-color: rgb(226, 226, 226);
+    border: solid;
+    border-width: 2px;
+    border-radius: 10px;
+}
+
+#explore-more:hover {
+    background-color: lightgray;
+}
+
 .explore-search-button {
     margin-left: 10px;
     margin-right: 0px;
@@ -482,6 +495,10 @@ article {
     border-color: rgb(67, 67, 67);
 }
 
+.explore-gallery-selected {
+    background-color: lightgreen;
+}
+
 .explore-type-game {
     background-color: rgba(255, 255, 0, 0.242);
 }
@@ -498,6 +515,10 @@ article {
     background-color: rgba(255, 0, 0, 0.7);
 }
 
-.explore-hiden {
+.explore-hidden {
     display: none;
+}
+
+.explore-centered {
+    text-align: center;
 }

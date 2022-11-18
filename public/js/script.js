@@ -6,30 +6,57 @@ function gameDropdown(console) {
     } else {
         gameEl.classList.add("game-hidden");
     }
-  }
+}
   
-// Get games or something?
-const explore_items = [
-{ image: 'img1', name: 'console1', type: 'console' },
-{ image: 'img2', name: 'console2', type: 'console' },
-{ image: 'img3', name: 'game1', type: 'game' },
-{ image: 'img4', name: 'game2', type: 'game' },
-{ image: 'img5', name: 'game3', type: 'game' },
-{ image: 'img6', name: 'game4', type: 'game' },
-{ image: 'img7', name: 'game5', type: 'game' }
-];
-function onload_explore_gallery() {
+function shuffle(_arr) {
+    let arr = [..._arr];
+    for (let i = arr.length - 1; i > 0; --i) {
+        let index = Math.floor((i + 1) * Math.random());
+        let temp = arr[index];
+        arr[index] = arr[i];
+        arr[i] = temp;
+    }
+    return arr;
+}
+
+async function onload_explore_gallery() {
     const element = document.getElementById('explore-gallery');
-    explore_items.forEach(item => {
-        const newelm = document.createElement('div');
-        newelm.appendChild(document.createTextNode(item.image + ' ' + item.name));
-        newelm.classList.add('explore-gallery-element');
-        newelm.classList.add('explore-type-' + item.type);
-        newelm.addEventListener('click', () => {
-            console.log(`coming from ${ item.name }! I am a ${ item.type }!`);
+    const request = await fetch('http://localhost:443/explore_data');
+    if (!request.ok || request.status === 404) {
+        console.log('error getting explore datat\ncheck the link');
+        return;
+    }
+    explore_items = await request.json();
+    let items = [];
+    for (let i = 0; i < 7; ++i) {
+        items = [...items, ...explore_items];
+    }
+    // items.sort((a, b) => a.title < b.title ? -1 : 1);
+    items = shuffle(items);
+    
+    // TODO
+    console.log(explore_items);
+    function render(n) {
+        items.splice(0, n).forEach(item => {
+            const newelm = document.createElement('div');
+            newelm.appendChild(document.createTextNode(item.title));
+            newelm.classList.add('explore-gallery-element');
+            newelm.addEventListener('click', () => {
+                if (newelm.classList.contains('explore-gallery-selected')) {
+                    newelm.classList.remove('explore-gallery-selected');
+                } else {
+                    newelm.classList.add('explore-gallery-selected');
+                }
+                console.log(`coming from ${ item.title }! I am ${ item.name }!`);
+            });
+            element.appendChild(newelm);
         });
-        element.appendChild(newelm);
-    });
+        if (items.length === 0) {
+            document.getElementById('explore-more').classList.add('explore-hidden');
+        }
+    }
+    render(8);
+    document.getElementById('explore-more').addEventListener('click', () => { render(8); });
 }
 
 document.getElementById("greyBackground").addEventListener("click", (e) => { 
