@@ -83,27 +83,39 @@ router.get('/thedata', function(req, res) {
   ];
   res.send(JSON.stringify(cArr));
 });
+
+//This allows for easy access of data (Shown below)
 app.use(express.urlencoded({extended:true}));
 //Signup post.
 app.post('/signup', function(req,res) {
-  // let body = '';
-  // req.on('data', data => body += data);
-  // req.on('end', () => {
-  //   let uname = body.match(/(uname=(.*)&)/g)[0];
-  //   uname = uname.slice(6, uname.length-1);
-  //   let pword = body.match(/(pword=(.*))/g)[0];
-  //   pword = pword.slice(6, pword.length);
-  //   console.log(uname);
-  //   console.log(pword);
-  // });
-  // res.redirect('/');
   const { uname, pword } = req.body;
 
   console.log(uname); // "test"
-    console.log(pword); // "test123"
+  console.log(pword); // "test123"
 
-    res.send("Success");
+  res.redirect("/");
 });
+
+//database testing
+const { Client } = require('ps');
+ 
+(async () => {
+  const client = new Client({
+    user: 'postgres',
+    host: '127.0.0.1',
+    database: 'test',
+    password: 'esri@123',
+    port: 5432
+  });
+  
+  await client.connect();
+ 
+  const res = await client.query('SELECT * from users');
+  console.log(res);
+  await client.end();
+})().catch(console.error);
+
+//Stuff idk idc about
 
 //CRUD operation
 
