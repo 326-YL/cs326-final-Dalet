@@ -11,7 +11,8 @@
     "doc": "doc"
   },
   "scripts": {
-    "start": "node server.js"},
+    "start": "node server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/326-YL/cs326-final-Dalet.git"
