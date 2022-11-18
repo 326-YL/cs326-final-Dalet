@@ -110,7 +110,7 @@ const pool = new Pool({
 router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query(`CREATE test (
+    const result = await client.query(`CREATE TABLE IF NOT EXIST test (
       uid int NOT NULL,
       username varchar(255),
       password varchar(255),
