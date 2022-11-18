@@ -97,23 +97,31 @@ app.post('/signup', function(req,res) {
 });
 
 //database testing
-const { Client } = require('ps');
- 
-(async () => {
-  const client = new Client({
-    user: 'postgres',
-    host: '127.0.0.1',
-    database: 'test',
-    password: 'esri@123',
-    port: 5432
-  });
-  
-  await client.connect();
- 
-  const res = await client.query('SELECT * from users');
-  console.log(res);
-  await client.end();
-})().catch(console.error);
+const { Pool } = require('pg');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+router.get('/db', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query(`CREATE IF NOT EXIST test (
+      uid int NOT NULL,
+      username varchar(255),
+      password varchar(255),
+      PRIMARY KEY(uid)
+      );`);
+    const results = { 'results': (result) ? result.rows : null};
+    res.render('pages/db', results );
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+})
 
 //Stuff idk idc about
 
