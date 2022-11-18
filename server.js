@@ -83,27 +83,33 @@ router.get('/thedata', function(req, res) {
   ];
   res.send(JSON.stringify(cArr));
 });
+app.use(express.urlencoded({extended:true}));
+//Signup post.
+app.post('/signup', function(req,res) {
+  // let body = '';
+  // req.on('data', data => body += data);
+  // req.on('end', () => {
+  //   let uname = body.match(/(uname=(.*)&)/g)[0];
+  //   uname = uname.slice(6, uname.length-1);
+  //   let pword = body.match(/(pword=(.*))/g)[0];
+  //   pword = pword.slice(6, pword.length);
+  //   console.log(uname);
+  //   console.log(pword);
+  // });
+  // res.redirect('/');
+  const { uname, pword } = req.body;
 
-app.post('/', function(req,res) {
-  let body = '';
-  req.on('data', data => body += data);
-  req.on('end', () => {
-    let uname = body.match(/(uname=(.*)&)/g)[0];
-    uname = uname.slice(6, uname.length-1);
-    let pword = body.match(/(pword=(.*))/g)[0];
-    pword = pword.slice(6, pword.length);
-    console.log(uname);
-    console.log(pword);
-    console.log(body);
-  });
-  res.redirect('/')
+  console.log(uname); // "test"
+    console.log(pword); // "test123"
+
+    res.send("Success");
 });
 
 //CRUD operation
 
 //allow user to login, will pop out the log in page
 router.get('/login',function(req,res){
-   res.send('<h>Plase Login</h>')
+  res.send('<h>Plase Login</h>')
 
 });
 
