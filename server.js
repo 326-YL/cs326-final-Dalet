@@ -84,6 +84,8 @@ router.get('/thedata', function(req, res) {
   res.send(JSON.stringify(cArr));
 });
 
+//This allows for easy access of data (Shown below)
+
 //This allows me to get the data from body easily
 app.use(express.urlencoded({extended:true}));
 //Signup post.
@@ -95,6 +97,35 @@ app.post('/signup', function(req,res) {
 
   res.redirect("/");
 });
+
+//database testing
+const { Pool } = require('pg');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+router.get('/db', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query(`CREATE IF NOT EXIST test (
+      uid int NOT NULL,
+      username varchar(255),
+      password varchar(255),
+      PRIMARY KEY(uid)
+      );`);
+    const results = { 'results': (result) ? result.rows : null};
+    res.render('pages/db', results );
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+})
+
+//Stuff idk idc about
 
 //CRUD operation
 
