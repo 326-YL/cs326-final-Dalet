@@ -84,21 +84,7 @@ router.get('/thedata', function(req, res) {
   res.send(JSON.stringify(cArr));
 });
 
-//This allows for easy access of data (Shown below)
-
-//This allows me to get the data from body easily
-app.use(express.urlencoded({extended:true}));
-//Signup post.
-app.post('/signup', async function(req,res) {
-  const { uname, pword } = req.body;
-
-  const client = await pool.connect();
-  const result = await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${pword}');`);
-
-  res.redirect("/");
-});
-
-//database testing
+//This access database, 'pool' refers to a datapool (I'd imagine)
 const { Pool } = require('pg');
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -107,6 +93,27 @@ const pool = new Pool({
   }
 });
 
+//This allows me to get the data from body easily
+app.use(express.urlencoded({extended:true}));
+
+app.post('/signup', async function(req,res) {
+  //This gets the data from POST submit, usually was in form of:
+  //website.com?uname='_'&pword='_'
+  const { uname, pword } = req.body;
+
+  //This connects to database
+  const client = await pool.connect();
+  //This grabs all usernames that are the same as uname (Hopefully none)
+  const isAvilableCheck = await client.query(`SELECT username FROM users WHERE username=${uname}`);
+  if (isAvilableCheck.length === 0) {
+    //This gives the data to the database
+    const result = await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${pword}');`);
+  }
+  //Returns us home.
+  res.redirect("/");
+});
+
+//database testing
 router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
