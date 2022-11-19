@@ -138,16 +138,18 @@ app.post('/login', async function(req,res) {
 router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
-    // const result = await client.query(`CREATE TABLE IF NOT EXISTS users (
-    //   uid SERIAL,
-    //   username varchar(255),
-    //   password varchar(255),
-    //   PRIMARY KEY(uid)
-    //   );`);
+    const result = await client.query(`CREATE TABLE IF NOT EXISTS consoles (
+      cid SERIAL,
+      brand varchar(255),
+      type varchar(255),
+      name varchar(255),
+      img-url varchar(255),
+      PRIMARY KEY(cid)
+      );`);
 
     // const result = await client.query("INSERT INTO test (uid, username,password) VALUES (1, 'test', 'test');");
     
-    const result = await client.query("SELECT * FROM users");
+    // const result = await client.query("SELECT * FROM users");
     const results = { 'results': (result) ? result.rows : null};
     res.send(results);
     // res.render('pages/db', results );
