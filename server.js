@@ -106,7 +106,7 @@ app.post('/signup', async function(req,res) {
   //This grabs all usernames that are the same as uname (Hopefully none)
   const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
   const isAvailableCheck = { 'results': (getUser!==undefined) ? getUser.rows : null};
-  if (isAvilableCheck.length === 0) {
+  if (isAvailableCheck.length === 0) {
     //This gives the data to the database
     const result = await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${pword}');`);
   }
