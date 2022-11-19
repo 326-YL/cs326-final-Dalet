@@ -105,7 +105,7 @@ app.post('/signup', async function(req,res) {
   const client = await pool.connect();
   //This grabs all usernames that are the same as uname (Hopefully none)
   const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
-  const isAvailableCheck = { 'results': (getUser) ? getUser.rows : null};
+  const isAvailableCheck = { 'results': (getUser!==undefined) ? getUser.rows : null};
   res.send(isAvailableCheck);
   if (isAvilableCheck.length === 0) {
     //This gives the data to the database
