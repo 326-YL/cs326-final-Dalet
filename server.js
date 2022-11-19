@@ -140,7 +140,7 @@ router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
     // await client.query("DROP TABLE consoles");
-    let data = JSON.parse(fs.readFileSync('./console_data/wii-data.json'));
+    let data = JSON.parse(fs.readFileSync('./console_data/wiiu-data.json'));
     await client.query(`CREATE TABLE IF NOT EXISTS consoles (
       cid SERIAL,
       brand varchar(255),
