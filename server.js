@@ -173,7 +173,7 @@ router.get('/db', async (req, res) => {
 router.get('/dbtest', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query("SELECT * FROM users");
+    const result = await client.query("SELECT * FROM consoles");
     const results = { 'results': (result) ? result.rows : null};
     res.send(results);
     client.release();
