@@ -152,8 +152,8 @@ router.get('/db', async (req, res) => {
     for (let i = 0; i < data.length; i++) {
       const con = data[i];
       await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
-      VALUES ("`+con['Brand']+`", "`+con['console']+`", "`+con['name']+`", 
-      "`+con['img-url']+`");`);
+      VALUES ('${con['Brand']}', '${con['console']}', '${con['name']}', 
+      '${con['img-url']}');`);
       
     }
 
