@@ -126,7 +126,7 @@ app.post('/login', async function(req,res) {
   const checkUser = (getUser!==undefined) ? getUser.rows : null;
   if (checkUser.length === 1) {
     //This gives the data to the database
-    const result = await client.query(`SELECT password FROM users WHERE username='${uname}' AND password='${pword}`);
+    const result = await client.query(`SELECT password FROM users WHERE username='${uname}' AND password='${pword}'`);
     const passCheck = (result!==undefined) ? result.rows : null;
     res.send(passCheck)
   }
