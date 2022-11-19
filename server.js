@@ -110,17 +110,19 @@ const pool = new Pool({
 router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
-    // const result = await client.query(`CREATE TABLE IF NOT EXISTS test (
-    //   uid int NOT NULL,
-    //   username varchar(255),
-    //   password varchar(255),
-    //   PRIMARY KEY(uid)
-    //   );`);
+    const result2 = await client.query(`DROP TABLE test`);
+    const result = await client.query(`CREATE TABLE IF NOT EXISTS users (
+      uid int NOT NULL AUTO_INCREMENT,
+      username varchar(255),
+      password varchar(255),
+      PRIMARY KEY(uid)
+      );`);
 
     // const result = await client.query("INSERT INTO test (uid, username,password) VALUES (1, 'test', 'test');");
     
-    const result = await client.query("SELECT * FROM test");
+    // const result = await client.query("SELECT * FROM test");
     const results = { 'results': (result) ? result.rows : null};
+    const results2 = { 'results': (result2) ? result2.rows : null};
     res.send(results);
     // res.render('pages/db', results );
     client.release();
