@@ -143,7 +143,7 @@ router.get('/db', async (req, res) => {
       brand varchar(255),
       type varchar(255),
       name varchar(255),
-      img-url varchar(255),
+      imgurl varchar(255),
       PRIMARY KEY(cid)
       );`);
 
