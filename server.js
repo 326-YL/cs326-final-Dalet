@@ -186,13 +186,15 @@ router.get('/db', async (req, res) => {
       cid INT,
       PRIMARY KEY(uid,cid)
       );`);
-      // await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
-      // VALUES ('Nintendo', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
-    const result = await client.query("SELECT * FROM consoles WHERE name='Nintendo 64 Gold Console [NA]'");
+    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 1);`);
+    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 21);`);
+    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 315);`);
+    const result = await client.query("SELECT * FROM consoles WHERE name='Nintendo Wii U Premium Console [NA]'");
     //NES Control Deck [NA] (1)
     //NES Toploader Console [NA] (21)
-    //Nintendo 64 Gold Console [NA]
-    const results = { 'results': (result) ? result.rows : null};
+    //Nintendo 64 Gold Console [NA] (315)
+    const results = (result) ? result.rows : null;
+    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, ${results[0].cid});`);
     res.send(results);
     client.release();
   } catch (err) {
