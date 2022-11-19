@@ -114,6 +114,26 @@ app.post('/signup', async function(req,res) {
   res.redirect("/");
 });
 
+app.post('/login', async function(req,res) {
+  //This gets the data from POST submit, usually was in form of:
+  //website.com?uname='_'&pword='_'
+  const { uname, pword } = req.body;
+
+  //This connects to database
+  const client = await pool.connect();
+  //This grabs all usernames that are the same as uname (Hopefully none)
+  const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
+  const checkUser = (getUser!==undefined) ? getUser.rows : null;
+  if (checkUser.length === 1) {
+    //This gives the data to the database
+    const result = await client.query(`SELECT password FROM users WHERE username='${uname}', password='${pword}`);
+    const passCheck = (result!==undefined) ? result.rows : null;
+    res.send(passCheck)
+  }
+  //Returns us home.
+  res.redirect("/");
+});
+
 //database testing
 router.get('/db', async (req, res) => {
   try {
