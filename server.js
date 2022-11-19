@@ -140,7 +140,7 @@ router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
     await client.query("DROP TABLE consoles");
-    let data = JSON.parse(fs.readFileSync('./data (backup-nes).json'));
+    let data = JSON.parse(fs.readFileSync('./data.json'));
     await client.query(`CREATE TABLE IF NOT EXISTS consoles (
       cid SERIAL,
       brand varchar(255),
@@ -152,7 +152,7 @@ router.get('/db', async (req, res) => {
     for (let i = 0; i < data.length; i++) {
       const con = data[i];
       await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
-      VALUES ('Nintendo', 'NES', '${con['name']}', '${con['img-url']}');`);
+      VALUES ('Nintendo', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
       
     }
 
