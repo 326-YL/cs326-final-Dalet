@@ -22,47 +22,55 @@
     <!-- Login Box -->
     <div id="greyBackground">
       <div id="login">
-        <form id="login-form">
-          <h3>Login</h3>
-          <label for="uname">Username:</label><br>
-          <input type="text" id="uname" name="uname"><br>
-          <label for="lname">Password:</label><br>
-          <input type="password" id="pword" name="pword"><br><br>
-          <input id="loginBtn" type="submit" value="Sign In">
+          <form id="login-form" method="post" action="/login">
+              <h3>Login</h3>
+              <label for="uname">Username:</label><br>
+              <input type="text" id="li-uname" name="uname"><br>
+              <label for="lname">Password:</label><br>
+              <input type="password" id="li-pword" name="pword"><br><br>
+              <input id="loginBtn" type="submit" value="Sign In">
+          </form>
+      </div>
+      <div id="signup">
+        <form id="signup-form" method="post" action="/signup">
+            <h3>Sign Up</h3>
+            <label for="uname">Choose Username:</label><br>
+            <input type="text" id="su-uname" name="uname"><br>
+            <label for="lname">Choose Password:</label><br>
+            <input type="password" id="su-pword" name="pword"><br><br>
+            <input id="signupBtn" type="submit" value="Sign Up">
         </form>
       </div>
     </div>
-      
-      <!-- Nav Bar -->
-    <div class="container top">
-      <div class="row">
-          <nav class="navbar navbar-expand-xl headerGrid">
-              <div class="container-fluid bumpRight" style="padding-right: 0;">
-                  <a class="navbar-brand navTitle" href="#">Game Shelf</a>
-                  <ul class="navbar-nav navBar">
-                      <li class="navbar-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                      </li>
-                      <li class="navbar-item">
-                        <a class="nav-link" href="/collection">My Collection</a>
-                      </li>
-                      <li class="navbar-item">
-                        <a class="nav-link" href="/explore">Explore</a>
-                      </li>
-                      <li class="navbar-item dropdown">
-                        <a class="login-icon nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="fa fa-thin fa-user-o fa-2x icon"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">Action</a></li>
-                          <li><a class="dropdown-item" href="#">Another action</a></li>
-                          <li><a class="dropdown-item" onclick="login(1)">Login</a></li>
-                        </ul>      
-                      </li>
-                  </ul>
-              </div>
-          </nav>
-      </div>
+
+  <!-- Nav Bar -->
+  <div class="container top">
+    <div class="row">
+      <nav class="navbar navbar-expand-xl headerGrid">
+        <div class="container-fluid bumpRight">
+          <a class="navbar-brand navTitle" href="#">Game Shelf</a>
+          <ul class="navbar-nav navBar">
+            <li class="navbar-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="navbar-item">
+              <a class="nav-link" href="/collection">My Collection</a>
+            </li>
+            <li class="navbar-item">
+              <a class="nav-link" href="/explore">Explore</a>
+            </li>
+            <li class="navbar-item dropdown">
+              <a class="login-icon nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-thin fa-user-o fa-2x icon"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" onclick="login(2)">Sign Up</a></li>
+                <li><a class="dropdown-item" onclick="login(1)">Login</a></li>
+              </ul>      
+            </li>
+          </ul>
+        </div>
+      </nav>
     </div>
 
     <!-- Below code mostly made by Samuel -->
