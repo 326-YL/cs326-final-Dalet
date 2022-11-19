@@ -43,6 +43,7 @@ router.get('/collection',function(req,res){
 });
 
 router.get('/thedata', async function(req, res) {
+  /*
   const cArr = [
     {
         name: "NES",
@@ -81,13 +82,53 @@ router.get('/thedata', async function(req, res) {
         ]
     }
   ];
-
+  */
   const client = await pool.connect();
   const result = await client.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
   userownconsole.cid = consoles.cid WHERE uid=1`);
   const results = (result) ? result.rows : null;
-  res.send(results);
 
+  let newArr = [
+    {
+      name: "3ds",
+      title: "New 3DS",
+      consoles: ["3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG"],
+      games: [
+          ["ultra-sun.png", "Pokemon Ultra Sun", "B"],
+          ["mario-3d-land.jpg", "Super Mario 3D Land", "P"]
+      ]
+    },
+    {
+      name: "gba",
+      title: "Gameboy Advance",
+      consoles: ["gba-sp.png"],
+      games: [
+          ["firered.png", "Pokemon FireRed", "P"],
+          ["firered.png", "Pokemon FireRed", "P"]
+      ]
+    }
+  ];
+
+  //Takes the query and turn it into something like cArr
+  results.forEach(x => {
+    let index = newArr.findIndex(con => {
+      return con.title === x.name;
+    });
+    //if there doesn't exist a console
+    if (index !== -1) {
+      let obj = {
+        name: x.type.replace(/\s/g, ''),
+        title: x.type,
+        consoles: [x.imgurl],
+        games: []
+      }
+      newArr.push(obj);
+    } else {
+      newArr[index].consoles.push(x.imgurl);
+    }
+  });
+
+  res.send(newArr);
   res.send(JSON.stringify(cArr));
     client.release();
 });
