@@ -160,7 +160,7 @@ body {
     transform: translate(-50%, -50%);
     background-color: white;
     border: 1px solid black;
-    display: block;
+    display: none;
 }
 
 #login-form {
@@ -179,7 +179,7 @@ body {
     transform: translate(-50%, -50%);
     background-color: white;
     border: 1px solid black;
-    display: block;
+    display: none;
 }
 
 #signup-form {
