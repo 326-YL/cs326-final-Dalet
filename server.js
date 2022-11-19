@@ -92,6 +92,7 @@ app.use(express.urlencoded({extended:true}));
 app.post('/signup', async function(req,res) {
   const { uname, pword } = req.body;
 
+  const client = await pool.connect();
   const result = await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${pword}');`);
 
   res.redirect("/");
