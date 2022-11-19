@@ -181,7 +181,7 @@ router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
     let data = JSON.parse(fs.readFileSync('./console_data/data.json'));
-    await client.query(`CREATE TABLE IF NOT EXISTS user-own-console (
+    await client.query(`CREATE TABLE IF NOT EXISTS userownconsole (
       uid INT,
       cid INT,
       PRIMARY KEY(uid,cid)
