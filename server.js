@@ -89,11 +89,10 @@ router.get('/thedata', function(req, res) {
 //This allows me to get the data from body easily
 app.use(express.urlencoded({extended:true}));
 //Signup post.
-app.post('/signup', function(req,res) {
+app.post('/signup', async function(req,res) {
   const { uname, pword } = req.body;
 
-  console.log(uname); // "test"
-  console.log(pword); // "test123"
+  const result = await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${pword}');`);
 
   res.redirect("/");
 });
@@ -110,16 +109,16 @@ const pool = new Pool({
 router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query(`CREATE TABLE IF NOT EXISTS users (
-      uid SERIAL,
-      username varchar(255),
-      password varchar(255),
-      PRIMARY KEY(uid)
-      );`);
+    // const result = await client.query(`CREATE TABLE IF NOT EXISTS users (
+    //   uid SERIAL,
+    //   username varchar(255),
+    //   password varchar(255),
+    //   PRIMARY KEY(uid)
+    //   );`);
 
     // const result = await client.query("INSERT INTO test (uid, username,password) VALUES (1, 'test', 'test');");
     
-    // const result = await client.query("SELECT * FROM test");
+    const result = await client.query("SELECT * FROM users");
     const results = { 'results': (result) ? result.rows : null};
     res.send(results);
     // res.render('pages/db', results );
