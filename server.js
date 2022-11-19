@@ -160,7 +160,7 @@ router.get('/db', async (req, res) => {
     
     // const result = await client.query("SELECT * FROM users");
     // const results = { 'results': (result) ? result.rows : null};
-    // res.send(results);
+    res.redirect('/');
     // res.render('pages/db', results );
     client.release();
   } catch (err) {
