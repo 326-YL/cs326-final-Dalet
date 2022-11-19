@@ -177,7 +177,7 @@ router.get('/dbtest', async (req, res) => {
   }
 });
 
-router.get('/createConsoleTable', async (req, res) => {
+router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
     let data = JSON.parse(fs.readFileSync('./console_data/data.json'));
@@ -192,7 +192,7 @@ router.get('/createConsoleTable', async (req, res) => {
     //NES Toploader Console [NA]
     //Nintendo 64 Gold Console [NA]
     const results = { 'results': (result) ? result.rows : null};
-    res.redirect(results);
+    res.send(results);
     client.release();
   } catch (err) {
     console.error(err);
