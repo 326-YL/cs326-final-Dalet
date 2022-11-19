@@ -188,7 +188,8 @@ router.get('/db', async (req, res) => {
       );`);
       // await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       // VALUES ('Nintendo', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
-    const result = await client.query("SELECT * FROM consoles WHERE name='NES Control Deck [NA]'");
+    const result = await client.query("SELECT * FROM consoles WHERE name='NES Toploader Console [NA]'");
+    //NES Control Deck [NA] (1)
     //NES Toploader Console [NA]
     //Nintendo 64 Gold Console [NA]
     const results = { 'results': (result) ? result.rows : null};
