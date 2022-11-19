@@ -170,6 +170,19 @@ router.get('/db', async (req, res) => {
   }
 });
 
+router.get('/dbtest', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query("SELECT * FROM users");
+    const results = { 'results': (result) ? result.rows : null};
+    res.send(results);
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
 //Stuff idk idc about
 
 //CRUD operation
