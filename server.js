@@ -42,7 +42,7 @@ router.get('/collection',function(req,res){
   res.sendFile(path.join(__dirname+'/public/collection.html'));
 });
 
-router.get('/thedata', function(req, res) {
+router.get('/thedata', async function(req, res) {
   const cArr = [
     {
         name: "NES",
@@ -81,7 +81,15 @@ router.get('/thedata', function(req, res) {
         ]
     }
   ];
+
+  const client = await pool.connect();
+  const result = await client.query(`SELECT * FROM userownconsole INNER JOIN console ON 
+  userownconsole.cid = console.cid WHERE uid='1'`);
+  const results = (result) ? result.rows : null;
+  res.send(results);
+
   res.send(JSON.stringify(cArr));
+    client.release();
 });
 
 //This access database, 'pool' refers to a datapool (I'd imagine)
@@ -180,7 +188,6 @@ router.get('/dbtest', async (req, res) => {
 router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
-    let data = JSON.parse(fs.readFileSync('./console_data/data.json'));
     await client.query(`CREATE TABLE IF NOT EXISTS userownconsole (
       uid INT,
       cid INT,
