@@ -83,8 +83,8 @@ router.get('/thedata', async function(req, res) {
   ];
 
   const client = await pool.connect();
-  const result = await client.query(`SELECT * FROM userownconsole INNER JOIN console ON 
-  userownconsole.cid = console.cid WHERE uid='1'`);
+  const result = await client.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
+  userownconsole.cid = consoles.cid WHERE uid=1`);
   const results = (result) ? result.rows : null;
   res.send(results);
 
