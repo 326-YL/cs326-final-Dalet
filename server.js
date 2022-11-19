@@ -134,9 +134,9 @@ app.post('/login', async function(req,res) {
   res.redirect("/");
 });
 
-//database testing
+//Adding all the data from the data.json to the database
 const fs = require('fs');
-router.get('/db', async (req, res) => {
+router.get('/createConsoleTable', async (req, res) => {
   try {
     const client = await pool.connect();
     await client.query("DROP TABLE consoles");
@@ -153,15 +153,10 @@ router.get('/db', async (req, res) => {
       const con = data[i];
       await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       VALUES ('Nintendo', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
-      
     }
-
-    // const result = await client.query("INSERT INTO test (uid, username,password) VALUES (1, 'test', 'test');");
-    
     // const result = await client.query("SELECT * FROM users");
     // const results = { 'results': (result) ? result.rows : null};
     res.redirect('/');
-    // res.render('pages/db', results );
     client.release();
   } catch (err) {
     console.error(err);
@@ -175,6 +170,29 @@ router.get('/dbtest', async (req, res) => {
     const result = await client.query("SELECT * FROM consoles");
     const results = { 'results': (result) ? result.rows : null};
     res.send(results);
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
+router.get('/createConsoleTable', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    let data = JSON.parse(fs.readFileSync('./console_data/data.json'));
+    await client.query(`CREATE TABLE IF NOT EXISTS user-own-console (
+      uid INT,
+      cid INT,
+      PRIMARY KEY(uid,cid)
+      );`);
+      // await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      // VALUES ('Nintendo', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
+    const result = await client.query("SELECT * FROM consoles WHERE name='NES Control Deck [NA]'");
+    //NES Toploader Console [NA]
+    //Nintendo 64 Gold Console [NA]
+    const results = { 'results': (result) ? result.rows : null};
+    res.redirect(results);
     client.release();
   } catch (err) {
     console.error(err);
