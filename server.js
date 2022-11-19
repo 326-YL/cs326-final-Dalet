@@ -139,14 +139,14 @@ const fs = require('fs');
 router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
-    // await client.query("DROP TABLE consoles");
-    let data = JSON.parse(fs.readFileSync('./console_data/switch-data.json'));
+    await client.query("DROP TABLE consoles");
+    let data = JSON.parse(fs.readFileSync('./console_data/data.json'));
     await client.query(`CREATE TABLE IF NOT EXISTS consoles (
       cid SERIAL,
       brand varchar(255),
       type varchar(255),
       name varchar(255),
-      imgurl varchar(255),
+      imgurl TEXT,
       PRIMARY KEY(cid)
       );`);
     for (let i = 0; i < data.length; i++) {
