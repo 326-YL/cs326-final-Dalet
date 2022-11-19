@@ -135,10 +135,12 @@ app.post('/login', async function(req,res) {
 });
 
 //database testing
+const fs = require('fs');
 router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query(`CREATE TABLE IF NOT EXISTS consoles (
+    let data = JSON.parse(fs.readFileSync('./data.json'));
+    await client.query(`CREATE TABLE IF NOT EXISTS consoles (
       cid SERIAL,
       brand varchar(255),
       type varchar(255),
@@ -146,6 +148,13 @@ router.get('/db', async (req, res) => {
       imgurl varchar(255),
       PRIMARY KEY(cid)
       );`);
+    for (let i = 0; i < 1; i++) {
+      const con = data[i];
+      const result = await client.query(`INSERT INTO test (brand,type,name,imgurl) 
+      VALUES ('${con['Brand']}', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
+      const results = { 'results': (result) ? result.rows : null};
+    res.send(results);
+    }
 
     // const result = await client.query("INSERT INTO test (uid, username,password) VALUES (1, 'test', 'test');");
     
