@@ -124,11 +124,11 @@ app.post('/login', async function(req,res) {
   //This grabs all usernames that are the same as uname (Hopefully none)
   const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
   const checkUser = (getUser!==undefined) ? getUser.rows : null;
+    res.send(checkUser)
   if (checkUser.length === 1) {
     //This gives the data to the database
     const result = await client.query(`SELECT password FROM users WHERE username='${uname}', password='${pword}`);
     const passCheck = (result!==undefined) ? result.rows : null;
-    res.send(passCheck)
   }
   //Returns us home.
   res.redirect("/");
