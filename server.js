@@ -110,23 +110,23 @@ router.get('/thedata', async function(req, res) {
   ];
 
   //Takes the query and turn it into something like cArr
-  results.forEach(x => {
-    let index = newArr.findIndex(con => {
-      return con.title === x.name;
-    });
-    //if there doesn't exist a console
-    if (index !== -1) {
-      let obj = {
-        name: x.type.replace(/\s/g, ''),
-        title: x.type,
-        consoles: [x.imgurl],
-        games: []
-      }
-      newArr.push(obj);
-    } else {
-      // newArr[index].consoles.push(x.imgurl);
-    }
-  });
+  // results.forEach(x => {
+  //   let index = newArr.findIndex(con => {
+  //     return con.title === x.name;
+  //   });
+  //   //if there doesn't exist a console
+  //   if (index !== -1) {
+  //     let obj = {
+  //       name: x.type.replace(/\s/g, ''),
+  //       title: x.type,
+  //       consoles: [x.imgurl],
+  //       games: []
+  //     }
+  //     newArr.push(obj);
+  //   } else {
+  //     // newArr[index].consoles.push(x.imgurl);
+  //   }
+  // });
 
   res.send(newArr);
   res.send(JSON.stringify(cArr));
