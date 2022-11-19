@@ -128,8 +128,7 @@ router.get('/thedata', async function(req, res) {
   //   }
   // });
 
-  res.send(newArr);
-  res.send(JSON.stringify(cArr));
+  res.send(JSON.stringify(newArr));
     client.release();
 });
 
