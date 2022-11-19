@@ -112,7 +112,7 @@ router.get('/db', async (req, res) => {
     const client = await pool.connect();
     const result2 = await client.query(`DROP TABLE test`);
     const result = await client.query(`CREATE TABLE IF NOT EXISTS users (
-      uid int NOT NULL AUTO_INCREMENT,
+      uid int AUTO_INCREMENT,
       username varchar(255),
       password varchar(255),
       PRIMARY KEY(uid)
