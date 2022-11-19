@@ -151,7 +151,7 @@ router.get('/db', async (req, res) => {
       );`);
     for (let i = 0; i < data.length; i++) {
       const con = data[i];
-      const result = await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       VALUES ("`+con['Brand']+`", "`+con['console']+`", "`+con['name']+`", 
       "`+con['img-url']+`");`);
       
@@ -160,8 +160,8 @@ router.get('/db', async (req, res) => {
     // const result = await client.query("INSERT INTO test (uid, username,password) VALUES (1, 'test', 'test');");
     
     // const result = await client.query("SELECT * FROM users");
-    const results = { 'results': (result) ? result.rows : null};
-    res.send(results);
+    // const results = { 'results': (result) ? result.rows : null};
+    // res.send(results);
     // res.render('pages/db', results );
     client.release();
   } catch (err) {
