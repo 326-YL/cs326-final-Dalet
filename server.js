@@ -110,7 +110,6 @@ const pool = new Pool({
 router.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result2 = await client.query(`DROP TABLE test`);
     const result = await client.query(`CREATE TABLE IF NOT EXISTS users (
       uid int AUTO_INCREMENT,
       username varchar(255),
@@ -122,7 +121,6 @@ router.get('/db', async (req, res) => {
     
     // const result = await client.query("SELECT * FROM test");
     const results = { 'results': (result) ? result.rows : null};
-    const results2 = { 'results': (result2) ? result2.rows : null};
     res.send(results);
     // res.render('pages/db', results );
     client.release();
