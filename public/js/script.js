@@ -19,7 +19,7 @@ function shuffle(_arr) {
     return arr;
 }
 
-async function onload_explore_gallery() {
+async function load_explore_filter(filter) {
     const element = document.getElementById('explore-gallery');
     const request = await fetch('http://localhost:443/explore_data');
     if (!request.ok || request.status === 404) {
@@ -33,7 +33,7 @@ async function onload_explore_gallery() {
     }
     // items.sort((a, b) => a.title < b.title ? -1 : 1);
     items = shuffle(items);
-    
+
     // TODO
     console.log(explore_items);
     function render(n) {
@@ -59,8 +59,29 @@ async function onload_explore_gallery() {
     document.getElementById('explore-more').addEventListener('click', () => { render(8); });
 }
 
+async function explore_clear() {
+    document.getElementById('explore-gallery').innerHTML = '';
+}
+
 async function explore_onload() {
-    await onload_explore_gallery();
+    // create buttons for consoles or brands
+    // Nested filters for each
+    //      First brand then console
+    // Then show to resulting games as they are in the onload function
+    const arr = [
+        { name: 'Test1' },
+        { name: 'Test2' },
+        { name: 'Test3' },
+        { name: 'Test4' },
+        { name: 'Test5' },
+        { name: 'Test6' },
+        { name: 'Test7' },
+        { name: 'Test8' },
+        { name: 'Test9' },
+        { name: 'Test10' },
+    ];
+    const search_input = document.getElementById('explore-search-input');
+    await load_explore_filter([]);
 }
 
 document.getElementById("greyBackground").addEventListener("click", (e) => { 
