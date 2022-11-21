@@ -389,7 +389,7 @@ res.send("delete");
 client.release();
 });
 
-router.get('/user/:id/update/:gameID/', async(req,res)=>{
+router.get('/user/:id/update/:gameID', async(req,res)=>{
 if(req.params.id===123){
   console.log("in");
 }
