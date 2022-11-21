@@ -158,12 +158,14 @@ app.post('/signup', async function(req,res) {
     password VARCHAR(255),
     PRIMARY KEY(uid)
     );`);
+    //TEMP
+    await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${pword}');`);
   //This grabs all usernames that are the same as uname (Hopefully none)
   const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
   const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
   if (isAvailableCheck.length === 0 && isAvailableCheck!==null) {
     //This gives the data to the database
-    const result = await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${pword}');`);
+    await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${pword}');`);
   }
   //Returns us home.
   res.redirect("/");
