@@ -9,4 +9,10 @@
    
    <img src="img/ms-3-database-example-ben.png" style="height:300px;width:600px">
    (Ben)
+
+   (Sam)
+   I implimented some search functionality to the explore page.
+   Still figuring out how I'm going to filter the database (similarity vs exact).
+   Only thing left to do is to insert the database and the filter function.
+
 </font>
