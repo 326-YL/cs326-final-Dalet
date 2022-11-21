@@ -11,37 +11,49 @@ const production="https://git.heroku.com/damp-reaches-70694.com"
 const development='http://localhost:8000/'
 let url = (process.env.NODE_ENV ? production : development);
 
+//MAIN PAGE ROUTES
+
 //to include all assets (css files and images)
 app.use(express.static(path.join(__dirname,'public')));
 
 //add the router
 app.use('/', router);
 
+//Index page
 router.get('/',function(req,res){
-  if (req.query.page === "test") {
-    res.redirect('/collection');
-  }
+  //sends index.html to the client
   res.sendFile(path.join(__dirname+'/public/index.html'));
-  //__dirname : It will resolve to the project folder.
-  // res.send("test");
 });
-
 
 router.get('/index',function(req,res){
+  //redirects to above route
   res.redirect('/')
-  //res.sendFile(path.join(__dirname+'/public/index.html'));
-  //__dirname : It will resolve to the project folder.
 });
 
-
-router.get('/explore',function(req,res){
-  res.sendFile(path.join(__dirname+'/public/explore.html'));
-});
-
+//collection page
 router.get('/collection',function(req,res){
+  //sends collection.html to the client
   res.sendFile(path.join(__dirname+'/public/collection.html'));
 });
 
+//explore page
+router.get('/explore',function(req,res){
+  //sends explore.html to the client
+  res.sendFile(path.join(__dirname+'/public/explore.html'));
+});
+
+//DATA / DATABASE RELATED ROUTES
+
+//This access database, 'pool' refers to a datapool (I'd imagine)
+const { Pool } = require('pg');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+//Data for the collection.html
 router.get('/thedata', async function(req, res) {
   /*
   const cArr = [
@@ -83,6 +95,7 @@ router.get('/thedata', async function(req, res) {
     }
   ];
   */
+ //work in progress
   const client = await pool.connect();
   const result = await client.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
   userownconsole.cid = consoles.cid WHERE uid=1`);
@@ -129,21 +142,13 @@ router.get('/thedata', async function(req, res) {
   // });
 
   res.send(JSON.stringify(newArr));
-    client.release();
-});
-
-//This access database, 'pool' refers to a datapool (I'd imagine)
-const { Pool } = require('pg');
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  client.release();
 });
 
 //This allows me to get the data from body easily
 app.use(express.urlencoded({extended:true}));
 
+//Signup database POST
 app.post('/signup', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
@@ -151,6 +156,7 @@ app.post('/signup', async function(req,res) {
 
   //This connects to database
   const client = await pool.connect();
+
   //this creates the table if it does not exist.
   await client.query(`CREATE TABLE IF NOT EXISTS users (
     uid SERIAL,
@@ -158,8 +164,11 @@ app.post('/signup', async function(req,res) {
     password VARCHAR(255),
     PRIMARY KEY(uid)
     );`);
+
   //This grabs all usernames that are the same as uname (Hopefully none)
   const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
+
+  //This turns getUser into an array
   const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
   if (isAvailableCheck.length === 0 && isAvailableCheck!==null) {
     //This gives the data to the database
@@ -170,6 +179,7 @@ app.post('/signup', async function(req,res) {
   client.release();
 });
 
+//Login database POST
 app.post('/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
@@ -177,12 +187,17 @@ app.post('/login', async function(req,res) {
 
   //This connects to database
   const client = await pool.connect();
+
   //This grabs all usernames that are the same as uname (Hopefully none)
   const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
+
+  //This turns getUser into an array
   const checkUser = (getUser!==undefined) ? getUser.rows : null;
   if (checkUser.length === 1) {
     //This gives the data to the database
     const result = await client.query(`SELECT password FROM users WHERE username='${uname}' AND password='${pword}'`);
+
+    //This turns result into an array
     const passCheck = (result!==undefined) ? result.rows : null;
     res.send(passCheck)
   }
@@ -191,13 +206,22 @@ app.post('/login', async function(req,res) {
   client.release();
 });
 
-//Adding all the data from the data.json to the database
+//This allows me to read the data.json file
 const fs = require('fs');
+
+//Adding all the data from the data.json to the database
 router.get('/createConsoleTable', async (req, res) => {
   try {
+    //This connects to database
     const client = await pool.connect();
+
+    //SQL that deletes consoles database, if it exists
     await client.query("DROP TABLE IF EXISTS consoles");
+
+    //Gets an array of objects
     let data = JSON.parse(fs.readFileSync('./console_data/data.json'));
+
+    //Creates a table if it doesn't exist
     await client.query(`CREATE TABLE IF NOT EXISTS consoles (
       cid SERIAL,
       brand varchar(255),
@@ -206,13 +230,16 @@ router.get('/createConsoleTable', async (req, res) => {
       imgurl TEXT,
       PRIMARY KEY(cid)
       );`);
+
+    //Loops through the array of objects
     for (let i = 0; i < data.length; i++) {
       const con = data[i];
+      //Inserts into the 'console' database data from 'data'
       await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       VALUES ('Nintendo', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
     }
-    // const result = await client.query("SELECT * FROM users");
-    // const results = { 'results': (result) ? result.rows : null};
+
+    //Assuming no issues arrive, we are sent back to the main page
     res.redirect('/');
     client.release();
   } catch (err) {
@@ -221,11 +248,19 @@ router.get('/createConsoleTable', async (req, res) => {
   }
 });
 
+//This simply shows all the data inside 'consoles' database
 router.get('/dbtest', async (req, res) => {
   try {
+    //This connects to database
     const client = await pool.connect();
+
+    //SQL that gets everything from 'consoles' database
     const result = await client.query("SELECT * FROM consoles");
+
+    //This turns result into an array
     const results = { 'results': (result) ? result.rows : null};
+
+    //Displays results array onto page
     res.send(results);
     client.release();
   } catch (err) {
@@ -234,23 +269,34 @@ router.get('/dbtest', async (req, res) => {
   }
 });
 
+//This creates a table 'userownconsole' and adds sample data into it
 router.get('/db', async (req, res) => {
   try {
+    //This connects to database
     const client = await pool.connect();
+
+    //SQL That creates the table if it doesn't exist
     await client.query(`CREATE TABLE IF NOT EXISTS userownconsole (
       uid INT,
       cid INT,
       PRIMARY KEY(uid,cid)
       );`);
+
+    //SQL that inserts sample data into table that was created
     await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 1);`);
     await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 21);`);
     await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 315);`);
+
+    //SQL that grabs a random item as a sample
     const result = await client.query("SELECT * FROM consoles WHERE name='Nintendo Wii U Premium Console [NA]'");
-    //NES Control Deck [NA] (1)
-    //NES Toploader Console [NA] (21)
-    //Nintendo 64 Gold Console [NA] (315)
+
+    //This turns result into an array
     const results = (result) ? result.rows : null;
+
+    //SQL that inserts the random item into the table, as a test
     await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, ${results[0].cid});`);
+
+    //Displays final test on page (Will not work twice, shouldn't work anymore)
     res.send(results);
     client.release();
   } catch (err) {
@@ -259,8 +305,8 @@ router.get('/db', async (req, res) => {
   }
 });
 
-//Stuff idk idc about
-
+//EVERYTHING BELOW HERE I INTEND TO DELETE IF THEY ARE NOT NECESSARY (Except final thing)
+/*
 //CRUD operation
 
 //allow user to login, will pop out the log in page
@@ -272,7 +318,7 @@ router.get('/login',function(req,res){
 //create operation after users login their account , get endpoint 'create'
 router.get('/create/:id',function(req,res){
     //req.query return the url as json object
-    /**this is just a test code */
+    //this is just a test code
     if(req.query.id===123){
       let object=req.query
       //once get the data from client side, the server will write data into database
@@ -285,7 +331,7 @@ router.get('/create/:id',function(req,res){
 
 router.get('/user/:id/delete',function(req,res){
 
-  /**this is just a test code */
+  // this is just a test code
    if(req.query.id==123){
     let object=req.query
        console.log('delete')
@@ -315,6 +361,9 @@ router.get('/search',function(req,res){
    //loadObject.Loaded(url)
    res.sendFile(path.join(__dirname+'/public/game.html'));
 })
+*/
+//EXCEPT THIS
 
+//Runs the server on heroku server or local port (I think)
 const httpServer = http.createServer(app);
 httpServer.listen(process.env.PORT || 443);
