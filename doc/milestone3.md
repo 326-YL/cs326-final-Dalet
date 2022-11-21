@@ -23,12 +23,12 @@
    its game id euqals to the user's request game id, then will call postgresql update method to update the value from our game table<br>
    for delete operation, it will be/user/:id/delete?id='', this also fetch the id from url, then delete the game with id='' from table<br>
    if you need to test the operation, use "/user/123/" id=123 is a test id for current deployment<br>
-   (Yangyang Lin)
+   (Yangyang Lin)<br>
  </font>
    <font size="3">
      we have create the secret.json file, and also create .gitignore file, add the secret.json to the gitignore, this will ignore the secret.json
    file each time we commit the code, so secret.json will not be commited<br>
-   (Yangyang Lin)
+   (Yangyang Lin)<br>
    </font>
 **<font size="6"> 
    Part 2: Back-end Functionality
@@ -55,7 +55,7 @@
    we have created the global environment variable both in the app code (.env this file will be ignored to commit) and also include them in the 
    heroku database setup.
    <br>
-   <img src="img/mil4-3.png" style="height:200px;width:300px">
+   <img src="img/mil3-4.png" style="height:200px;width:300px">
    link the github repo with heroku and enable the auto-deployment
    <br>
    (Yangyang Lin)
