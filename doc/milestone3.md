@@ -59,8 +59,7 @@
    link the github repo with heroku and enable the auto-deployment
    <br>
    (Yangyang Lin)
-   <br>
-   
+
    
    **label division**
    <ul>
