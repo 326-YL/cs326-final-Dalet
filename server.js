@@ -95,7 +95,7 @@ router.get('/thedata', async function(req, res) {
     }
   ];
   */
- //work in progress
+  //work in progress
   const client = await pool.connect();
   const result = await client.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
   userownconsole.cid = consoles.cid WHERE uid=1`);
@@ -121,7 +121,8 @@ router.get('/thedata', async function(req, res) {
       ]
     }
   ];
-
+  
+  //An issue.
   //Takes the query and turn it into something like cArr
   // results.forEach(x => {
   //   let index = newArr.findIndex(con => {
@@ -249,7 +250,7 @@ router.get('/createConsoleTable', async (req, res) => {
 });
 
 //This simply shows all the data inside 'consoles' database
-router.get('/dbtest', async (req, res) => {
+router.get('/showconsole', async (req, res) => {
   try {
     //This connects to database
     const client = await pool.connect();
@@ -269,8 +270,50 @@ router.get('/dbtest', async (req, res) => {
   }
 });
 
+//This simply shows all the data inside 'users' database
+router.get('/showusers', async (req, res) => {
+  try {
+    //This connects to database
+    const client = await pool.connect();
+
+    //SQL that gets everything from 'users' database
+    const result = await client.query("SELECT * FROM users");
+
+    //This turns result into an array
+    const results = { 'results': (result) ? result.rows : null};
+
+    //Displays results array onto page
+    res.send(results);
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
+//This simply shows all the data inside 'userownconsole' database
+router.get('/showuserownconsole', async (req, res) => {
+  try {
+    //This connects to database
+    const client = await pool.connect();
+
+    //SQL that gets everything from 'userownconsole' database
+    const result = await client.query("SELECT * FROM userownconsole");
+
+    //This turns result into an array
+    const results = { 'results': (result) ? result.rows : null};
+
+    //Displays results array onto page
+    res.send(results);
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
 //This creates a table 'userownconsole' and adds sample data into it
-router.get('/db', async (req, res) => {
+router.get('/createUserOwnConsole', async (req, res) => {
   try {
     //This connects to database
     const client = await pool.connect();
@@ -304,65 +347,6 @@ router.get('/db', async (req, res) => {
     res.send("Error " + err);
   }
 });
-
-//EVERYTHING BELOW HERE I INTEND TO DELETE IF THEY ARE NOT NECESSARY (Except final thing)
-/*
-//CRUD operation
-
-//allow user to login, will pop out the log in page
-router.get('/login',function(req,res){
-  res.send('<h>Plase Login</h>')
-
-});
-
-//create operation after users login their account , get endpoint 'create'
-router.get('/create/:id',function(req,res){
-    //req.query return the url as json object
-    //this is just a test code
-    if(req.query.id===123){
-      let object=req.query
-      //once get the data from client side, the server will write data into database
-      //using file system to store the data
-      database.createData(gameFile,req);
-    }
-    console.log('create')
-    res.send('create');
-});
-
-router.get('/user/:id/delete',function(req,res){
-
-  // this is just a test code
-   if(req.query.id==123){
-    let object=req.query
-       console.log('delete')
-      //once get the data from client side, the server will write data into database
-      //using file system to store the data
-      //database.deleteData(gameFile,req);
-   }
-   res.send("delete");
-})
-
-
-//place * before/search will allow any users or visitors on client side at 
-//any pages do search operation
-router.get('/search',function(req,res){
-   //let title=req.query.title;
-   //let edition=req.query.edition;
-   
-   console.log("in search");
-   console.log(req.protocol);
-   console.log(req.baseUrl);
-   console.log(process.env.NODE_ENV)
-   res.send(req.query);
-   //const url="https://boiling-lake-51546.herokuapp.com"+req.url
-   console.log("url:"+url);
-   //url=url+req.url;
-   //console.log("url:"+url);
-   //loadObject.Loaded(url)
-   res.sendFile(path.join(__dirname+'/public/game.html'));
-})
-*/
-//EXCEPT THIS
 
 //Runs the server on heroku server or local port (I think)
 const httpServer = http.createServer(app);
