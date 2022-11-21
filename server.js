@@ -167,6 +167,7 @@ app.post('/signup', async function(req,res) {
   }
   //Returns us home.
   res.redirect("/");
+  client.release();
 });
 
 app.post('/login', async function(req,res) {
@@ -187,6 +188,7 @@ app.post('/login', async function(req,res) {
   }
   //Returns us home.
   res.redirect("/");
+  client.release();
 });
 
 //Adding all the data from the data.json to the database
