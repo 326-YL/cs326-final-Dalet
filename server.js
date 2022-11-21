@@ -209,6 +209,7 @@ app.post('/login', async function(req,res) {
 
 //This allows me to read the data.json file
 const fs = require('fs');
+const e = require('express');
 
 //Adding all the data from the data.json to the database
 router.get('/createConsoleTable', async (req, res) => {
@@ -353,6 +354,9 @@ router.get('/createUserOwnConsole', async (req, res) => {
 router.get('/user/:id/create',async(req,res)=>{
   //req.query return the url as json object
   /**this is just a test code */
+  if(req.params.id===123){
+    console.log("in");
+  }
   let newGame=req.query;
   console.log(newGame);
   const client = await pool.connect();
@@ -373,9 +377,12 @@ router.get('/user/:id/create',async(req,res)=>{
 });
 router.get('/user/:id/delete',async(req,res)=>{
 /**this is just a test code */
+if(req.params.id===123){
+  console.log("in");
+}
 let data=req.query;
-let key=Object.keys(newGame);
-let value=Object.values(newGame);
+let key=Object.keys(data);
+let value=Object.values(data);
 client.query(`DELETE FROM userownconsole WHERE ${key[0]}=${value[0]};`);
 res.send("delete");
 
@@ -394,8 +401,13 @@ const values=Object.values(data);
 const client = await pool.connect();
 let queryString='';
 for(let i=0;i<variable.length;i++){
-  queryString+=`${variable[i]}=${values[i]},`
+  if(i!==variable.length-1){
+    queryString+=`${variable[i]}=${values[i]},`
+  }else{
+    queryString+=`${variable[i]}=${values[i]}`;
+  }
 }
+
 console.log(queryString);
 client.query(`UPDATE userownconsole SET ${queryString} WHERE gameID=${id};`);
 client.release();
