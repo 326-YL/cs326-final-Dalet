@@ -187,7 +187,7 @@ const fs = require('fs');
 router.get('/createConsoleTable', async (req, res) => {
   try {
     const client = await pool.connect();
-    await client.query("DROP TABLE consoles");
+    await client.query("DROP TABLE IF EXISTS consoles");
     let data = JSON.parse(fs.readFileSync('./console_data/data.json'));
     await client.query(`CREATE TABLE IF NOT EXISTS consoles (
       cid SERIAL,
