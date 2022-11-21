@@ -151,6 +151,13 @@ app.post('/signup', async function(req,res) {
 
   //This connects to database
   const client = await pool.connect();
+  //this creates the table if it does not exist.
+  await client.query(`CREATE TABLE IF NOT EXISTS users (
+    uid SERIAL,
+    username VARCHAR(255),
+    password VARCHAR(255),
+    PRIMARY KEY(uid)
+    );`);
   //This grabs all usernames that are the same as uname (Hopefully none)
   const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
   const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
