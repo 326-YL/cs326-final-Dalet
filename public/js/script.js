@@ -28,10 +28,10 @@ function shuffle(_arr) {
  * 
  * @param { Array<Entry> } arr is an array of database entries 
  * @param { number } n is the number of elements to render every time.
- * @param { (html.div_element, Entry) => html.div_element } func takes in an element and an entry from the database and returns a the element edited
+ * @param { (html.div_element, Entry) => html.div_element } func takes in an element and an entry from the database and edits it
  * 
  * Of note: @param func is applied to every single entry in @param arr, so write it accordingly
- * Every div returned by @param func will be appened to the explore-gallery
+ * Every div edited by @param func will be appened to the explore-gallery
  * This function will also set the 'view more' button to display @param arr
  */
 async function explore_gallery_render(arr, n, func) {
@@ -67,12 +67,14 @@ async function explore_gallery_render(arr, n, func) {
  * 
  */
 async function load_explore_filter(filter) {
-    const request = await fetch('http://localhost:443/explore_data');
+    const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedata');
+    console.log(request);
     if (!request.ok || request.status === 404) {
         console.log('error getting explore datat\ncheck the link');
         return;
     }
     explore_items = await request.json();
+    explore_gallery_clear();
     let items = [];
     for (let i = 0; i < 7; ++i) {
         items = [...items, ...explore_items];
@@ -93,7 +95,6 @@ async function load_explore_filter(filter) {
             }
             console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
-        return newelm;
     });
 }
 
@@ -123,16 +124,14 @@ async function explore_onload() {
     ];
     explore_gallery_render(arr, 4, (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.name));
-        newelm.addEventListener('click', async () => {
-            explore_gallery_clear();
+        newelm.onclick = async () => {
             console.log(item.name + ' is the filter');
             await load_explore_filter([]);
-        });
+        };
     });
     const search_input = document.getElementById('explore-search-input');
     search_input.addEventListener('keypress', async (event) => {
         if (event.key === 'Enter') {
-            explore_gallery_clear();
             console.log(`"${ search_input.value }" was entered`);
             await load_explore_filter([]);
         }
