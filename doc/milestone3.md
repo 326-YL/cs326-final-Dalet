@@ -50,14 +50,20 @@
    </ul>
 </font>
    **Part 3**
-   <img src="img/mil3-3.png" style="height:200px;width:300px">
+   <img src="img/mil3-3.png" style="height:400px;width:500px">
    <br>
    we have created the global environment variable both in the app code (.env this file will be ignored to commit) and also include them in the 
    heroku database setup.
    <br>
-   <img src="img/mil3-4.png" style="height:200px;width:300px">
+   <img src="img/mil3-4.png" style="height:400px;width:500px">
    link the github repo with heroku and enable the auto-deployment
    <br>
    (Yangyang Lin)
+   
+   **label division**
+   1.implement the database connection and also create user and game table,test the database fucntion with testing data (Ben)
+   2.improve collection page UI, and adding functionality that interact with server side (Ben)
+   3.improve the explore page UI, and adding more functionality (Samuel)
+   4.improve the crud operationa and combine with database implementation (Yangyang Lin)
    
    
