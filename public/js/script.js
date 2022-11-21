@@ -8,6 +8,11 @@ function gameDropdown(console) {
     }
 }
   
+/**
+ * 
+ * @param { Array<Any> } _arr array to be shuffled 
+ * @returns new array that is randomly shuffled
+ */
 function shuffle(_arr) {
     let arr = [..._arr];
     for (let i = arr.length - 1; i > 0; --i) {
@@ -92,6 +97,9 @@ async function load_explore_filter(filter) {
     });
 }
 
+/**
+ * Clears the inner html of explore-gallery
+ */
 async function explore_gallery_clear() {
     document.getElementById('explore-gallery').innerHTML = '';
 }
