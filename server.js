@@ -158,8 +158,6 @@ app.post('/signup', async function(req,res) {
     password VARCHAR(255),
     PRIMARY KEY(uid)
     );`);
-    //TEMP
-    await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${pword}');`);
   //This grabs all usernames that are the same as uname (Hopefully none)
   const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
   const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
