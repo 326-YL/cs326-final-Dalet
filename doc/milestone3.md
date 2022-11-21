@@ -13,11 +13,6 @@
    <img src="img/md3-database-example-ben.png" style="height:300px;width:600px">
    (Ben)
 
-   (Sam)
-   I implimented some search functionality to the explore page.
-   Still figuring out how I'm going to filter the database (similarity vs exact).
-   Only thing left to do is to insert the database and the filter function.
-
 </font>
 
 **<font size="6"> 
@@ -36,4 +31,11 @@
       <li>Going to '/dbtest' will show all that data (815 items currently)</li>
       <li>Started a userownconsole database, where it combines a user id to a console id</li>
    </ul>
+
+   Sam:
+   I implimented some search functionality to the explore page.
+   Still figuring out how I'm going to filter the database (similarity vs exact).
+   Only thing left to do is to insert the database and the filter function.
+
+
 </font>
