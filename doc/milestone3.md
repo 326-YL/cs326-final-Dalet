@@ -50,7 +50,7 @@
    </ul>
 </font>
    **Part 3**
-   <img src="img/mil3-3.png" style="height:300px;width:500px">
+   <img src="img/mil3-3.png" style="height:300px;width:600px">
    <br>
    we have created the global environment variable both in the app code (.env this file will be ignored to commit) and also include them in the 
    heroku database setup.
