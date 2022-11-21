@@ -19,8 +19,49 @@ function shuffle(_arr) {
     return arr;
 }
 
-async function load_explore_filter(filter) {
+/**
+ * 
+ * @param { Array<Entry> } arr is an array of database entries 
+ * @param { number } n is the number of elements to render every time.
+ * @param { (html.div_element, Entry) => html.div_element } func takes in an element and an entry from the database and returns a the element edited
+ * 
+ * Of note: @param func is applied to every single entry in @param arr, so write it accordingly
+ * Every div returned by @param func will be appened to the explore-gallery
+ * This function will also set the 'view more' button to display @param arr
+ */
+async function explore_gallery_render(arr, n, func) {
     const element = document.getElementById('explore-gallery');
+    const closure = () => {
+        arr.splice(0, n).forEach(item => {
+            const newdiv = document.createElement('div');
+            newdiv.classList.add('explore-gallery-element');
+            // const node = func(newdiv, item);
+            // element.appendChild(node);
+            func(newdiv, item);
+            element.appendChild(newdiv);
+        });
+        const elm = document.getElementById('explore-more');
+        if (arr.length === 0 && !elm.classList.contains('explore-hidden')) {
+            // If there are no items to display left
+            elm.classList.add('explore-hidden');
+        } else if (elm.classList.contains('explore-hidden')) {
+            // If there are items to display, show the button
+            elm.classList.remove('explore-hidden');
+        }
+    }
+    document.getElementById('explore-more').onclick = closure;
+    closure();
+}
+
+/**
+ * 
+ * @param { Array } filter not sure yet --- ignore
+ * 
+ * This function will display interactable database entries based on the given filter,
+ * whether that be what console, brand, name, etc. it has.
+ * 
+ */
+async function load_explore_filter(filter) {
     const request = await fetch('http://localhost:443/explore_data');
     if (!request.ok || request.status === 404) {
         console.log('error getting explore datat\ncheck the link');
@@ -36,30 +77,22 @@ async function load_explore_filter(filter) {
 
     // TODO
     console.log(explore_items);
-    function render(n) {
-        items.splice(0, n).forEach(item => {
-            const newelm = document.createElement('div');
-            newelm.appendChild(document.createTextNode(item.title));
-            newelm.classList.add('explore-gallery-element');
-            newelm.addEventListener('click', () => {
-                if (newelm.classList.contains('explore-gallery-selected')) {
-                    newelm.classList.remove('explore-gallery-selected');
-                } else {
-                    newelm.classList.add('explore-gallery-selected');
-                }
-                console.log(`coming from ${ item.title }! I am ${ item.name }!`);
-            });
-            element.appendChild(newelm);
+    const arr = [...items];
+    explore_gallery_render(arr, 8, (newelm, item) => {
+        newelm.appendChild(document.createTextNode(item.title));
+        newelm.addEventListener('click', () => {
+            if (newelm.classList.contains('explore-gallery-selected')) {
+                newelm.classList.remove('explore-gallery-selected');
+            } else {
+                newelm.classList.add('explore-gallery-selected');
+            }
+            console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
-        if (items.length === 0) {
-            document.getElementById('explore-more').classList.add('explore-hidden');
-        }
-    }
-    render(8);
-    document.getElementById('explore-more').addEventListener('click', () => { render(8); });
+        return newelm;
+    });
 }
 
-async function explore_clear() {
+async function explore_gallery_clear() {
     document.getElementById('explore-gallery').innerHTML = '';
 }
 
@@ -80,8 +113,23 @@ async function explore_onload() {
         { name: 'Test9' },
         { name: 'Test10' },
     ];
+    explore_gallery_render(arr, 4, (newelm, item) => {
+        newelm.appendChild(document.createTextNode(item.name));
+        newelm.addEventListener('click', async () => {
+            explore_gallery_clear();
+            console.log(item.name + ' is the filter');
+            await load_explore_filter([]);
+        });
+    });
     const search_input = document.getElementById('explore-search-input');
-    await load_explore_filter([]);
+    search_input.addEventListener('keypress', async (event) => {
+        if (event.key === 'Enter') {
+            explore_gallery_clear();
+            console.log(`"${ search_input.value }" was entered`);
+            await load_explore_filter([]);
+        }
+    });
+    // await load_explore_filter([]);
 }
 
 document.getElementById("greyBackground").addEventListener("click", (e) => { 
