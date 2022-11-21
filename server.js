@@ -371,8 +371,9 @@ router.get('/user/:id/create',async(req,res)=>{
     //using file system to store the data
     //we will rearrage the structure =later and seperate the code into database js
     //database.createData(gameFile,req);
+  
+  res.send("create a new game");
   client.release();
-  res.sendFile(path.join(__dirname+'/public/game.html'));
   //res.send("create");
 });
 router.get('/user/:id/delete',async(req,res)=>{
@@ -385,7 +386,6 @@ let key=Object.keys(data);
 let value=Object.values(data);
 client.query(`DELETE FROM userownconsole WHERE ${key[0]}=${value[0]};`);
 res.send("delete");
-
 client.release();
 });
 
@@ -410,6 +410,7 @@ for(let i=0;i<variable.length;i++){
 
 console.log(queryString);
 client.query(`UPDATE userownconsole SET ${queryString} WHERE gameID=${id};`);
+res.send("update");
 client.release();
 })
 
