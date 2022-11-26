@@ -138,7 +138,7 @@ router.get('/thedata', async function(req, res) {
       }
       newArr.push(obj);
     } else {
-      newArr[index].consoles.push(x.imgurl);
+      // newArr[index].consoles.push(x.imgurl);
     }
   });
 
