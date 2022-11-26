@@ -100,6 +100,7 @@ router.get('/thedata', async function(req, res) {
   const result = await client.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
   userownconsole.cid = consoles.cid WHERE uid=1`);
   const results = (result) ? result.rows : null;
+  res.send(result);
 
   let newArr = [
     {
@@ -124,23 +125,23 @@ router.get('/thedata', async function(req, res) {
   
   //An issue.
   //Takes the query and turn it into something like cArr
-  // results.forEach(x => {
-  //   let index = newArr.findIndex(con => {
-  //     return con.title === x.name;
-  //   });
-  //   //if there doesn't exist a console
-  //   if (index !== -1) {
-  //     let obj = {
-  //       name: x.type.replace(/\s/g, ''),
-  //       title: x.type,
-  //       consoles: [x.imgurl],
-  //       games: []
-  //     }
-  //     newArr.push(obj);
-  //   } else {
-  //     // newArr[index].consoles.push(x.imgurl);
-  //   }
-  // });
+  results.forEach(x => {
+    let index = newArr.findIndex(con => {
+      return con.title === x.name;
+    });
+    //if there doesn't exist a console
+    if (index !== -1) {
+      let obj = {
+        name: x.type.replace(/\s/g, ''),
+        title: x.type,
+        consoles: [x.imgurl],
+        games: []
+      }
+      newArr.push(obj);
+    } else {
+      // newArr[index].consoles.push(x.imgurl);
+    }
+  });
 
   res.send(JSON.stringify(newArr));
   client.release();
