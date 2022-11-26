@@ -128,8 +128,9 @@ router.get('/thedata', async function(req, res) {
     let index = newArr.findIndex(con => {
       return con.title === x.type;
     });
+    
     //if there doesn't exist a console
-    if (index !== -1) {
+    if (index === -1) {
       let obj = {
         name: x.type.replace(/\s/g, ''),
         title: x.type,
