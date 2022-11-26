@@ -242,7 +242,7 @@ async function displayCollection() {
                 data[i].consoles.forEach(e => {
                     const img = document.createElement("img");
                     img.classList.add("console-img");
-                    img.src = "./img/" + e;
+                    img.href = e;
                     conDiv1.appendChild(img);
                 });
 

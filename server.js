@@ -105,7 +105,7 @@ router.get('/thedata', async function(req, res) {
     {
       name: "3ds",
       title: "New 3DS",
-      consoles: ["3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG"],
+      consoles: ["img/3ds.JPG", "img/3ds.JPG", "img/3ds.JPG", "img/3ds.JPG", "img/3ds.JPG"],
       games: [
           ["ultra-sun.png", "Pokemon Ultra Sun", "B"],
           ["mario-3d-land.jpg", "Super Mario 3D Land", "P"]
@@ -114,7 +114,7 @@ router.get('/thedata', async function(req, res) {
     {
       name: "gba",
       title: "Gameboy Advance",
-      consoles: ["gba-sp.png"],
+      consoles: ["img/gba-sp.png"],
       games: [
           ["firered.png", "Pokemon FireRed", "P"],
           ["firered.png", "Pokemon FireRed", "P"]
