@@ -376,6 +376,35 @@ router.get('/user/:id/create',async(req,res)=>{
   client.release();
   //res.send("create");
 });
+//Crud operstion with database 
+//create operation after users login their account , get endpoint 'create'
+//in database, this will be an insertion operation, it will fetch the url params query string
+// and convert it into object
+router.get('/user/:id/create',async(req,res)=>{
+  //req.query return the url as json object
+  /**this is just a test code */
+  if(req.params.id===123){
+    console.log("in");
+  }
+  let newGame=req.query;
+  console.log(newGame);
+  const client = await pool.connect();
+  const variable= Object.keys(newGame);
+  console.log(variable);
+  const values=Object.values(newGame);
+  console.log(values);
+  for(let i=0;i<values.length;i++){
+    client.query(`INSERT INTO userownconsole (${variable[i]}) VALUES (${values[i]});`);
+  }
+    //once get the data from client side, the server will write data into database
+    //using file system to store the data
+    //we will rearrage the structure =later and seperate the code into database js
+    //database.createData(gameFile,req);
+  
+  res.send("create a new game");
+  client.release();
+  //res.send("create");
+});
 router.get('/user/:id/delete',async(req,res)=>{
 /**this is just a test code */
 if(req.params.id===123){
