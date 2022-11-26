@@ -105,7 +105,7 @@ router.get('/thedata', async function(req, res) {
     {
       name: "3ds",
       title: "New 3DS",
-      consoles: ["img/3ds.JPG", "img/3ds.JPG", "img/3ds.JPG", "img/3ds.JPG", "img/3ds.JPG"],
+      consoles: ["3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG"],
       games: [
           ["ultra-sun.png", "Pokemon Ultra Sun", "B"],
           ["mario-3d-land.jpg", "Super Mario 3D Land", "P"]
@@ -134,7 +134,7 @@ router.get('/thedata', async function(req, res) {
       let obj = {
         name: x.type.replace(/\s/g, ''),
         title: x.type,
-        consoles: [x.imgurl],
+        consoles: ['https://'+x.imgurl],
         games: []
       }
       newArr.push(obj);
