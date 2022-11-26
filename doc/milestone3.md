@@ -27,7 +27,9 @@
       <li>2 users cannot choose the same username</li>
       <li>User can login, and temporality, it will send to a page where it shows the password they typed in.</li>
       <li>Created a consoles database that adds all the .JSON data I have compiled into the database</li>
-      <li>Going to '/dbtest' will show all that data (815 items currently)</li>
+      <li>Going to '/showusers' will show all that data</li>
+      <li>Going to '/showconsole' will show all that data (815 items currently)</li>
+      <li>Going to '/showuserownconsole' will show all that data (Only select samples)</li>
       <li>Started a userownconsole database, where it combines a user id to a console id</li>
    </ul>
 </font>

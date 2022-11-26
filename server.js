@@ -210,6 +210,7 @@ app.post('/login', async function(req,res) {
 
 //This allows me to read the data.json file
 const fs = require('fs');
+const e = require('express');
 
 //Adding all the data from the data.json to the database
 router.get('/createConsoleTable', async (req, res) => {
@@ -347,7 +348,72 @@ router.get('/createUserOwnConsole', async (req, res) => {
     console.error(err);
     res.send("Error " + err);
   }
+})
+//create operation after users login their account , get endpoint 'create'
+//in database, this will be an insertion operation, it will fetch the url params query string
+// and convert it into object
+router.get('/user/:id/create',async(req,res)=>{
+  //req.query return the url as json object
+  /**this is just a test code */
+  if(req.params.id===123){
+    console.log("in");
+  }
+  let newGame=req.query;
+  console.log(newGame);
+  const client = await pool.connect();
+  const variable= Object.keys(newGame);
+  console.log(variable);
+  const values=Object.values(newGame);
+  console.log(values);
+  for(let i=0;i<values.length;i++){
+    client.query(`INSERT INTO userownconsole (${variable[i]}) VALUES (${values[i]});`);
+  }
+    //once get the data from client side, the server will write data into database
+    //using file system to store the data
+    //we will rearrage the structure =later and seperate the code into database js
+    //database.createData(gameFile,req);
+  
+  res.send("create a new game");
+  client.release();
+  //res.send("create");
 });
+router.get('/user/:id/delete',async(req,res)=>{
+/**this is just a test code */
+if(req.params.id===123){
+  console.log("in");
+}
+let data=req.query;
+let key=Object.keys(data);
+let value=Object.values(data);
+client.query(`DELETE FROM userownconsole WHERE ${key[0]}=${value[0]};`);
+res.send("delete");
+client.release();
+});
+
+router.get('/user/:id/update/:gameID', async(req,res)=>{
+if(req.params.id===123){
+  console.log("in");
+}
+let data=req.query;
+let id=req.params.gameID;
+const variable= Object.keys(data);
+console.log(variable);
+const values=Object.values(data);
+const client = await pool.connect();
+let queryString='';
+for(let i=0;i<variable.length;i++){
+  if(i!==variable.length-1){
+    queryString+=`${variable[i]}=${values[i]},`
+  }else{
+    queryString+=`${variable[i]}=${values[i]}`;
+  }
+}
+
+console.log(queryString);
+client.query(`UPDATE userownconsole SET ${queryString} WHERE gameID=${id};`);
+res.send("update");
+client.release();
+})
 
 //Runs the server on heroku server or local port (I think)
 const httpServer = http.createServer(app);
