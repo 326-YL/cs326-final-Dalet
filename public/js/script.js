@@ -242,7 +242,13 @@ async function displayCollection() {
                 data[i].consoles.forEach(e => {
                     const img = document.createElement("img");
                     img.classList.add("console-img");
-                    img.href = e;
+                    fetch(e).then(function(response) {
+                        return response.blob();
+                    }).then(function(myBlob) {
+                        var objectURL = URL.createObjectURL(myBlob);
+                        img.src = objectURL;
+                    });
+                    // img.src = e;
                     conDiv1.appendChild(img);
                 });
 
