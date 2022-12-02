@@ -1,3 +1,5 @@
+const e = require("express");
+
 function gameDropdown(console) {
     const consoleEl = document.getElementById(console);
     const gameEl = document.getElementById(console+"-game");
@@ -42,6 +44,7 @@ function explore_button_on(bool) {
  */
 async function explore_gallery_render(arr, n, func) {
     const element = document.getElementById('explore-gallery');
+    const original_data = [...arr];
     const closure = () => {
         arr.splice(0, n).forEach(item => {
             const newdiv = document.createElement('div');
@@ -71,10 +74,10 @@ async function explore_gallery_render(arr, n, func) {
  * Feel free to add any you may want below
  * 
  * @PREDETERMINED_ATTRIBUTES :
- * @param { String } brand filters with brand name
- * @param { boolean } consoles_only only includes consoles
- * @param { boolean } games_only only includes games
- *  @note If both @param consoles_only and @param games_only are active, the result is []
+ * @param { String } brand filters by brand name
+ * @param { boolean } consoles only includes consoles
+ * @param { boolean } console_links paired with consoles, if true, then you can click on a console and it displays games.
+ * @param { boolean } games only includes games
  * 
  * This function will display interactable database entries based on the given filter,
  * whether that be what console, brand, name, etc. it has.
@@ -106,7 +109,7 @@ async function load_explore_filter(filter) {
     // With the way the back button stack works,
     // we don't have to actually store this array
 
-    explore_gallery_render(arr, 8, (newelm, item) => {
+    const console_link_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.title));
         newelm.addEventListener('click', () => {
             if (newelm.classList.contains('explore-gallery-selected')) {
@@ -116,7 +119,26 @@ async function load_explore_filter(filter) {
             }
             console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
-    });
+    };
+    const game_func = (newelm, item) => {
+        newelm.appendChild(document.createTextNode(item.title));
+        newelm.addEventListener('click', () => {
+            if (newelm.classList.contains('explore-gallery-selected')) {
+                newelm.classList.remove('explore-gallery-selected');
+            } else {
+                newelm.classList.add('explore-gallery-selected');
+            }
+            console.log(`coming from ${ item.title }! I am ${ item.name }!`);
+        });
+    };
+
+    if ((filter.console_links ?? false)) {
+        // Do the console links
+        explore_gallery_render(arr, 8, console_link_func);
+    } else {
+        // Game stuff -- check other filters
+        explore_gallery_render(arr, 8, game_func);
+    }
 }
 
 /**
