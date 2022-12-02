@@ -110,6 +110,7 @@ async function load_explore_filter(filter) {
 
     const game_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.title));
+        // Add image
         newelm.addEventListener('click', () => {
             // User clicked on the game to expand or select it.
             // Do something with the game and the database maybe?
@@ -123,6 +124,7 @@ async function load_explore_filter(filter) {
     };
     const console_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.title));
+        // Add image
         newelm.addEventListener('click', () => {
             // Filter based on the console
             // ie, display all games from the console
@@ -139,14 +141,19 @@ async function load_explore_filter(filter) {
             game_func(newElm, item);
         }
     }
-
     // TODO -- Fix this
-    if ((filter.console ?? false)) {
-        // Do the console links
-        explore_gallery_render(arr, 4, console_func);
-    } else {
-        // Game stuff -- check other filters
+    if ((filter.console ?? false) && (filter.game ?? false)) {
+        // From searching
+        explore_gallery_render(arr, 4, game_and_console);
+    } else if ((filter.console ?? false)) {
+        // From clicking a brand
+        explore_gallery_render(arr, 8, console_func);
+    } else if ((filter.game ?? false)) {
+        // From clicking a console
         explore_gallery_render(arr, 8, game_func);
+    } else {
+        // None --- error
+        console.log('search not found');
     }
 }
 
@@ -201,6 +208,9 @@ async function explore_onload() {
     back_button.onclick = async () => {
         const stack_element = window.stack.pop();
         explore_gallery_render(stack_element.array, stack_element.iterations, stack_element.function);
+        if (window.stack.length <= 0) {
+            explore_button_on(false);
+        }
     };
     // await load_explore_filter([]);
 }
