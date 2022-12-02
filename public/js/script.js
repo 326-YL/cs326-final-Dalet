@@ -1,5 +1,3 @@
-const e = require("express");
-
 function gameDropdown(console) {
     const consoleEl = document.getElementById(console);
     const gameEl = document.getElementById(console+"-game");
@@ -128,11 +126,19 @@ async function load_explore_filter(filter) {
         newelm.addEventListener('click', () => {
             // Filter based on the console
             // ie, display all games from the console
-            window.stack.push(arr); // Push current data
+            window.stack.push({ num: 4, array: arr, function: console_func }); // Push current data
+            explore_button_on(true);
             load_explore_filter({ game: true });
             console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
     };
+    const game_and_console = (newElm, item) => {
+        if (item.type = 'console') {
+            console_func(newElm, item)
+        } else {
+            game_func(newElm, item);
+        }
+    }
 
     // TODO -- Fix this
     if ((filter.console ?? false)) {
@@ -161,6 +167,7 @@ async function explore_onload() {
 
     const back_button = document.getElementById('explore-back');
 
+    // Maybe move this stuff to the filter function since it's kinda like filtering.
     // Brands
     const brands = [
         { name: 'Microsoft', img_url: '' , other: {}},
@@ -168,29 +175,33 @@ async function explore_onload() {
         { name: 'Nintendo', img_url: '', other: {}},
         { name: 'Artari', img_url: '', other: {}}
     ];
-    explore_gallery_render(brands, 4, (newelm, item) => {
+    const brand_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.name));
         // newelm.addImage(getImage(item.img_url))
         // --- Clicking on a brand ---
         newelm.onclick = async () => {
             console.log(item.name + ' is the brand');
-            
             // Save previous array before filtering
             const gallery = document.getElementById('explore-gallery');
-            window.stack.push(gallery.innerHTML);
+            window.stack.push({ iterations: 4, data: brands, function: brand_func });
             explore_button_on(true);
             
             /* See this function for details on the input */ load_explore_filter;
             await load_explore_filter({ brand: item.name, console: true });
         };
-    });
+    };
+    explore_gallery_render(brands, 4, brand_func);
     const search_input = document.getElementById('explore-search-input');
     search_input.addEventListener('keypress', async (event) => {
         if (event.key === 'Enter') {
             console.log(`"${ search_input.value }" was entered`);
-            await load_explore_filter([]);
+            await load_explore_filter({ game: true, console: true, keys: []});
         }
     });
+    back_button.onclick = async () => {
+        const stack_element = window.stack.pop();
+        explore_gallery_render(stack_element.array, stack_element.iterations, stack_element.function);
+    };
     // await load_explore_filter([]);
 }
 
