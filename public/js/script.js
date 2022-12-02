@@ -24,6 +24,12 @@ function shuffle(_arr) {
     return arr;
 }
 
+function explore_button_on(bool) {
+    const button = document.getElementById('explore-back');
+    bool ? button.classList.remove('hidden') 
+         : button.classList.add('hidden');
+}
+
 /**
  * 
  * @param { Array<Entry> } arr is an array of database entries 
@@ -60,15 +66,25 @@ async function explore_gallery_render(arr, n, func) {
 
 /**
  * 
- * @param { Array } filter not sure yet --- ignore
+ * @param { Object } filter Object with predetermined attributes to filter by
+ *
+ * Feel free to add any you may want below
+ * 
+ * @PREDETERMINED_ATTRIBUTES :
+ * @param { String } brand filters with brand name
+ * @param { boolean } consoles_only only includes consoles
+ * @param { boolean } games_only only includes games
+ *  @note If both @param consoles_only and @param games_only are active, the result is []
  * 
  * This function will display interactable database entries based on the given filter,
  * whether that be what console, brand, name, etc. it has.
  * 
+ * The attributes will either be given or not. Ones that are not given will be ignored.
+ * 
  */
 async function load_explore_filter(filter) {
     const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedata');
-    console.log(request);
+    // console.log(request);
     if (!request.ok || request.status === 404) {
         console.log('error getting explore datat\ncheck the link');
         return;
@@ -82,9 +98,14 @@ async function load_explore_filter(filter) {
     // items.sort((a, b) => a.title < b.title ? -1 : 1);
     items = shuffle(items);
 
-    // TODO
+    // TODO - filtering
     console.log(explore_items);
     const arr = [...items];
+
+    // Stack stuff
+    // With the way the back button stack works,
+    // we don't have to actually store this array
+
     explore_gallery_render(arr, 8, (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.title));
         newelm.addEventListener('click', () => {
@@ -110,23 +131,32 @@ async function explore_onload() {
     // Nested filters for each
     //      First brand then console
     // Then show to resulting games as they are in the onload function
-    const arr = [
-        { name: 'Test1' },
-        { name: 'Test2' },
-        { name: 'Test3' },
-        { name: 'Test4' },
-        { name: 'Test5' },
-        { name: 'Test6' },
-        { name: 'Test7' },
-        { name: 'Test8' },
-        { name: 'Test9' },
-        { name: 'Test10' },
+    
+    window.stack = [];
+
+    const back_button = document.getElementById('explore-back');
+
+    // Brands
+    const brands = [
+        { name: 'Microsoft', img_url: '' , other: {}},
+        { name: 'Sony', img_url: '', other: {}},
+        { name: 'Nintendo', img_url: '', other: {}},
+        { name: 'Artari', img_url: '', other: {}}
     ];
-    explore_gallery_render(arr, 4, (newelm, item) => {
+    explore_gallery_render(brands, 4, (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.name));
+        // newelm.addImage(getImage(item.img_url))
+        // --- Clicking on a brand ---
         newelm.onclick = async () => {
-            console.log(item.name + ' is the filter');
-            await load_explore_filter([]);
+            console.log(item.name + ' is the brand');
+            
+            // Save previous array before filtering
+            const gallery = document.getElementById('explore-gallery');
+            window.stack.push(gallery.innerHTML);
+            explore_button_on(true);
+            
+            /* See this function for details on the input */ load_explore_filter;
+            await load_explore_filter({ brand: item.name, consoles_only: true });
         };
     });
     const search_input = document.getElementById('explore-search-input');
@@ -242,7 +272,13 @@ async function displayCollection() {
                 data[i].consoles.forEach(e => {
                     const img = document.createElement("img");
                     img.classList.add("console-img");
-                    img.src = "./img/" + e;
+                    // fetch(e).then(function(response) {
+                    //     return response.blob();
+                    // }).then(function(myBlob) {
+                    //     var objectURL = URL.createObjectURL(myBlob);
+                    //     img.src = objectURL;
+                    // });
+                    img.src = e;
                     conDiv1.appendChild(img);
                 });
 

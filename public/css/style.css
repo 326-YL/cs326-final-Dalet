@@ -276,7 +276,7 @@ article {
 }
 
 .console-img {
-    width: 100px;
+    height: 75px;
     padding-left: 20px;
     display: block;
     float: left;
@@ -442,6 +442,22 @@ article {
     text-align: center;
 }
 
+#explore-back {
+    position: relative;
+    bottom: 1px;
+    border: solid;
+    border-width: 3px;
+    border-color: rgb(160, 160, 160);
+    border-radius: 4px;
+    background-color: rgb(230, 230, 230);
+    padding: 2px 8px;
+}
+
+#explore-back:hover {
+    border-color: rgb(148, 148, 148);
+    background-color: rgb(207, 207, 207);
+}
+
 #explore-search-input {
     width: max(400px, 40%);
     height: 40px;
@@ -449,7 +465,7 @@ article {
     font-size: 20px;
     text-indent: 2%;
     margin-left: 0px;
-    margin-right: 10px;
+    margin-right: 0px;
     border-style: solid;
     border-width: 2px;
     border-radius: 12px;

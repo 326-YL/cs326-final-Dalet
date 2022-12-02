@@ -14,7 +14,23 @@
    (Ben)
 
 </font>
-
+<font size="4">
+   we have updated the crud operation of create, delete, update after user login, thoes operations will fetch the url
+   param query strings<br>
+   for create operation, it will be /user/:id/create?cid=''&uid='', this will create the new console
+   game with its cid and uid,once we fetch the data from url query, then will use postgrelsql to insert new game into our game
+   database.
+   for update operation, it will be /user/:id/update/:gameID?cid='',this will fetch the gameID from url, then update the game where 
+   its game id euqals to the user's request game id, then will call postgresql update method to update the value from our game table<br>
+   for delete operation, it will be/user/:id/delete?id='', this also fetch the id from url, then delete the game with id='' from table<br>
+   if you need to test the operation, use "/user/123/" id=123 is a test id for current deployment<br>
+   (Yangyang Lin)<br>
+ </font>
+   <font size="3">
+     we have create the secret.json file, and also create .gitignore file, add the secret.json to the gitignore, this will ignore the secret.json
+   file each time we commit the code, so secret.json will not be commited<br>
+   (Yangyang Lin)<br>
+   </font>
 **<font size="6"> 
    Part 2: Back-end Functionality
 </font>**<br>
@@ -41,3 +57,24 @@
 
 
 </font>
+   **Part 3**
+   <img src="img/mil3-3.png" style="height:300px;width:600px">
+   <br>
+   we have created the global environment variable both in the app code (.env this file will be ignored to commit) and also include them in the 
+   heroku database setup.
+   <br>
+   <img src="img/mil3-4.png" style="height:300px;width:500px">
+   link the github repo with heroku and enable the auto-deployment
+   <br>
+   (Yangyang Lin)
+
+   
+   **label division**
+   <ul>
+   <li>1.implement the database connection and also create user and game table,test the database fucntion with testing data (Ben)
+   <li>2.improve collection page UI, and adding functionality that interact with server side (Ben)
+   <li>3.improve the explore page UI, and adding more functionality (Samuel)
+   <li>4.improve the crud operationa and combine with database implementation (Yangyang Lin)
+   </ul>
+   
+   
