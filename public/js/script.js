@@ -34,7 +34,7 @@ function explore_button_on(bool) {
 
 /**
  * 
- * @param { Array<Entry> } arr is an array of database entries 
+ * @param { Array<Entry> } _arr is an array of database entries --- does not get editted in reference
  * @param { number } n is the number of elements to render every time.
  * @param { (html.div_element, Entry) => html.div_element } func takes in an element and an entry from the database and edits it
  * 
@@ -42,9 +42,9 @@ function explore_button_on(bool) {
  * Every div edited by @param func will be appened to the explore-gallery
  * This function will also set the 'view more' button to display @param arr
  */
-async function explore_gallery_render(arr, n, func) {
+async function explore_gallery_render(_arr, n, func) {
     const element = document.getElementById('explore-gallery');
-    const original_data = [...arr];
+    const arr = [..._arr]; // Copy contents
     const closure = () => {
         arr.splice(0, n).forEach(item => {
             const newdiv = document.createElement('div');
@@ -75,9 +75,10 @@ async function explore_gallery_render(arr, n, func) {
  * 
  * @PREDETERMINED_ATTRIBUTES :
  * @param { String } brand filters by brand name
- * @param { boolean } consoles only includes consoles
- * @param { boolean } console_links paired with consoles, if true, then you can click on a console and it displays games.
- * @param { boolean } games only includes games
+ * @param { boolean } consoles includes consoles
+ * @param { boolean } games includes games
+ * @param { String } console_name name of the console the game is from
+ * @param { Array<String> } keys string keys for searching through games, consoles, and brands
  * 
  * This function will display interactable database entries based on the given filter,
  * whether that be what console, brand, name, etc. it has.
@@ -109,9 +110,11 @@ async function load_explore_filter(filter) {
     // With the way the back button stack works,
     // we don't have to actually store this array
 
-    const console_link_func = (newelm, item) => {
+    const game_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.title));
         newelm.addEventListener('click', () => {
+            // User clicked on the game to expand or select it.
+            // Do something with the game and the database maybe?
             if (newelm.classList.contains('explore-gallery-selected')) {
                 newelm.classList.remove('explore-gallery-selected');
             } else {
@@ -120,21 +123,21 @@ async function load_explore_filter(filter) {
             console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
     };
-    const game_func = (newelm, item) => {
+    const console_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.title));
         newelm.addEventListener('click', () => {
-            if (newelm.classList.contains('explore-gallery-selected')) {
-                newelm.classList.remove('explore-gallery-selected');
-            } else {
-                newelm.classList.add('explore-gallery-selected');
-            }
+            // Filter based on the console
+            // ie, display all games from the console
+            window.stack.push(arr); // Push current data
+            load_explore_filter({ game: true });
             console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
     };
 
-    if ((filter.console_links ?? false)) {
+    // TODO -- Fix this
+    if ((filter.console ?? false)) {
         // Do the console links
-        explore_gallery_render(arr, 8, console_link_func);
+        explore_gallery_render(arr, 4, console_func);
     } else {
         // Game stuff -- check other filters
         explore_gallery_render(arr, 8, game_func);
@@ -178,7 +181,7 @@ async function explore_onload() {
             explore_button_on(true);
             
             /* See this function for details on the input */ load_explore_filter;
-            await load_explore_filter({ brand: item.name, consoles_only: true });
+            await load_explore_filter({ brand: item.name, console: true });
         };
     });
     const search_input = document.getElementById('explore-search-input');
