@@ -26,8 +26,8 @@ function shuffle(_arr) {
 
 function explore_button_on(bool) {
     const button = document.getElementById('explore-back');
-    bool ? button.classList.remove('hidden') 
-         : button.classList.add('hidden');
+    bool ? button.classList.remove('explore-hidden')
+         : button.classList.add('explore-hidden');
 }
 
 /**
@@ -40,11 +40,11 @@ function explore_button_on(bool) {
  * Every div edited by @param func will be appened to the explore-gallery
  * This function will also set the 'view more' button to display @param arr
  */
-async function explore_gallery_render(_arr, n, func) {
+async function explore_gallery_render(_arr, func) {
     const element = document.getElementById('explore-gallery');
     const arr = [..._arr]; // Copy contents
     const closure = () => {
-        arr.splice(0, n).forEach(item => {
+        arr.splice(0, 16).forEach(item => {
             const newdiv = document.createElement('div');
             newdiv.classList.add('explore-gallery-element');
             // const node = func(newdiv, item);
@@ -53,10 +53,10 @@ async function explore_gallery_render(_arr, n, func) {
             element.appendChild(newdiv);
         });
         const elm = document.getElementById('explore-more');
-        if (arr.length === 0 && !elm.classList.contains('explore-hidden')) {
+        if (arr.length === 0) {
             // If there are no items to display left
             elm.classList.add('explore-hidden');
-        } else if (elm.classList.contains('explore-hidden')) {
+        } else {
             // If there are items to display, show the button
             elm.classList.remove('explore-hidden');
         }
@@ -85,13 +85,32 @@ async function explore_gallery_render(_arr, n, func) {
  * 
  */
 async function load_explore_filter(filter) {
-    const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedata');
+    // const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedata');
+    const request = {
+        ok: true,
+        status: 202,
+        json: () => {
+            return [
+                { title: "console1", type: "console", name: "mario", brand: "Sony", img: "first.png"},
+                { title: "console2", type: "console", name: "mario", brand: "Sony", img: "first.png"},
+                { title: "obj3", type: "game", name: "mario", brand: "Sony", img: "first.png"},
+                { title: "obj4", type: "game", name: "mario", brand: "Sony", img: "first.png"},
+                { title: "obj5", type: "game", name: "mario", brand: "Sony", img: "first.png"},
+                { title: "console1", type: "console", name: "mario", brand: "Microsoft", img: "first.png"},
+                { title: "console2", type: "console", name: "mario", brand: "Microsoft", img: "first.png"},
+                { title: "obj3", type: "game", name: "mario", brand: "Microsoft", img: "first.png"},
+                { title: "obj4", type: "game", name: "mario", brand: "Microsoft", img: "first.png"},
+                { title: "obj5", type: "game", name: "mario", brand: "Microsoft", img: "first.png"},
+            ];
+        }
+    }
     // console.log(request);
     if (!request.ok || request.status === 404) {
         console.log('error getting explore datat\ncheck the link');
         return;
     }
-    explore_items = await request.json();
+    // explore_items = await request.json();
+    explore_items = request.json();
     explore_gallery_clear();
     let items = [];
     for (let i = 0; i < 7; ++i) {
@@ -101,7 +120,25 @@ async function load_explore_filter(filter) {
     items = shuffle(items);
 
     // TODO - filtering
-    console.log(explore_items);
+    console.log(items);
+    console.log(filter);
+    items = items.filter((item) => {
+        //         { String } brand filters by brand name
+        //  * @param { boolean } consoles includes consoles
+        //  * @param { boolean } games includes games
+        //  * @param { String } console_name name of the console the game is from
+        //  * @param { Array<String> } keys s
+        if ((filter.brand ?? item.brand) !== item.brand) {
+            return false;
+        }
+        if (!(filter.console ?? false) && item.type === "console") {
+            return false;
+        }
+        if (!(filter.game ?? false) && item.type === "game") {
+            return false;
+        }
+        return true;
+    });
     const arr = [...items];
 
     // Stack stuff
@@ -128,15 +165,16 @@ async function load_explore_filter(filter) {
         newelm.addEventListener('click', () => {
             // Filter based on the console
             // ie, display all games from the console
-            window.stack.push({ num: 4, array: arr, function: console_func }); // Push current data
+            window.stack.push( () => { explore_gallery_render(arr, console_func); } ); // Push current data
             explore_button_on(true);
+            console.log('reached here');
             load_explore_filter({ game: true });
             console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
     };
     const game_and_console = (newElm, item) => {
         if (item.type = 'console') {
-            console_func(newElm, item)
+            console_func(newElm, item);
         } else {
             game_func(newElm, item);
         }
@@ -144,13 +182,13 @@ async function load_explore_filter(filter) {
     // TODO -- Fix this
     if ((filter.console ?? false) && (filter.game ?? false)) {
         // From searching
-        explore_gallery_render(arr, 4, game_and_console);
+        explore_gallery_render(arr, game_and_console);
     } else if ((filter.console ?? false)) {
         // From clicking a brand
-        explore_gallery_render(arr, 8, console_func);
+        explore_gallery_render(arr, console_func);
     } else if ((filter.game ?? false)) {
         // From clicking a console
-        explore_gallery_render(arr, 8, game_func);
+        explore_gallery_render(arr, game_func);
     } else {
         // None --- error
         console.log('search not found');
@@ -190,14 +228,13 @@ async function explore_onload() {
             console.log(item.name + ' is the brand');
             // Save previous array before filtering
             const gallery = document.getElementById('explore-gallery');
-            window.stack.push({ iterations: 4, data: brands, function: brand_func });
+            window.stack.push(() => { explore_gallery_render(brands, brand_func); });
             explore_button_on(true);
-            
             /* See this function for details on the input */ load_explore_filter;
             await load_explore_filter({ brand: item.name, console: true });
         };
     };
-    explore_gallery_render(brands, 4, brand_func);
+    explore_gallery_render(brands, brand_func);
     const search_input = document.getElementById('explore-search-input');
     search_input.addEventListener('keypress', async (event) => {
         if (event.key === 'Enter') {
@@ -206,8 +243,9 @@ async function explore_onload() {
         }
     });
     back_button.onclick = async () => {
-        const stack_element = window.stack.pop();
-        explore_gallery_render(stack_element.array, stack_element.iterations, stack_element.function);
+        const stack_func = window.stack.pop();
+        explore_gallery_clear();
+        stack_func();
         if (window.stack.length <= 0) {
             explore_button_on(false);
         }

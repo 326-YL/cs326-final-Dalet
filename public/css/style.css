@@ -444,13 +444,14 @@ article {
 
 #explore-back {
     position: relative;
-    bottom: 1px;
+    bottom: 2px;
     border: solid;
     border-width: 3px;
     border-color: rgb(160, 160, 160);
     border-radius: 4px;
     background-color: rgb(230, 230, 230);
     padding: 2px 8px;
+    margin-right: 4px;
 }
 
 #explore-back:hover {
