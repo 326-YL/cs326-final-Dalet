@@ -83,7 +83,6 @@ async function explore_gallery_render(_arr, func) {
  * 
  */
 async function load_explore_filter(filter) {
-    // const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedata');
     const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedatatoo');
     // const request = {
     //     ok: true,
