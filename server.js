@@ -121,7 +121,7 @@ router.get('/thedatatoo', async function(req, res) {
   const client = await pool.connect();
 
   //Queries the database
-  const result = await client.query(`SELECT * FROM console`);
+  const result = await client.query(`SELECT * FROM consoles`);
   const results = (result) ? result.rows : null;
 
   let newArr = [
