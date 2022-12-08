@@ -44,11 +44,9 @@ async function explore_gallery_render(_arr, func) {
     const element = document.getElementById('explore-gallery');
     const arr = [..._arr]; // Copy contents
     const closure = () => {
-        arr.splice(0, 16).forEach(item => {
+        arr.splice(0, 16).forEach(async item => {
             const newdiv = document.createElement('div');
-            newdiv.classList.add('explore-gallery-element');
-            // const node = func(newdiv, item);
-            // element.appendChild(node);
+            newdiv.classList.add('explore-gallery-element');            
             func(newdiv, item);
             element.appendChild(newdiv);
         });
@@ -86,68 +84,68 @@ async function explore_gallery_render(_arr, func) {
  */
 async function load_explore_filter(filter) {
     // const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedata');
-    const request = {
-        ok: true,
-        status: 202,
-        json: () => {
-            return [
-                { title: "console1", type: "console", name: "mario", brand: "Sony", img: "first.png"},
-                { title: "console2", type: "console", name: "mario", brand: "Sony", img: "first.png"},
-                { title: "obj3", type: "game", name: "mario", brand: "Sony", img: "first.png"},
-                { title: "obj4", type: "game", name: "mario", brand: "Sony", img: "first.png"},
-                { title: "obj5", type: "game", name: "mario", brand: "Sony", img: "first.png"},
-                { title: "console1", type: "console", name: "mario", brand: "Microsoft", img: "first.png"},
-                { title: "console2", type: "console", name: "mario", brand: "Microsoft", img: "first.png"},
-                { title: "obj3", type: "game", name: "mario", brand: "Microsoft", img: "first.png"},
-                { title: "obj4", type: "game", name: "mario", brand: "Microsoft", img: "first.png"},
-                { title: "obj5", type: "game", name: "mario", brand: "Microsoft", img: "first.png"},
-            ];
-        }
-    }
+    const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedatatoo');
+    // const request = {
+    //     ok: true,
+    //     status: 202,
+    //     json: () => {
+    //         return [
+    //             { title: "console1", kind: "console", name: "mario", brand: "Sony", img: "../img/first.png"},
+    //             { title: "console2", kind: "console", name: "mario", brand: "Sony", img: "../img/first.png"},
+    //             { title: "obj3", kind: "game", name: "mario", brand: "Sony", img: "../img/first.png"},
+    //             { title: "obj4", kind: "game", name: "mario", brand: "Sony", img: "../img/first.png"},
+    //             { title: "obj5", kind: "game", name: "mario", brand: "Sony", img: "../img/first.png"},
+    //             { title: "console1", kind: "console", name: "mario", brand: "Microsoft", img: "../img/first.png"},
+    //             { title: "console2", kind: "console", name: "mario", brand: "Microsoft", img: "../img/first.png"},
+    //             { title: "obj3", kind: "game", name: "mario", brand: "Microsoft", img: "../img/first.png"},
+    //             { title: "obj4", kind: "game", name: "mario", brand: "Microsoft", img: "../img/first.png"},
+    //             { title: "obj5", kind: "game", name: "mario", brand: "Microsoft", img: "../img/first.png"},
+    //         ];
+    //     }
+    // }
     // console.log(request);
     if (!request.ok || request.status === 404) {
         console.log('error getting explore datat\ncheck the link');
         return;
     }
-    // explore_items = await request.json();
-    explore_items = request.json();
+    const explore_items = await request.json();
+    // explore_items = request.json();
     explore_gallery_clear();
-    let items = [];
-    for (let i = 0; i < 7; ++i) {
-        items = [...items, ...explore_items];
-    }
-    // items.sort((a, b) => a.title < b.title ? -1 : 1);
-    items = shuffle(items);
-
-    // TODO - filtering
-    console.log(items);
-    console.log(filter);
-    items = items.filter((item) => {
-        //         { String } brand filters by brand name
+    let filtered_items = explore_items.filter((item) => {
+        //  * @param { String } brand filters by brand name
         //  * @param { boolean } consoles includes consoles
         //  * @param { boolean } games includes games
         //  * @param { String } console_name name of the console the game is from
-        //  * @param { Array<String> } keys s
-        if ((filter.brand ?? item.brand) !== item.brand) {
+        //  * @param { Array<String> } keys strings for filtering generally
+        if ((filter.brand ?? item.brand) !== item.Brand) {
             return false;
         }
-        if (!(filter.console ?? false) && item.type === "console") {
+        if (!(filter.console ?? false) && item.Kind === "console") {
             return false;
         }
-        if (!(filter.game ?? false) && item.type === "game") {
+        if (!(filter.game ?? false) && item.Kind === "game") {
             return false;
         }
         return true;
     });
-    const arr = [...items];
+    filtered_items.sort((a, b) => a.name < b.name ? -1 : 1);
+    // filtered_items = shuffle(filtered_items);
+    const arr = [...filtered_items];
 
-    // Stack stuff
-    // With the way the back button stack works,
-    // we don't have to actually store this array
-
+    // const thing = {
+    //     "id": 1,
+    //     "Brand":"Nintendo",
+    //     "Kind":"console",
+    //     "Type":"NES",
+    //     "name":"NES Control Deck [NA]",
+    //     "img":"consolevariations.com/storage/images/variations/consoles/nintendo-entertainment-system/small/nintendo-entertainment-system.jpg"
+    // }
     const game_func = (newelm, item) => {
-        newelm.appendChild(document.createTextNode(item.title));
-        // Add image
+        newelm.appendChild(document.createTextNode(item.name));
+        const image = document.createElement('img');
+        image.src = item.img;
+        image.classList.add('explore-image');
+        newelm.appendChild(image);
         newelm.addEventListener('click', () => {
             // User clicked on the game to expand or select it.
             // Do something with the game and the database maybe?
@@ -156,24 +154,27 @@ async function load_explore_filter(filter) {
             } else {
                 newelm.classList.add('explore-gallery-selected');
             }
-            console.log(`coming from ${ item.title }! I am ${ item.name }!`);
+            console.log(`coming from ${ item.id }! I am ${ item.name }!`);
         });
     };
     const console_func = (newelm, item) => {
-        newelm.appendChild(document.createTextNode(item.title));
-        // Add image
+        newelm.appendChild(document.createTextNode(item.name));
+        const image = document.createElement('img');
+        image.src = item.img;
+        image.classList.add('explore-image');
+        newelm.appendChild(image);
         newelm.addEventListener('click', () => {
             // Filter based on the console
             // ie, display all games from the console
             window.stack.push( () => { explore_gallery_render(arr, console_func); } ); // Push current data
             explore_button_on(true);
-            console.log('reached here');
-            load_explore_filter({ game: true });
+            console.log('reached here, id: ' + item.id);
+            load_explore_filter({ brand: item.Brand, game: true });
             console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
     };
     const game_and_console = (newElm, item) => {
-        if (item.type = 'console') {
+        if (item.Kind = 'console') {
             console_func(newElm, item);
         } else {
             game_func(newElm, item);
@@ -217,8 +218,8 @@ async function explore_onload() {
     const brands = [
         { name: 'Microsoft', img_url: '' , other: {}},
         { name: 'Sony', img_url: '', other: {}},
-        { name: 'Nintendo', img_url: '', other: {}},
-        { name: 'Artari', img_url: '', other: {}}
+        { name: 'Nintendo', img_url: '', other: {}}
+        // { name: 'Artari', img_url: '', other: {}}
     ];
     const brand_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.name));
@@ -250,7 +251,6 @@ async function explore_onload() {
             explore_button_on(false);
         }
     };
-    // await load_explore_filter([]);
 }
 
 document.getElementById("greyBackground").addEventListener("click", (e) => { 

@@ -525,6 +525,8 @@ article {
     border-radius: 12px;
     /* for now */
     text-align: center;
+    /* Overflow */
+    overflow: hidden;
 }
 
 .explore-gallery-element:hover {
@@ -557,4 +559,9 @@ article {
 
 .explore-centered {
     text-align: center;
+}
+
+.explore-image {
+    width: 100%;
+    height: 100%;
 }
