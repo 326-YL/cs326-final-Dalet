@@ -142,7 +142,7 @@ async function load_explore_filter(filter) {
     const game_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.name));
         const image = document.createElement('img');
-        image.src = item.img;
+        image.src = "https://" + item.img;
         image.classList.add('explore-image');
         newelm.appendChild(image);
         newelm.addEventListener('click', () => {
@@ -159,7 +159,7 @@ async function load_explore_filter(filter) {
     const console_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.name));
         const image = document.createElement('img');
-        image.src = item.img;
+        image.src = "https://" + item.img; // Images don't have 'https://' tags
         image.classList.add('explore-image');
         newelm.appendChild(image);
         newelm.addEventListener('click', () => {
