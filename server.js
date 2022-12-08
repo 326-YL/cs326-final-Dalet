@@ -122,7 +122,7 @@ router.get('/thedatatoo', async function(req, res) {
 
   //Queries the database
   const result = await client.query(`SELECT * FROM console`);
-  const results = (result) ? result.rows[0] : null;
+  const results = (result) ? result.rows : null;
 
   let newArr = [
     //id, brand, kind, type, name, img
@@ -154,7 +154,7 @@ router.get('/thedatatoo', async function(req, res) {
   ["mario-3-game.webp", "Super Mario Bros 3", "P"]];
   newArr[3].games = [["mario-64-game.webp", "Super Mario 64", "W"]];
 
-  res.send(results);
+  res.send(JSON.stringify(results[0]));
   client.release();
 });
 
