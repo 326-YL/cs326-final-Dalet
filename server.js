@@ -55,48 +55,10 @@ const pool = new Pool({
 
 //Data for the collection.html
 router.get('/thedata', async function(req, res) {
-  /*
-  const cArr = [
-    {
-        name: "NES",
-        title: "NES",
-        consoles: ["nes.webp", "nes-2.webp"],
-        games: [
-            ["mario-game.webp", "Super Mario Bros", "B"],
-            ["mario-3-game.webp", "Super Mario Bros 3", "P"],
-            ["mario-3-game.webp", "Super Mario Bros 3", "P"]
-        ]
-    },
-    {
-        name: "3ds",
-        title: "New 3DS",
-        consoles: ["3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG", "3ds.JPG"],
-        games: [
-            ["ultra-sun.png", "Pokemon Ultra Sun", "B"],
-            ["mario-3d-land.jpg", "Super Mario 3D Land", "P"]
-        ]
-    },
-    {
-        name: "gba",
-        title: "Gameboy Advance",
-        consoles: ["gba-sp.png"],
-        games: [
-            ["firered.png", "Pokemon FireRed", "P"],
-            ["firered.png", "Pokemon FireRed", "P"]
-        ]
-    },
-    {
-        name: "n64",
-        title: "n64",
-        consoles: ["n64.webp"],
-        games: [
-            ["mario-64-game.webp", "Super Mario 64", "W"]
-        ]
-    }
-  ];
-  */
-  //work in progress
+  //This connects to database
   const client = await pool.connect();
+
+  //Queries the database
   const result = await client.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
   userownconsole.cid = consoles.cid WHERE uid=1`);
   const results = (result) ? result.rows : null;
@@ -150,6 +112,49 @@ router.get('/thedata', async function(req, res) {
   newArr[3].games = [["mario-64-game.webp", "Super Mario 64", "W"]];
 
   res.send(JSON.stringify(newArr));
+  client.release();
+});
+
+//Data for the explore.html
+router.get('/thedatatoo', async function(req, res) {
+  //This connects to database
+  const client = await pool.connect();
+
+  //Queries the database
+  const result = await client.query(`SELECT * FROM console`);
+  const results = (result) ? result.rows[0] : null;
+
+  let newArr = [
+    //id, brand, kind, type, name, img
+  ];
+  
+  //Takes the query and turn it into something like cArr
+  // results.forEach(x => {
+  //   let index = newArr.findIndex(con => {
+  //     return con.title === x.type;
+  //   });
+    
+  //   //if there doesn't exist a console
+  //   if (index === -1) {
+  //     let obj = {
+  //       name: x.type.replace(/\s/g, ''),
+  //       title: x.type,
+  //       consoles: ['https://'+x.imgurl],
+  //       games: []
+  //     }
+  //     newArr.push(obj);
+  //   } else {
+  //     newArr[index].consoles.push('https://'+x.imgurl);
+  //   }
+  // });
+
+  //temp 'games' array
+  newArr[2].games = [["mario-game.webp", "Super Mario Bros", "B"],
+  ["mario-3-game.webp", "Super Mario Bros 3", "P"],
+  ["mario-3-game.webp", "Super Mario Bros 3", "P"]];
+  newArr[3].games = [["mario-64-game.webp", "Super Mario 64", "W"]];
+
+  res.send(results);
   client.release();
 });
 
