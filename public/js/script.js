@@ -26,13 +26,13 @@ function shuffle(_arr) {
 
 function explore_button_on(bool) {
     const button = document.getElementById('explore-back');
-    bool ? button.classList.remove('hidden') 
-         : button.classList.add('hidden');
+    bool ? button.classList.remove('explore-hidden')
+         : button.classList.add('explore-hidden');
 }
 
 /**
  * 
- * @param { Array<Entry> } arr is an array of database entries 
+ * @param { Array<Entry> } _arr is an array of database entries --- does not get editted in reference
  * @param { number } n is the number of elements to render every time.
  * @param { (html.div_element, Entry) => html.div_element } func takes in an element and an entry from the database and edits it
  * 
@@ -40,22 +40,21 @@ function explore_button_on(bool) {
  * Every div edited by @param func will be appened to the explore-gallery
  * This function will also set the 'view more' button to display @param arr
  */
-async function explore_gallery_render(arr, n, func) {
+async function explore_gallery_render(_arr, func) {
     const element = document.getElementById('explore-gallery');
+    const arr = [..._arr]; // Copy contents
     const closure = () => {
-        arr.splice(0, n).forEach(item => {
+        arr.splice(0, 16).forEach(async item => {
             const newdiv = document.createElement('div');
-            newdiv.classList.add('explore-gallery-element');
-            // const node = func(newdiv, item);
-            // element.appendChild(node);
+            newdiv.classList.add('explore-gallery-element');            
             func(newdiv, item);
             element.appendChild(newdiv);
         });
         const elm = document.getElementById('explore-more');
-        if (arr.length === 0 && !elm.classList.contains('explore-hidden')) {
+        if (arr.length === 0) {
             // If there are no items to display left
             elm.classList.add('explore-hidden');
-        } else if (elm.classList.contains('explore-hidden')) {
+        } else {
             // If there are items to display, show the button
             elm.classList.remove('explore-hidden');
         }
@@ -71,10 +70,11 @@ async function explore_gallery_render(arr, n, func) {
  * Feel free to add any you may want below
  * 
  * @PREDETERMINED_ATTRIBUTES :
- * @param { String } brand filters with brand name
- * @param { boolean } consoles_only only includes consoles
- * @param { boolean } games_only only includes games
- *  @note If both @param consoles_only and @param games_only are active, the result is []
+ * @param { String } brand filters by brand name
+ * @param { boolean } consoles includes consoles
+ * @param { boolean } games includes games
+ * @param { String } console_name name of the console the game is from
+ * @param { Array<String> } keys string keys for searching through games, consoles, and brands
  * 
  * This function will display interactable database entries based on the given filter,
  * whether that be what console, brand, name, etc. it has.
@@ -83,40 +83,116 @@ async function explore_gallery_render(arr, n, func) {
  * 
  */
 async function load_explore_filter(filter) {
-    const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedata');
+    const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedatatoo');
+    // const request = {
+    //     ok: true,
+    //     status: 202,
+    //     json: () => {
+    //         return [
+    //             { title: "console1", kind: "console", name: "mario", brand: "Sony", img: "../img/first.png"},
+    //             { title: "console2", kind: "console", name: "mario", brand: "Sony", img: "../img/first.png"},
+    //             { title: "obj3", kind: "game", name: "mario", brand: "Sony", img: "../img/first.png"},
+    //             { title: "obj4", kind: "game", name: "mario", brand: "Sony", img: "../img/first.png"},
+    //             { title: "obj5", kind: "game", name: "mario", brand: "Sony", img: "../img/first.png"},
+    //             { title: "console1", kind: "console", name: "mario", brand: "Microsoft", img: "../img/first.png"},
+    //             { title: "console2", kind: "console", name: "mario", brand: "Microsoft", img: "../img/first.png"},
+    //             { title: "obj3", kind: "game", name: "mario", brand: "Microsoft", img: "../img/first.png"},
+    //             { title: "obj4", kind: "game", name: "mario", brand: "Microsoft", img: "../img/first.png"},
+    //             { title: "obj5", kind: "game", name: "mario", brand: "Microsoft", img: "../img/first.png"},
+    //         ];
+    //     }
+    // }
     // console.log(request);
     if (!request.ok || request.status === 404) {
         console.log('error getting explore datat\ncheck the link');
         return;
     }
-    explore_items = await request.json();
+    const explore_items = await request.json();
+    // explore_items = request.json();
     explore_gallery_clear();
-    let items = [];
-    for (let i = 0; i < 7; ++i) {
-        items = [...items, ...explore_items];
-    }
-    // items.sort((a, b) => a.title < b.title ? -1 : 1);
-    items = shuffle(items);
+    let filtered_items = explore_items.filter((item) => {
+        //  * @param { String } brand filters by brand name
+        //  * @param { boolean } consoles includes consoles
+        //  * @param { boolean } games includes games
+        //  * @param { String } console_name name of the console the game is from
+        //  * @param { Array<String> } keys strings for filtering generally
+        if ((filter.brand ?? item.brand) !== item.Brand) {
+            return false;
+        }
+        if (!(filter.console ?? false) && item.Kind === "console") {
+            return false;
+        }
+        if (!(filter.game ?? false) && item.Kind === "game") {
+            return false;
+        }
+        return true;
+    });
+    filtered_items.sort((a, b) => a.name < b.name ? -1 : 1);
+    // filtered_items = shuffle(filtered_items);
+    const arr = [...filtered_items];
 
-    // TODO - filtering
-    console.log(explore_items);
-    const arr = [...items];
-
-    // Stack stuff
-    // With the way the back button stack works,
-    // we don't have to actually store this array
-
-    explore_gallery_render(arr, 8, (newelm, item) => {
-        newelm.appendChild(document.createTextNode(item.title));
+    // const thing = {
+    //     "id": 1,
+    //     "Brand":"Nintendo",
+    //     "Kind":"console",
+    //     "Type":"NES",
+    //     "name":"NES Control Deck [NA]",
+    //     "img":"consolevariations.com/storage/images/variations/consoles/nintendo-entertainment-system/small/nintendo-entertainment-system.jpg"
+    // }
+    const game_func = (newelm, item) => {
+        newelm.appendChild(document.createTextNode(item.name));
+        const image = document.createElement('img');
+        image.src = item.img;
+        image.classList.add('explore-image');
+        newelm.appendChild(image);
         newelm.addEventListener('click', () => {
+            // User clicked on the game to expand or select it.
+            // Do something with the game and the database maybe?
             if (newelm.classList.contains('explore-gallery-selected')) {
                 newelm.classList.remove('explore-gallery-selected');
             } else {
                 newelm.classList.add('explore-gallery-selected');
             }
+            console.log(`coming from ${ item.id }! I am ${ item.name }!`);
+        });
+    };
+    const console_func = (newelm, item) => {
+        newelm.appendChild(document.createTextNode(item.name));
+        const image = document.createElement('img');
+        image.src = item.img;
+        image.classList.add('explore-image');
+        newelm.appendChild(image);
+        newelm.addEventListener('click', () => {
+            // Filter based on the console
+            // ie, display all games from the console
+            window.stack.push( () => { explore_gallery_render(arr, console_func); } ); // Push current data
+            explore_button_on(true);
+            console.log('reached here, id: ' + item.id);
+            load_explore_filter({ brand: item.Brand, game: true });
             console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
-    });
+    };
+    const game_and_console = (newElm, item) => {
+        if (item.Kind = 'console') {
+            console_func(newElm, item);
+        } else {
+            game_func(newElm, item);
+        }
+    }
+    // TODO -- Fix this
+    if ((filter.console ?? false) && (filter.game ?? false)) {
+        // From searching
+        explore_gallery_render(arr, game_and_console);
+    } else if ((filter.console ?? false)) {
+        // From clicking a brand
+        explore_gallery_render(arr, console_func);
+    } else if ((filter.game ?? false)) {
+        // From clicking a console
+        explore_gallery_render(arr, game_func);
+    } else {
+        // None --- error
+        console.log('search not found');
+    }
 }
 
 /**
@@ -136,37 +212,44 @@ async function explore_onload() {
 
     const back_button = document.getElementById('explore-back');
 
+    // Maybe move this stuff to the filter function since it's kinda like filtering.
     // Brands
     const brands = [
         { name: 'Microsoft', img_url: '' , other: {}},
         { name: 'Sony', img_url: '', other: {}},
-        { name: 'Nintendo', img_url: '', other: {}},
-        { name: 'Artari', img_url: '', other: {}}
+        { name: 'Nintendo', img_url: '', other: {}}
+        // { name: 'Artari', img_url: '', other: {}}
     ];
-    explore_gallery_render(brands, 4, (newelm, item) => {
+    const brand_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.name));
         // newelm.addImage(getImage(item.img_url))
         // --- Clicking on a brand ---
         newelm.onclick = async () => {
             console.log(item.name + ' is the brand');
-            
             // Save previous array before filtering
             const gallery = document.getElementById('explore-gallery');
-            window.stack.push(gallery.innerHTML);
+            window.stack.push(() => { explore_gallery_render(brands, brand_func); });
             explore_button_on(true);
-            
             /* See this function for details on the input */ load_explore_filter;
-            await load_explore_filter({ brand: item.name, consoles_only: true });
+            await load_explore_filter({ brand: item.name, console: true });
         };
-    });
+    };
+    explore_gallery_render(brands, brand_func);
     const search_input = document.getElementById('explore-search-input');
     search_input.addEventListener('keypress', async (event) => {
         if (event.key === 'Enter') {
             console.log(`"${ search_input.value }" was entered`);
-            await load_explore_filter([]);
+            await load_explore_filter({ game: true, console: true, keys: []});
         }
     });
-    // await load_explore_filter([]);
+    back_button.onclick = async () => {
+        const stack_func = window.stack.pop();
+        explore_gallery_clear();
+        stack_func();
+        if (window.stack.length <= 0) {
+            explore_button_on(false);
+        }
+    };
 }
 
 document.getElementById("greyBackground").addEventListener("click", (e) => { 
