@@ -129,26 +129,19 @@ router.get('/thedatatoo', async function(req, res) {
   ];
   
   //Takes the query and turn it into something like cArr
-  // results.forEach(x => {
-  //   let index = newArr.findIndex(con => {
-  //     return con.title === x.type;
-  //   });
-    
-  //   //if there doesn't exist a console
-  //   if (index === -1) {
-  //     let obj = {
-  //       name: x.type.replace(/\s/g, ''),
-  //       title: x.type,
-  //       consoles: ['https://'+x.imgurl],
-  //       games: []
-  //     }
-  //     newArr.push(obj);
-  //   } else {
-  //     newArr[index].consoles.push('https://'+x.imgurl);
-  //   }
-  // });
+  results.forEach(x => {
+    const newObj = {
+      id: x.cid,
+      Brand: x.brand,
+      Kind: "console",
+      Type: x.type,
+      name: x.name,
+      img: x.imgurl
+    }
+    newArr.push(newObj);
+  });
 
-  res.send(JSON.stringify(results[0]));
+  res.send(JSON.stringify(newArr));
   client.release();
 });
 
