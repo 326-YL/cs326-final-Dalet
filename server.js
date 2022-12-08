@@ -148,12 +148,6 @@ router.get('/thedatatoo', async function(req, res) {
   //   }
   // });
 
-  //temp 'games' array
-  newArr[2].games = [["mario-game.webp", "Super Mario Bros", "B"],
-  ["mario-3-game.webp", "Super Mario Bros 3", "P"],
-  ["mario-3-game.webp", "Super Mario Bros 3", "P"]];
-  newArr[3].games = [["mario-64-game.webp", "Super Mario 64", "W"]];
-
   res.send(JSON.stringify(results[0]));
   client.release();
 });
