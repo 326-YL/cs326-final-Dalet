@@ -220,7 +220,9 @@ router.get('/createConsoleTable', async (req, res) => {
     await client.query("DROP TABLE IF EXISTS consoles");
 
     //Gets an array of objects
-    let data = JSON.parse(fs.readFileSync('./console_data/data.json'));
+    const nintendo = JSON.parse(fs.readFileSync('./console_data/n-data.json'));
+    const sony = JSON.parse(fs.readFileSync('./console_data/sony-data.json'));
+    const microsoft = JSON.parse(fs.readFileSync('./console_data/ms-data.json'));
 
     //Creates a table if it doesn't exist
     await client.query(`CREATE TABLE IF NOT EXISTS consoles (
@@ -233,11 +235,25 @@ router.get('/createConsoleTable', async (req, res) => {
       );`);
 
     //Loops through the array of objects
-    for (let i = 0; i < data.length; i++) {
-      const con = data[i];
+    for (let i = 0; i < nintendo.length; i++) {
+      const con = nintendo[i];
       //Inserts into the 'console' database data from 'data'
       await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       VALUES ('Nintendo', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
+    }
+    //Loops through the array of objects
+    for (let i = 0; i < sony.length; i++) {
+      const con = sony[i];
+      //Inserts into the 'console' database data from 'data'
+      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      VALUES ('Sony', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
+    }
+    //Loops through the array of objects
+    for (let i = 0; i < microsoft.length; i++) {
+      const con = microsoft[i];
+      //Inserts into the 'console' database data from 'data'
+      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      VALUES ('Microsoft', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
     }
 
     //Assuming no issues arrive, we are sent back to the main page
