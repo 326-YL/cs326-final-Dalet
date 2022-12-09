@@ -1,7 +1,9 @@
+const { default: axios } = require("axios");
+
 /**
  * fetch
  */
-import axios from "axios";
+const axios =require('axios')
 const options = {
   method: 'GET',
   url: 'https://free-to-play-games-database.p.rapidapi.com/api/filter',
