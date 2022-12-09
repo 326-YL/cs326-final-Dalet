@@ -110,6 +110,10 @@ async function load_explore_filter(filter) {
     const explore_items = await request.json();
     // explore_items = request.json();
     explore_gallery_clear();
+    // Change keys to lowercase --- Used when filtering
+    if (filter.keys !== undefined) {
+        keys = keys.map(key => key.toLowerCase());
+    }
     let filtered_items = explore_items.filter((item) => {
         //  * @param { String } brand filters by brand name
         //  * @param { boolean } consoles includes consoles
@@ -124,6 +128,16 @@ async function load_explore_filter(filter) {
         }
         if (!(filter.game ?? false) && item.Kind === "game") {
             return false;
+        }
+        if (filter.keys !== undefined && filter.keys.length !== 0) {
+            if (!filter.keys.some(key => {
+                return item.Brand.toLowerCase().includes(key)
+                    || item.Kind.toLowerCase().includes(key)
+                    || item.type.toLowerCase().includes(key)
+                    || item.name.toLowerCase().includes(key);
+            })) {
+                return false;
+            }
         }
         return true;
     });
@@ -239,7 +253,7 @@ async function explore_onload() {
     search_input.addEventListener('keypress', async (event) => {
         if (event.key === 'Enter') {
             console.log(`"${ search_input.value }" was entered`);
-            await load_explore_filter({ game: true, console: true, keys: []});
+            await load_explore_filter({ game: true, console: true, keys: search_input.value.split(' ')});
         }
     });
     back_button.onclick = async () => {
