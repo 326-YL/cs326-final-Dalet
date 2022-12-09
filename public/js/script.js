@@ -252,8 +252,9 @@ async function explore_onload() {
     explore_call(async () => { explore_gallery_render(brands, brand_func); });
     const search_input = document.getElementById('explore-search-input');
     search_input.addEventListener('keypress', async (event) => {
+        const input_str = search_input.value;
         if (event.key === 'Enter') {
-            explore_call(async () => { await load_explore_filter({ game: true, console: true, keys_arr: search_input.value.split(' ')}); });
+            explore_call(async () => { await load_explore_filter({ game: true, console: true, keys_arr: input_str.split(' ')}); });
         }
     });
     back_button.onclick = async () => {
