@@ -563,9 +563,12 @@ article {
 }
 
 .explore-item-txt {
+    position: absolute;
     text-align: center;
     justify-content: center;
-    float: left;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color:rgba(0, 0, 0, 0.25);
     width: 100%;
     color: white;
