@@ -220,6 +220,14 @@ async function explore_gallery_clear() {
     document.getElementById('explore-gallery').innerHTML = '';
 }
 
+/**
+ * 
+ * @param { function: any } func calls a function that calls load_explore_filter or explore_load_gallery
+ * 
+ * The purpose of this function is to save the states of each search.
+ * Mostly to prevent redundent code elsewhere.
+ *  
+ */
 async function explore_call(func) {
     if (window.explore_current_call !== undefined) {
         window.stack.push(window.explore_current_call);
