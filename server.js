@@ -242,19 +242,19 @@ router.get('/createConsoleTable', async (req, res) => {
       VALUES ('Nintendo', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
     }
     //Loops through the array of objects
-    for (let i = 0; i < sony.length; i++) {
-      const con = sony[i];
-      //Inserts into the 'console' database data from 'data'
-      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
-      VALUES ('Sony', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
-    }
-    //Loops through the array of objects
-    // for (let i = 0; i < microsoft.length; i++) {
-    //   const con = microsoft[i];
+    // for (let i = 0; i < sony.length; i++) {
+    //   const con = sony[i];
     //   //Inserts into the 'console' database data from 'data'
     //   await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
-    //   VALUES ('Microsoft', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
+    //   VALUES ('Sony', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
     // }
+    //Loops through the array of objects
+    for (let i = 0; i < microsoft.length; i++) {
+      const con = microsoft[i];
+      //Inserts into the 'console' database data from 'data'
+      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      VALUES ('Microsoft', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
+    }
 
     //Assuming no issues arrive, we are sent back to the main page
     res.redirect('/');
