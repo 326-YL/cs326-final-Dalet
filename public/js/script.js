@@ -146,7 +146,7 @@ async function load_explore_filter(filter) {
                 return false;
             }
         }
-        if ((filter.types_only ?? false) && !(item.Type in types_array)) {
+        if ((filter.types_only ?? false) && !types_array.includes(item.Type)) {
             // Get unique types
             console.log(`${ item.Type } is not in the array`);
             console.log(types_array);
