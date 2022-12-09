@@ -239,8 +239,7 @@ async function explore_onload() {
     window.stack = [];
     window.explore_current_call = undefined;
     const back_button = document.getElementById('explore-back');
-    const console_filter_button = document.getElementById('explore-search-consolesfilter');
-    const game_filter_button = document.getElementById('explore-search-gamesfilter');
+    const all_filter_button = document.getElementById('explore-search-showall');
 
     const brands = [
         { name: 'Microsoft', img_url: '' , other: {}},
@@ -277,14 +276,9 @@ async function explore_onload() {
             explore_button_on(false);
         }
     };
-    console_filter_button.onclick = async () => {
+    all_filter_button.onclick = async () => {
         explore_call(async () => {
             await load_explore_filter({ console: true });
-        });
-    };
-    game_filter_button.onclick = async () => {
-        explore_call(async () => {
-            await load_explore_filter({ game: true });
         });
     };
 }
