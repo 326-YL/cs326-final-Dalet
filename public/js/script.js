@@ -69,12 +69,15 @@ async function explore_gallery_render(_arr, func) {
  *
  * Feel free to add any you may want below
  * 
- * @PREDETERMINED_ATTRIBUTES :
+ * @PREDETERMINED_FILTERS :
  * @param { String } brand filters by brand name
+ * @param { String } type filters by the Entry.Type value
  * @param { boolean } consoles includes consoles
  * @param { boolean } games includes games
  * @param { String } console_name name of the console the game is from
  * @param { Array<String> } keys_arr string keys for searching through games, consoles, and brands
+ * @PREDETERMINED_DATA_DISPLAYS
+ * @param { boolean } types_only displays the array of types
  * 
  * This function will display interactable database entries based on the given filter,
  * whether that be what console, brand, name, etc. it has.
@@ -109,14 +112,14 @@ async function load_explore_filter(filter) {
         return;
     }
     const explore_items = await request.json();
-    // explore_items = request.json();
-    explore_gallery_clear();
     // Change keys to lowercase --- Used when filtering
     if (filter.keys_arr !== undefined) {
         filter.keys_arr = filter.keys_arr.map(key => key.toLowerCase());
     }
+    let types_array = [];
     let filtered_items = explore_items.filter((item) => {
         //  * @param { String } brand filters by brand name
+        //  * @param { String } type filters by the Entry.Type value
         //  * @param { boolean } consoles includes consoles
         //  * @param { boolean } games includes games
         //  * @param { String } console_name name of the console the game is from
@@ -124,12 +127,15 @@ async function load_explore_filter(filter) {
         if ((filter.brand ?? item.Brand) !== item.Brand) {
             return false;
         }
-        if (!(filter.console ?? false) && item.Kind === "console") {
+        if ((filter.type ?? item.Type) !== item.Type) {
             return false;
         }
-        if (!(filter.game ?? false) && item.Kind === "game") {
-            return false;
-        }
+        // if (!(filter.console ?? false) && item.Kind === "console") {
+        //     return false;
+        // }
+        // if (!(filter.game ?? false) && item.Kind === "game") {
+        //     return false;
+        // }
         if (filter.keys_arr !== undefined && filter.keys_arr.length !== 0) {
             if (!filter.keys_arr.some(key => {
                 return item.Brand.toLowerCase().includes(key)
@@ -142,41 +148,21 @@ async function load_explore_filter(filter) {
                 return false;
             }
         }
+        if ((filter.types_only ?? false) && !(item.Type in types_array)) {
+            // Get unique types
+            types_array.push(item.Type);
+        }
         return true;
     });
     if (filtered_items.length === 0) {
         document.getElementById('explore-back').click();
         return;
     }
+
+
     filtered_items.sort((a, b) => a.name < b.name ? -1 : 1);
-    // filtered_items = shuffle(filtered_items);
     const arr = [...filtered_items];
 
-    // const thing = {
-    //     "id": 1,
-    //     "Brand":"Nintendo",
-    //     "Kind":"console",
-    //     "Type":"NES",
-    //     "name":"NES Control Deck [NA]",
-    //     "img":"consolevariations.com/storage/images/variations/consoles/nintendo-entertainment-system/small/nintendo-entertainment-system.jpg"
-    // }
-    const game_func = (newelm, item) => {
-        newelm.appendChild(document.createTextNode(item.name));
-        const image = document.createElement('img');
-        image.src = "https://" + item.img;
-        image.classList.add('explore-image');
-        newelm.appendChild(image);
-        newelm.addEventListener('click', () => {
-            // User clicked on the game to expand or select it.
-            // Do something with the game and the database maybe?
-            if (newelm.classList.contains('explore-gallery-selected')) {
-                newelm.classList.remove('explore-gallery-selected');
-            } else {
-                newelm.classList.add('explore-gallery-selected');
-            }
-            console.log(`coming from ${ item.id }! I am ${ item.name }!`);
-        });
-    };
     const console_func = (newelm, item) => {
         const txtSpan = document.createElement('span');
         txtSpan.classList.add('explore-item-txt');
@@ -187,33 +173,33 @@ async function load_explore_filter(filter) {
         image.classList.add('explore-image');
         newelm.appendChild(image);
         newelm.addEventListener('click', () => {
-            // Filter based on the console
-            // ie, display all games from the console
-            explore_call(async () => { await load_explore_filter({ brand: item.Brand, game: true })});
+            // Select the console
+            if (newelm.classList.contains('explore-gallery-selected')) {
+                newelm.classList.remove('explore-gallery-selected');
+            } else {
+                newelm.classList.add('explore-gallery-selected');
+            }
             console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
     };
-    const game_and_console = (newElm, item) => {
-        if (item.Kind = 'console') {
-            console_func(newElm, item);
-        } else {
-            game_func(newElm, item);
-        }
-    }
-    // TODO -- Fix this
-    if ((filter.console ?? false) && (filter.game ?? false)) {
-        // From searching
-        explore_gallery_render(arr, game_and_console);
-    } else if ((filter.console ?? false)) {
-        // From clicking a brand
-        explore_gallery_render(arr, console_func);
-    } else if ((filter.game ?? false)) {
-        // From clicking a console
-        explore_gallery_render(arr, game_func);
+    const type_to_console = (newelm, item) => {
+        const txtSpan = document.createElement('span');
+        txtSpan.classList.add('explore-item-txt');
+        txtSpan.appendChild(document.createTextNode(item));
+        newelm.appendChild(txtSpan);
+        newelm.addEventListener('click', () => {
+            explore_call(async () => { await load_explore_filter({ brand: filter.brand, type: item })});
+        });
+    };
+    // Clear gallery
+    explore_gallery_clear();
+    // Display
+    if (filter.types_only ?? false) {
+        explore_gallery_render(types_array, type_to_console);
     } else {
-        // None --- error
-        console.log('search not found');
+        explore_gallery_render(filtered_items, console_func);
     }
+
 }
 
 /**
@@ -246,28 +232,32 @@ async function explore_onload() {
     window.explore_current_call = undefined;
     const back_button = document.getElementById('explore-back');
     const console_filter_button = document.getElementById('explore-search-consolesfilter');
-    
+    const game_filter_button = document.getElementById('explore-search-gamesfilter');
+
     const brands = [
         { name: 'Microsoft', img_url: '' , other: {}},
         { name: 'Sony', img_url: '', other: {}},
         { name: 'Nintendo', img_url: '', other: {}}
     ];
-    const brand_func = (newelm, item) => {
+    const brand_to_type = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.name));
         // newelm.addImage(getImage(item.img_url))
         // --- Clicking on a brand ---
         newelm.onclick = async () => {
             console.log(item.name + ' is the brand');
             /* See this function for details on the input */ load_explore_filter;
-            explore_call(async () => { await load_explore_filter({ brand: item.name, console: true }); });
+            explore_call(async () => { await load_explore_filter({ brand: item.name, types_only: true }); });
         };
     };
-    explore_call(async () => { explore_gallery_render(brands, brand_func); });
+    
+    // Render brands
+    explore_call(async () => { explore_gallery_render(brands, brand_to_type); });
+    
     const search_input = document.getElementById('explore-search-input');
     search_input.addEventListener('keypress', async (event) => {
         const input_str = search_input.value;
         if (event.key === 'Enter') {
-            explore_call(async () => { await load_explore_filter({ game: true, console: true, keys_arr: input_str.split(' ')}); });
+            explore_call(async () => { await load_explore_filter({ keys_arr: input_str.split(' ')}); });
         }
     });
     back_button.onclick = async () => {
@@ -281,6 +271,11 @@ async function explore_onload() {
     console_filter_button.onclick = async () => {
         explore_call(async () => {
             await load_explore_filter({ console: true });
+        });
+    };
+    game_filter_button.onclick = async () => {
+        explore_call(async () => {
+            await load_explore_filter({ game: true });
         });
     };
 }

@@ -536,7 +536,11 @@ article {
 }
 
 .explore-gallery-selected {
-    background-color: lightgreen;
+    border-color: rgb(62, 180, 248);
+}
+
+.explore-gallery-selected:hover {
+    border-color: rgb(45, 134, 186);
 }
 
 .explore-type-game {
