@@ -143,8 +143,6 @@ async function load_explore_filter(filter) {
                     || item.Type.toLowerCase().includes(key)
                     || item.name.toLowerCase().includes(key);
             })) {
-                console.log('found none with these keys:');
-                console.log(filter.keys_arr);
                 return false;
             }
         }
