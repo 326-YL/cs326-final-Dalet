@@ -234,6 +234,8 @@ async function explore_onload() {
     window.stack = [];
     window.explore_current_call = undefined;
     const back_button = document.getElementById('explore-back');
+    const console_filter_button = document.getElementById('explore-search-consolesfilter');
+    
     const brands = [
         { name: 'Microsoft', img_url: '' , other: {}},
         { name: 'Sony', img_url: '', other: {}},
@@ -264,6 +266,11 @@ async function explore_onload() {
         if (window.stack.length <= 0) {
             explore_button_on(false);
         }
+    };
+    console_filter_button.onclick = async () => {
+        explore_call(async () => {
+            await load_explore_filter({ console: true });
+        });
     };
 }
 
