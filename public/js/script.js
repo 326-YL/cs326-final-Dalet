@@ -142,6 +142,9 @@ async function load_explore_filter(filter) {
         }
         return true;
     });
+    if (filtered_items.length === 0) {
+        return;
+    }
     filtered_items.sort((a, b) => a.name < b.name ? -1 : 1);
     // filtered_items = shuffle(filtered_items);
     const arr = [...filtered_items];
