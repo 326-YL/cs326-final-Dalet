@@ -569,11 +569,12 @@ article {
     top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color:rgba(0, 0, 0, 0.1)
+    background-color:rgba(0, 0, 0, 0.1);
 }
 
 .explore-image {
     position: relative;
     width: 100%;
     height: 100%;
+    z-index: -1;
 }
