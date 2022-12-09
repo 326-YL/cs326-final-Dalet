@@ -90,16 +90,16 @@ async function load_explore_filter(filter) {
             status: 202,
             json: () => {
                 return [
-                    { type: "NES other thing", Kind: "console", name: "mario", Brand: "Sony", img: ""},
-                    { type: "NES", Kind: "console", name: "mario", Brand: "Sony", img: ""},
-                    { type: "obj3", Kind: "console", name: "mario", Brand: "Sony", img: ""},
-                    { type: "obj4", Kind: "console", name: "mario", Brand: "Sony", img: ""},
-                    { type: "obj5", Kind: "console", name: "mario", Brand: "Sony", img: ""},
-                    { type: "console1", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
-                    { type: "console2", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
-                    { type: "obj3", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
-                    { type: "obj4", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
-                    { type: "obj5", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
+                    { Type: "NES other thing", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { Type: "NES", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { Type: "obj3", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { Type: "obj4", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { Type: "obj5", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { Type: "console1", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
+                    { Type: "console2", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
+                    { Type: "obj3", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
+                    { Type: "obj4", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
+                    { Type: "obj5", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
                 ];
             }
         }
@@ -134,7 +134,7 @@ async function load_explore_filter(filter) {
             if (!filter.keys_arr.some(key => {
                 return item.Brand.toLowerCase().includes(key)
                     || item.Kind.toLowerCase().includes(key)
-                    || item.type.toLowerCase().includes(key)
+                    || item.Type.toLowerCase().includes(key)
                     || item.name.toLowerCase().includes(key);
             })) {
                 return false;
