@@ -145,6 +145,7 @@ async function load_explore_filter(filter) {
         return true;
     });
     if (filtered_items.length === 0) {
+        document.getElementById('explore-back').click();
         return;
     }
     filtered_items.sort((a, b) => a.name < b.name ? -1 : 1);
@@ -229,23 +230,14 @@ async function explore_call(func) {
 }
 
 async function explore_onload() {
-    // create buttons for consoles or brands
-    // Nested filters for each
-    //      First brand then console
-    // Then show to resulting games as they are in the onload function
     
     window.stack = [];
     window.explore_current_call = undefined;
-
     const back_button = document.getElementById('explore-back');
-
-    // Maybe move this stuff to the filter function since it's kinda like filtering.
-    // Brands
     const brands = [
         { name: 'Microsoft', img_url: '' , other: {}},
         { name: 'Sony', img_url: '', other: {}},
         { name: 'Nintendo', img_url: '', other: {}}
-        // { name: 'Artari', img_url: '', other: {}}
     ];
     const brand_func = (newelm, item) => {
         newelm.appendChild(document.createTextNode(item.name));
@@ -253,11 +245,6 @@ async function explore_onload() {
         // --- Clicking on a brand ---
         newelm.onclick = async () => {
             console.log(item.name + ' is the brand');
-            // Save previous array before filtering
-            const gallery = document.getElementById('explore-gallery');
-            // window.stack.push(window.explore_current_call);
-            // window.explore_current_call = async () => { explore_gallery_render(brands, brand_func); };
-            // explore_button_on(true);
             /* See this function for details on the input */ load_explore_filter;
             explore_call(async () => { await load_explore_filter({ brand: item.name, console: true }); });
         };
@@ -266,12 +253,6 @@ async function explore_onload() {
     const search_input = document.getElementById('explore-search-input');
     search_input.addEventListener('keypress', async (event) => {
         if (event.key === 'Enter') {
-            console.log(`"${ search_input.value }" was entered`);
-            console.log('keys are: ');
-            console.log(search_input.value.split(' '));
-            // window.stack.push(() => window.explore_current_call);
-            // window.explore_current_call = async () => { await load_explore_filter({ game: true, console: true, keys_arr: search_input.value.split(' ')}) };
-            // explore_button_on(true);
             explore_call(async () => { await load_explore_filter({ game: true, console: true, keys_arr: search_input.value.split(' ')}); });
         }
     });
