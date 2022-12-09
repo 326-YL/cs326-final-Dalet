@@ -197,13 +197,13 @@ async function load_explore_filter(filter) {
     // TODO -- Fix this
     if ((filter.console ?? false) && (filter.game ?? false)) {
         // From searching
-        explore_call(async () => { explore_gallery_render(arr, game_and_console); });
+        explore_gallery_render(arr, game_and_console);
     } else if ((filter.console ?? false)) {
         // From clicking a brand
-        explore_call(async () => { explore_gallery_render(arr, console_func); });
+        explore_gallery_render(arr, console_func);
     } else if ((filter.game ?? false)) {
         // From clicking a console
-        explore_call(async () => { explore_gallery_render(arr, game_func); });
+        explore_gallery_render(arr, game_func);
     } else {
         // None --- error
         console.log('search not found');
