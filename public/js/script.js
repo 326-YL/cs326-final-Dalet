@@ -90,7 +90,7 @@ async function load_explore_filter(filter) {
             status: 202,
             json: () => {
                 return [
-                    { type: "NES", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { type: "NES other thing", Kind: "console", name: "mario", Brand: "Sony", img: ""},
                     { type: "NES", Kind: "console", name: "mario", Brand: "Sony", img: ""},
                     { type: "obj3", Kind: "console", name: "mario", Brand: "Sony", img: ""},
                     { type: "obj4", Kind: "console", name: "mario", Brand: "Sony", img: ""},
@@ -183,10 +183,7 @@ async function load_explore_filter(filter) {
         newelm.addEventListener('click', () => {
             // Filter based on the console
             // ie, display all games from the console
-            window.stack.push( () => { explore_gallery_render(arr, console_func); } ); // Push current data
-            explore_button_on(true);
-            console.log('reached here, id: ' + item.id);
-            load_explore_filter({ brand: item.Brand, game: true });
+            explore_call(async () => { await load_explore_filter({ brand: item.Brand, game: true })});
             console.log(`coming from ${ item.title }! I am ${ item.name }!`);
         });
     };
@@ -200,13 +197,13 @@ async function load_explore_filter(filter) {
     // TODO -- Fix this
     if ((filter.console ?? false) && (filter.game ?? false)) {
         // From searching
-        explore_gallery_render(arr, game_and_console);
+        explore_call(async () => { explore_gallery_render(arr, game_and_console); });
     } else if ((filter.console ?? false)) {
         // From clicking a brand
-        explore_gallery_render(arr, console_func);
+        explore_call(async () => { explore_gallery_render(arr, console_func); });
     } else if ((filter.game ?? false)) {
         // From clicking a console
-        explore_gallery_render(arr, game_func);
+        explore_call(async () => { explore_gallery_render(arr, game_func); });
     } else {
         // None --- error
         console.log('search not found');
