@@ -93,11 +93,14 @@ async function load_explore_filter(filter) {
             status: 202,
             json: () => {
                 return [
-                    { Type: "NES other thing", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { Type: "NES", Kind: "Playstation", name: "Playstaion 2", Brand: "Sony", img: ""},
+                    { Type: "NES", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { Type: "NES", Kind: "console", name: "mario", Brand: "Sony", img: ""},
                     { Type: "NES", Kind: "console", name: "mario", Brand: "Sony", img: ""},
                     { Type: "obj3", Kind: "console", name: "mario", Brand: "Sony", img: ""},
                     { Type: "obj4", Kind: "console", name: "mario", Brand: "Sony", img: ""},
                     { Type: "obj5", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { Type: "Playstation", Kind: "Playstation", name: "Playstaion 2 better result", Brand: "Sony", img: ""},
                     { Type: "console1", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
                     { Type: "console2", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
                     { Type: "obj3", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
@@ -117,6 +120,7 @@ async function load_explore_filter(filter) {
         filter.keys_arr = filter.keys_arr.map(key => key.toLowerCase());
     }
     let types_array = [];
+    let search_map = [];
     let filtered_items = explore_items.filter((item) => {
         //  * @param { String } brand filters by brand name
         //  * @param { String } type filters by the Entry.Type value
@@ -130,26 +134,26 @@ async function load_explore_filter(filter) {
         if ((filter.type ?? item.Type) !== item.Type) {
             return false;
         }
-        // if (!(filter.console ?? false) && item.Kind === "console") {
-        //     return false;
-        // }
-        // if (!(filter.game ?? false) && item.Kind === "game") {
-        //     return false;
-        // }
+        if ((filter.console ?? false) && item.Kind === "console") {
+            return false;
+        }
+        if ((filter.game ?? false) && item.Kind === "game") {
+            return false;
+        }
         if (filter.keys_arr !== undefined && filter.keys_arr.length !== 0) {
-            if (!filter.keys_arr.some(key => {
-                return item.Brand.toLowerCase().includes(key)
-                    || item.Kind.toLowerCase().includes(key)
-                    || item.Type.toLowerCase().includes(key)
-                    || item.name.toLowerCase().includes(key);
-            })) {
-                return false;
+            let value = filter.keys_arr.reduce((sum, key) => {
+                return sum + (item.Brand.toLowerCase().includes(key) ? 1 : 0)
+                           + (item.Kind.toLowerCase().includes(key) ? 1 : 0)
+                           + (item.Type.toLowerCase().includes(key) ? 1 : 0)
+                           + (item.name.toLowerCase().includes(key) ? 1 : 0);
+            }, 0);
+            if (search_map[value] === undefined) {
+                search_map[value] = [];
             }
+            search_map[value].push(item);
         }
         if ((filter.types_only ?? false) && !types_array.includes(item.Type)) {
             // Get unique types
-            console.log(`${ item.Type } is not in the array`);
-            console.log(types_array);
             types_array.push(item.Type);
         }
         return true;
@@ -159,9 +163,7 @@ async function load_explore_filter(filter) {
         return;
     }
 
-
     filtered_items.sort((a, b) => a.name < b.name ? -1 : 1);
-    const arr = [...filtered_items];
 
     const console_func = (newelm, item) => {
         const txtSpan = document.createElement('span');
@@ -169,7 +171,7 @@ async function load_explore_filter(filter) {
         txtSpan.appendChild(document.createTextNode(item.name));
         newelm.appendChild(txtSpan);
         const image = document.createElement('img');
-        image.src = "https://" + item.img; // Images don't have 'https://' tags
+        image.src = "https://" + item.img; // item.img doesn't have 'https://' tag
         image.classList.add('explore-image');
         newelm.appendChild(image);
         newelm.addEventListener('click', () => {
@@ -194,12 +196,18 @@ async function load_explore_filter(filter) {
     // Clear gallery
     explore_gallery_clear();
     // Display
-    if (filter.types_only ?? false) {
-        explore_gallery_render(types_array, type_to_console);
+    if (types_array.length > 0) {
+        explore_gallery_render([...types_array], type_to_console);
+    } else if (search_map.length > 0) {
+        // Array of weighted searched items
+        console.log('here');
+        const input = search_map.reduceRight((arr, elm) => {
+            return elm === undefined ? arr : arr.concat(elm);
+        }, []);
+        explore_gallery_render([...input], console_func);
     } else {
-        explore_gallery_render(filtered_items, console_func);
+        explore_gallery_render([...filtered_items], console_func);
     }
-
 }
 
 /**
@@ -240,12 +248,13 @@ async function explore_onload() {
         { name: 'Nintendo', img_url: '', other: {}}
     ];
     const brand_to_type = (newelm, item) => {
-        newelm.appendChild(document.createTextNode(item.name));
-        // newelm.addImage(getImage(item.img_url))
+        const txtSpan = document.createElement('span');
+        txtSpan.classList.add('explore-item-txt');
+        txtSpan.appendChild(document.createTextNode(item.name));
+        newelm.appendChild(txtSpan);
         // --- Clicking on a brand ---
         newelm.onclick = async () => {
             console.log(item.name + ' is the brand');
-            /* See this function for details on the input */ load_explore_filter;
             explore_call(async () => { await load_explore_filter({ brand: item.name, types_only: true }); });
         };
     };
