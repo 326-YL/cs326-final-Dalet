@@ -74,7 +74,7 @@ async function explore_gallery_render(_arr, func) {
  * @param { boolean } consoles includes consoles
  * @param { boolean } games includes games
  * @param { String } console_name name of the console the game is from
- * @param { Array<String> } keys string keys for searching through games, consoles, and brands
+ * @param { Array<String> } keys_arr string keys for searching through games, consoles, and brands
  * 
  * This function will display interactable database entries based on the given filter,
  * whether that be what console, brand, name, etc. it has.
@@ -83,25 +83,26 @@ async function explore_gallery_render(_arr, func) {
  * 
  */
 async function load_explore_filter(filter) {
-    const request = await fetch('https://damp-reaches-70694.herokuapp.com/thedatatoo');
-    // const request = {
-    //     ok: true,
-    //     status: 202,
-    //     json: () => {
-    //         return [
-    //             { title: "console1", kind: "console", name: "mario", brand: "Sony", img: "../img/first.png"},
-    //             { title: "console2", kind: "console", name: "mario", brand: "Sony", img: "../img/first.png"},
-    //             { title: "obj3", kind: "game", name: "mario", brand: "Sony", img: "../img/first.png"},
-    //             { title: "obj4", kind: "game", name: "mario", brand: "Sony", img: "../img/first.png"},
-    //             { title: "obj5", kind: "game", name: "mario", brand: "Sony", img: "../img/first.png"},
-    //             { title: "console1", kind: "console", name: "mario", brand: "Microsoft", img: "../img/first.png"},
-    //             { title: "console2", kind: "console", name: "mario", brand: "Microsoft", img: "../img/first.png"},
-    //             { title: "obj3", kind: "game", name: "mario", brand: "Microsoft", img: "../img/first.png"},
-    //             { title: "obj4", kind: "game", name: "mario", brand: "Microsoft", img: "../img/first.png"},
-    //             { title: "obj5", kind: "game", name: "mario", brand: "Microsoft", img: "../img/first.png"},
-    //         ];
-    //     }
-    // }
+    const request = window.location.hostname !== "127.0.0.1"
+        ? await fetch('https://damp-reaches-70694.herokuapp.com/thedatatoo')
+        : {
+            ok: true,
+            status: 202,
+            json: () => {
+                return [
+                    { type: "NES", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { type: "NES", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { type: "obj3", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { type: "obj4", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { type: "obj5", Kind: "console", name: "mario", Brand: "Sony", img: ""},
+                    { type: "console1", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
+                    { type: "console2", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
+                    { type: "obj3", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
+                    { type: "obj4", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
+                    { type: "obj5", Kind: "console", name: "mario", Brand: "Microsoft", img: ""},
+                ];
+            }
+        }
     // console.log(request);
     if (!request.ok || request.status === 404) {
         console.log('error getting explore datat\ncheck the link');
@@ -111,8 +112,8 @@ async function load_explore_filter(filter) {
     // explore_items = request.json();
     explore_gallery_clear();
     // Change keys to lowercase --- Used when filtering
-    if (filter.keys !== undefined) {
-        keys = keys.map(key => key.toLowerCase());
+    if (filter.keys_arr !== undefined) {
+        filter.keys_arr = filter.keys_arr.map(key => key.toLowerCase());
     }
     let filtered_items = explore_items.filter((item) => {
         //  * @param { String } brand filters by brand name
@@ -120,7 +121,7 @@ async function load_explore_filter(filter) {
         //  * @param { boolean } games includes games
         //  * @param { String } console_name name of the console the game is from
         //  * @param { Array<String> } keys strings for filtering generally
-        if ((filter.brand ?? item.brand) !== item.Brand) {
+        if ((filter.brand ?? item.Brand) !== item.Brand) {
             return false;
         }
         if (!(filter.console ?? false) && item.Kind === "console") {
@@ -129,8 +130,8 @@ async function load_explore_filter(filter) {
         if (!(filter.game ?? false) && item.Kind === "game") {
             return false;
         }
-        if (filter.keys !== undefined && filter.keys.length !== 0) {
-            if (!filter.keys.some(key => {
+        if (filter.keys_arr !== undefined && filter.keys_arr.length !== 0) {
+            if (!filter.keys_arr.some(key => {
                 return item.Brand.toLowerCase().includes(key)
                     || item.Kind.toLowerCase().includes(key)
                     || item.type.toLowerCase().includes(key)
@@ -216,6 +217,15 @@ async function explore_gallery_clear() {
     document.getElementById('explore-gallery').innerHTML = '';
 }
 
+async function explore_call(func) {
+    if (window.explore_current_call !== undefined) {
+        window.stack.push(window.explore_current_call);
+        explore_button_on(true);
+    }
+    window.explore_current_call = func;
+    func();
+}
+
 async function explore_onload() {
     // create buttons for consoles or brands
     // Nested filters for each
@@ -223,6 +233,7 @@ async function explore_onload() {
     // Then show to resulting games as they are in the onload function
     
     window.stack = [];
+    window.explore_current_call = undefined;
 
     const back_button = document.getElementById('explore-back');
 
@@ -242,24 +253,30 @@ async function explore_onload() {
             console.log(item.name + ' is the brand');
             // Save previous array before filtering
             const gallery = document.getElementById('explore-gallery');
-            window.stack.push(() => { explore_gallery_render(brands, brand_func); });
-            explore_button_on(true);
+            // window.stack.push(window.explore_current_call);
+            // window.explore_current_call = async () => { explore_gallery_render(brands, brand_func); };
+            // explore_button_on(true);
             /* See this function for details on the input */ load_explore_filter;
-            await load_explore_filter({ brand: item.name, console: true });
+            explore_call(async () => { await load_explore_filter({ brand: item.name, console: true }); });
         };
     };
-    explore_gallery_render(brands, brand_func);
+    explore_call(async () => { explore_gallery_render(brands, brand_func); });
     const search_input = document.getElementById('explore-search-input');
     search_input.addEventListener('keypress', async (event) => {
         if (event.key === 'Enter') {
             console.log(`"${ search_input.value }" was entered`);
-            await load_explore_filter({ game: true, console: true, keys: search_input.value.split(' ')});
+            console.log('keys are: ');
+            console.log(search_input.value.split(' '));
+            // window.stack.push(() => window.explore_current_call);
+            // window.explore_current_call = async () => { await load_explore_filter({ game: true, console: true, keys_arr: search_input.value.split(' ')}) };
+            // explore_button_on(true);
+            explore_call(async () => { await load_explore_filter({ game: true, console: true, keys_arr: search_input.value.split(' ')}); });
         }
     });
     back_button.onclick = async () => {
-        const stack_func = window.stack.pop();
+        window.explore_current_call = window.stack.pop();
         explore_gallery_clear();
-        stack_func();
+        window.explore_current_call();
         if (window.stack.length <= 0) {
             explore_button_on(false);
         }
