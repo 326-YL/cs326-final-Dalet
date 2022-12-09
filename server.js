@@ -10,7 +10,7 @@ const gameFile='./vedioGame.json'
 const production="https://git.heroku.com/damp-reaches-70694.com"
 const development='http://localhost:8000/'
 let url = (process.env.NODE_ENV ? production : development);
-const bcrypt =require('bcrypt');
+//const bcrypt =require('bcrypt');
 
 
 //MAIN PAGE ROUTES
@@ -178,16 +178,18 @@ app.post('/signup', async function(req,res) {
   //This turns getUser into an array
   const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
   if (isAvailableCheck.length === 0 && isAvailableCheck!==null) {
+    await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${hashpword}');`);
     //This gives the data to the database
     // adding password hash and store it back to database 
-  try{
+  /*try{
     //encrypt password first
     const hashpword=await bcrypt.hash(pword,10);
     await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${hashpword}');`);
   }catch(err){
     res.status(500).json({'message':err.message});
   }  
-  }
+  }*/
+}
   //Returns us home.
   res.redirect("/");
   client.release();
