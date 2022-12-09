@@ -10,6 +10,8 @@ const gameFile='./vedioGame.json'
 const production="https://git.heroku.com/damp-reaches-70694.com"
 const development='http://localhost:8000/'
 let url = (process.env.NODE_ENV ? production : development);
+const bcrypt =require('bcrypt');
+
 
 //MAIN PAGE ROUTES
 
@@ -153,10 +155,14 @@ app.post('/signup', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
   const { uname, pword } = req.body;
+  //validate inputs
+  if(!uname||!pword){
+    return res.status(400).json({'message':'need username and password'});
+  };
+
 
   //This connects to database
   const client = await pool.connect();
-
   //this creates the table if it does not exist.
   await client.query(`CREATE TABLE IF NOT EXISTS users (
     uid SERIAL,
@@ -164,15 +170,23 @@ app.post('/signup', async function(req,res) {
     password VARCHAR(255),
     PRIMARY KEY(uid)
     );`);
+  
 
   //This grabs all usernames that are the same as uname (Hopefully none)
   const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
-
+  
   //This turns getUser into an array
   const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
   if (isAvailableCheck.length === 0 && isAvailableCheck!==null) {
     //This gives the data to the database
-    await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${pword}');`);
+    // adding password hash and store it back to database 
+  try{
+    //encrypt password first
+    const hashpword=await bcrypt.hash(pword,10);
+    await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${hashpword}');`);
+  }catch(err){
+    res.status(500).json({'message':err.message});
+  }  
   }
   //Returns us home.
   res.redirect("/");
