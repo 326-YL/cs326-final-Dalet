@@ -10,8 +10,12 @@ const client=require('./database');
 const http=require('http');
 //This allows me to read the data.json file
 const fs = require('fs');
+const passport=require("passport");
+const initializePassport=require("./passportConfig");
 
-//const bcrypt =require('bcrypt');
+
+initializePassport(passport);
+
 
 
 //MAIN PAGE ROUTES
@@ -25,6 +29,9 @@ app.use(
     resave:false,
     saveUnitialized:false
   }))
+
+app.use(passport.session);
+app.use(passport.initialize);
 
 app.use(flash());
 
@@ -213,7 +220,7 @@ app.post('/signup', async function(req,res) {
 });
 
 //Login database POST
-app.post('/login', async function(req,res) {
+app.post('/users/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
   const { uname, pword } = req.body;
@@ -489,6 +496,7 @@ client.query(`UPDATE userownconsole SET ${queryString} WHERE gameID=${id};`);
 res.send("update");
 //client.release();
 })
+
 
 //Runs the server on heroku server or local port (I think)
 const httpServer = http.createServer(app);
