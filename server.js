@@ -167,7 +167,6 @@ router.get('/thedatatoo', async function(req, res) {
 
 //This allows me to get the data from body easily
 
-
 //Signup database POST
 app.post('/signup', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
