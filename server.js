@@ -6,13 +6,12 @@ const flash=require('express-flash');
 const express = require('express');
 
 const router = express.Router();
-const client=require('./database');
+const pool=require('./database');
 const http=require('http');
 //This allows me to read the data.json file
 const fs = require('fs');
 const passport=require("passport");
 const initializePassport=require("./passportConfig");
-
 const app = express();
 
 initializePassport(passport);
@@ -175,7 +174,7 @@ app.post('/signup', async function(req,res) {
   //website.com?uname='_'&pword='_'
   const { uname, pword} = req.body;
   //This connects to database
-  //const client = await pool.connect();
+  const client = await pool.connect();
   //validate inputs
   if(!uname||!pword){
     return res.json({'message':'need username, password'});
