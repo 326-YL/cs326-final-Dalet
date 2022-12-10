@@ -3,8 +3,8 @@ const app = express();
 const path = require('path');
 const router = express.Router();
 
-//const session=reqiure('express-session');
-import session from "express-session";
+const session=reqiure('express-session');
+//import session from "express-session";
 const flash=reqiure('express-flash');
 const client=reqiure('./database');
 const http=require('http');
@@ -496,4 +496,4 @@ res.send("update");
 
 //Runs the server on heroku server or local port (I think)
 const httpServer = http.createServer(app);
-httpServer.listen(process.env.PORT || 443);
+httpServer.listen(process.env.PORT || 5432);
