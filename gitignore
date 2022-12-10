@@ -1,3 +1,4 @@
 #ignore the filename secret.json
 secret.json
 /node_modules
+*.env

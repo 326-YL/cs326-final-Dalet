@@ -2,14 +2,18 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const router = express.Router();
-const database=require("./database")
+
+const session=reqiure('express-session');
+const flash=reqiure('express-flash');
+const client=reqiure('./database');
 const http=require('http');
-const loadObject= require('./public/js/engine');
-const { send } = require('process');
-const gameFile='./vedioGame.json'
+const bcrypt=require('bcrypt');
+//This allows me to read the data.json file
+const fs = require('fs');
 const production="https://git.heroku.com/damp-reaches-70694.com"
 const development='http://localhost:8000/'
 let url = (process.env.NODE_ENV ? production : development);
+
 //const bcrypt =require('bcrypt');
 
 
@@ -17,6 +21,15 @@ let url = (process.env.NODE_ENV ? production : development);
 
 //to include all assets (css files and images)
 app.use(express.static(path.join(__dirname,'public')));
+
+app.use(
+  session({ 
+    secret:"secret",
+    resave:false,
+    saveUnitialized:false
+  }))
+
+app.use(flash());
 
 //add the router
 app.use('/', router);
@@ -47,18 +60,18 @@ router.get('/explore',function(req,res){
 //DATA / DATABASE RELATED ROUTES
 
 //This access database, 'pool' refers to a datapool (I'd imagine)
-const { Pool } = require('pg');
-const pool = new Pool({
+//const { Pool } = require('pg');
+/*const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
-});
+});*/
 
 //Data for the collection.html
 router.get('/thedata', async function(req, res) {
   //This connects to database
-  const client = await pool.connect();
+  //const client = await pool.connect();
 
   //Queries the database
   const result = await client.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
@@ -114,13 +127,13 @@ router.get('/thedata', async function(req, res) {
   newArr[3].games = [["mario-64-game.webp", "Super Mario 64", "W"]];
 
   res.send(JSON.stringify(newArr));
-  client.release();
+  //client.release();
 });
 
 //Data for the explore.html
 router.get('/thedatatoo', async function(req, res) {
   //This connects to database
-  const client = await pool.connect();
+  //const client = await pool.connect();
 
   //Queries the database
   const result = await client.query(`SELECT * FROM consoles`);
@@ -144,7 +157,7 @@ router.get('/thedatatoo', async function(req, res) {
   });
 
   res.send(JSON.stringify(newArr));
-  client.release();
+  //client.release();
 });
 
 //This allows me to get the data from body easily
@@ -154,45 +167,52 @@ app.use(express.urlencoded({extended:true}));
 app.post('/signup', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
-  const { uname, pword } = req.body;
-  //validate inputs
-  if(!uname||!pword){
-    return res.status(400).json({'message':'need username and password'});
-  };
-
-
+  const { uname, pword} = req.body;
   //This connects to database
-  const client = await pool.connect();
-  //this creates the table if it does not exist.
-  await client.query(`CREATE TABLE IF NOT EXISTS users (
-    uid SERIAL,
-    username VARCHAR(255),
-    password VARCHAR(255),
-    PRIMARY KEY(uid)
-    );`);
-  
+  //const client = await pool.connect();
+  //validate inputs
+  if(!uname||!pword||!email){
+    return res.json({'message':'need username, password'});
+  };
+  if(pword.length<8){
+    return res.json({'message':'password length must be greater then 8'});
+  };
+  //hash the users'password
+  try{
+    let hashword=await bcrypt.hash(pword,10);
+    await client.query(`CREATE TABLE IF NOT EXISTS users (
+      uid SERIAL,
+      username VARCHAR(255),
+      password VARCHAR(255),
+      email VARCHAR(255),
+      PRIMARY KEY(uid)
+      );`);
+      //This grabs all usernames that are the same as uname (Hopefully none)
+      const getUser = client.query(`SELECT username FROM users WHERE username='${uname}';`,
+           (err,result)=>{
+             console.log(err);
+             console.log(result.rows)
 
-  //This grabs all usernames that are the same as uname (Hopefully none)
-  const getUser = await client.query(`SELECT username FROM users WHERE username='${uname}'`);
-  
-  //This turns getUser into an array
-  const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
-  if (isAvailableCheck.length === 0 && isAvailableCheck!==null) {
-    await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${hashpword}');`);
-    //This gives the data to the database
-    // adding password hash and store it back to database 
-  /*try{
-    //encrypt password first
-    const hashpword=await bcrypt.hash(pword,10);
-    await client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${hashpword}');`);
-  }catch(err){
-    res.status(500).json({'message':err.message});
-  }  
-  }*/
-}
+      });
+      //This turns getUser into an array
+      const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
+      if (isAvailableCheck.length === 0 && isAvailableCheck!==null) {
+        client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${hashword}');`,
+          (err,result)=>{
+            if(err){
+              throw err;
+            }
+            console.log(result.rows);
+            req.flash('meg',"succussfully sign up your account now,please login");
+            res.redirect('/users/login');
+
+        });
+      }
+  }catch(e){
+    console.log(e);
+  }
   //Returns us home.
-  res.redirect("/");
-  client.release();
+  //client.release();
 });
 
 //Login database POST
@@ -200,7 +220,6 @@ app.post('/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
   const { uname, pword } = req.body;
-
   //This connects to database
   const client = await pool.connect();
 
@@ -216,21 +235,21 @@ app.post('/login', async function(req,res) {
     //This turns result into an array
     const passCheck = (result!==undefined) ? result.rows : null;
     res.send(passCheck)
+
   }
   //Returns us home.
-  res.redirect("/");
-  client.release();
+  res.send({'validate':'true'});
+  //res.redirect("/");
+  //client.release();
 });
 
-//This allows me to read the data.json file
-const fs = require('fs');
-const e = require('express');
+
 
 //Adding all the data from the data.json to the database
 router.get('/createConsoleTable', async (req, res) => {
   try {
     //This connects to database
-    const client = await pool.connect();
+    //const client = await pool.connect();
 
     //SQL that deletes consoles database, if it exists
     await client.query("DROP TABLE IF EXISTS consoles");
@@ -274,7 +293,7 @@ router.get('/createConsoleTable', async (req, res) => {
 
     //Assuming no issues arrive, we are sent back to the main page
     res.redirect('/');
-    client.release();
+    //client.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -285,7 +304,7 @@ router.get('/createConsoleTable', async (req, res) => {
 router.get('/showconsole', async (req, res) => {
   try {
     //This connects to database
-    const client = await pool.connect();
+    //const client = await pool.connect();
 
     //SQL that gets everything from 'consoles' database
     const result = await client.query("SELECT * FROM consoles");
@@ -295,7 +314,7 @@ router.get('/showconsole', async (req, res) => {
 
     //Displays results array onto page
     res.send(results);
-    client.release();
+    //client.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -316,7 +335,7 @@ router.get('/showusers', async (req, res) => {
 
     //Displays results array onto page
     res.send(results);
-    client.release();
+    //client.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -327,7 +346,7 @@ router.get('/showusers', async (req, res) => {
 router.get('/showuserownconsole', async (req, res) => {
   try {
     //This connects to database
-    const client = await pool.connect();
+    //const client = await pool.connect();
 
     //SQL that gets everything from 'userownconsole' database
     const result = await client.query("SELECT * FROM userownconsole");
@@ -337,7 +356,7 @@ router.get('/showuserownconsole', async (req, res) => {
 
     //Displays results array onto page
     res.send(results);
-    client.release();
+    //client.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -348,7 +367,7 @@ router.get('/showuserownconsole', async (req, res) => {
 router.get('/createUserOwnConsole', async (req, res) => {
   try {
     //This connects to database
-    const client = await pool.connect();
+    //const client = await pool.connect();
 
     //SQL That creates the table if it doesn't exist
     await client.query(`CREATE TABLE IF NOT EXISTS userownconsole (
@@ -373,7 +392,7 @@ router.get('/createUserOwnConsole', async (req, res) => {
 
     //Displays final test on page (Will not work twice, shouldn't work anymore)
     res.send(results);
-    client.release();
+    //client.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -390,7 +409,7 @@ router.get('/user/:id/create',async(req,res)=>{
   }
   let newGame=req.query;
   console.log(newGame);
-  const client = await pool.connect();
+  //const client = await pool.connect();
   const variable= Object.keys(newGame);
   console.log(variable);
   const values=Object.values(newGame);
@@ -404,7 +423,7 @@ router.get('/user/:id/create',async(req,res)=>{
     //database.createData(gameFile,req);
   
   res.send("create a new game");
-  client.release();
+  //client.release();
   //res.send("create");
 });
 //Crud operstion with database 
@@ -419,7 +438,7 @@ router.get('/user/:id/create',async(req,res)=>{
   }
   let newGame=req.query;
   console.log(newGame);
-  const client = await pool.connect();
+  //const client = await pool.connect();
   const variable= Object.keys(newGame);
   console.log(variable);
   const values=Object.values(newGame);
@@ -433,7 +452,7 @@ router.get('/user/:id/create',async(req,res)=>{
     //database.createData(gameFile,req);
   
   res.send("create a new game");
-  client.release();
+  //client.release();
   //res.send("create");
 });
 router.get('/user/:id/delete',async(req,res)=>{
@@ -446,7 +465,7 @@ let key=Object.keys(data);
 let value=Object.values(data);
 client.query(`DELETE FROM userownconsole WHERE ${key[0]}=${value[0]};`);
 res.send("delete");
-client.release();
+//client.release();
 });
 
 router.get('/user/:id/update/:gameID', async(req,res)=>{
@@ -471,7 +490,7 @@ for(let i=0;i<variable.length;i++){
 console.log(queryString);
 client.query(`UPDATE userownconsole SET ${queryString} WHERE gameID=${id};`);
 res.send("update");
-client.release();
+//client.release();
 })
 
 //Runs the server on heroku server or local port (I think)

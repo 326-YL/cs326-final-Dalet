@@ -1,37 +1,16 @@
-//database
-const fs = require('fs');
-const userFile='./user.json';
-const videoGameFile='./videoGame.json';
-const gameFile='./vedioGame.json'
-function createData(filename,object){
-    console.log('filename'+filename);
-    console.log(object);
-    if(gameFile===filename){
-        fs.writeFile(filename,JSON.stringify(object))
+//system database
+const isProduction=process.env.NODE_ENV==="production";
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+//require("dotenv").config();
+const { Pool }=require('pg');
+
+const connectionString=`postgresql://${process.env.DB_USER}${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
+const client=new Pool({
+    connectionString:isProduction? process.env.DATABASE_URL:connectionString,
+    ssl: {
+        rejectUnauthorized: false
     }
-    
-}
-
-
-function updateData(filename,req,res){
-
-
-
-}
-
-function deleteData(filename,req,res){
-
-
-
-
-}
-
-function searchData(filename,object,url){
-
-
-return object;
-
-
-}
-
-module.exports={ createData, searchData }
+});
+module.exports={client};

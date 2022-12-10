@@ -2,8 +2,8 @@
   "name": "video-game-website",
   "version": "1.0.0",
   "engines": {
-    "node": "18.x",
-    "npm": "8.x"
+    "node": "v19.1.0",
+    "npm": "8.19.3"
   },
   "description": "a web application for video game searching, reviewing,collecting",
   "main": "script.js",
@@ -28,7 +28,13 @@
   "homepage": "https://github.com/326-YL/cs326-final-Dalet#readme",
   "dependencies": {
     "axios": "^1.2.1",
+    "bcrypt": "^5.1.0",
     "express": "^4.18.2",
-    "pg": "^8.8.0"
+    "express-flash": "^0.0.2",
+    "install": "^0.13.0",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.8.0",
+    "session": "^0.1.0"
   }
 }
