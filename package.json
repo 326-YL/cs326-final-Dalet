@@ -14,7 +14,6 @@
     "start": "node server.js"
   },
   "repository": {
-    "type": "git",
     "url": "git+https://github.com/326-YL/cs326-final-Dalet.git"
   },
   "keywords": [
