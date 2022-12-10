@@ -197,7 +197,6 @@ app.post('/signup', async function(req,res) {
            (err,result)=>{
              console.log(err);
              console.log(result.rows)
-
       });
       //This turns getUser into an array
       const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
