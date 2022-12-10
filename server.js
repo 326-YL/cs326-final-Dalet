@@ -12,6 +12,7 @@ const http=require('http');
 const fs = require('fs');
 const passport=require("passport");
 const initializePassport=require("./passportConfig");
+const client=require("./database").client;
 const app = express();
 
 initializePassport(passport);
