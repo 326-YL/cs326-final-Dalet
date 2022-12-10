@@ -4,7 +4,7 @@ const path = require('path');
 const router = express.Router();
 const bcrypt =require('bcrypt');
 
-const flash=reqiure('flash');
+const flash=reqiure('express-flash');
 
 const session=reqiure('express-session');
 
