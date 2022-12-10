@@ -6,7 +6,7 @@ const flash=require('express-flash');
 const express = require('express');
 
 const router = express.Router();
-const pool=require('./database');
+const client=require('./database');
 const http=require('http');
 //This allows me to read the data.json file
 const fs = require('fs');
