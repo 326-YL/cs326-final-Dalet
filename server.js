@@ -177,7 +177,7 @@ app.post('/signup', async function(req,res) {
   //This connects to database
   //const client = await pool.connect();
   //validate inputs
-  if(!uname||!pword||!email){
+  if(!uname||!pword){
     return res.json({'message':'need username, password'});
   };
   if(pword.length<8){
