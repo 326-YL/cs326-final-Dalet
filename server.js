@@ -3,7 +3,9 @@ const app = express();
 const path = require('path');
 const router = express.Router();
 const bcrypt =require('bcrypt');
-const flash=reqiure('express-flash');
+
+const flash=reqiure('flash');
+
 const session=reqiure('express-session');
 
 const client=reqiure('./database');
