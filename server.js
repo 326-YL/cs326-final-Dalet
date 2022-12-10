@@ -6,7 +6,7 @@ const flash=require('express-flash');
 const express = require('express');
 
 const router = express.Router();
-const client=require('./database');
+const client=require('./database').client;
 const http=require('http');
 //This allows me to read the data.json file
 const fs = require('fs');
@@ -185,7 +185,7 @@ app.post('/signup', async function(req,res) {
   //hash the users'password
   try{
     let hashword=await bcrypt.hash(pword,10);
-     client.query(`CREATE TABLE IF NOT EXISTS users (
+     await client.query(`CREATE TABLE IF NOT EXISTS users (
       uid SERIAL,
       username VARCHAR(255),
       password VARCHAR(255),
