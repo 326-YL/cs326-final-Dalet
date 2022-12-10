@@ -11,9 +11,6 @@ const http=require('http');
 const bcrypt=require('bcrypt');
 //This allows me to read the data.json file
 const fs = require('fs');
-const production="https://git.heroku.com/damp-reaches-70694.com"
-const development='http://localhost:8000/'
-let url = (process.env.NODE_ENV ? production : development);
 
 //const bcrypt =require('bcrypt');
 
