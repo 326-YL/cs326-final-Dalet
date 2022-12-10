@@ -3,7 +3,8 @@ const app = express();
 const path = require('path');
 const router = express.Router();
 
-const session=reqiure('express-session');
+//const session=reqiure('express-session');
+import session from "express-session";
 const flash=reqiure('express-flash');
 const client=reqiure('./database');
 const http=require('http');
