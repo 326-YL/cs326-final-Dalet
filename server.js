@@ -1,10 +1,10 @@
 const path = require('path');
 const bcrypt =require('bcrypt');
-var cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const session=require('express-session');
 const flash=require('express-flash');
 const express = require('express');
-const app = express();
+
 const router = express.Router();
 const client=require('./database');
 const http=require('http');
@@ -13,6 +13,7 @@ const fs = require('fs');
 const passport=require("passport");
 const initializePassport=require("./passportConfig");
 
+const app = express();
 
 initializePassport(passport);
 
@@ -31,7 +32,7 @@ app.use(
   }))
 
 app.use(passport.session());
-app.use(passport.initialize);
+app.use(passport.initialize());
 
 app.use(flash());
 
