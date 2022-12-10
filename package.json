@@ -2,7 +2,7 @@
   "name": "video-game-website",
   "version": "1.0.0",
   "engines": {
-    "node": ">= 8.0.0",
+    "node": "8.0.0",
     "npm": "8.19.3"
   },
   "description": "a web application for video game searching, reviewing,collecting",
