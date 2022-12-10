@@ -174,7 +174,7 @@ app.post('/signup', async function(req,res) {
   //website.com?uname='_'&pword='_'
   const { uname, pword} = req.body;
   //This connects to database
-  const client = await pool.connect();
+  //const client = await pool.connect();
   //validate inputs
   if(!uname||!pword){
     return res.json({'message':'need username, password'});
@@ -185,7 +185,7 @@ app.post('/signup', async function(req,res) {
   //hash the users'password
   try{
     let hashword=await bcrypt.hash(pword,10);
-    await client.query(`CREATE TABLE IF NOT EXISTS users (
+     client.query(`CREATE TABLE IF NOT EXISTS users (
       uid SERIAL,
       username VARCHAR(255),
       password VARCHAR(255),
