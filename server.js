@@ -22,7 +22,7 @@ initializePassport(passport);
 
 //to include all assets (css files and images)
 app.use(express.static(path.join(__dirname,'public')));
-
+//app.use(express.urlencoded({extended:true}));
 app.use(
   session({ 
     secret:"secret",
@@ -165,7 +165,7 @@ router.get('/thedatatoo', async function(req, res) {
 });
 
 //This allows me to get the data from body easily
-app.use(express.urlencoded({extended:true}));
+
 
 //Signup database POST
 app.post('/signup', async function(req,res) {
