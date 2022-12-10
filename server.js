@@ -12,7 +12,7 @@ const http=require('http');
 const fs = require('fs');
 const passport=require("passport");
 const initializePassport=require("./passportConfig");
-
+app.set('trust proxy', 1);
 const app = express();
 
 initializePassport(passport);
