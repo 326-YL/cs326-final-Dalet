@@ -3,8 +3,9 @@ const app = express();
 const path = require('path');
 const router = express.Router();
 const bcrypt =require('bcrypt');
-const session=reqiure('express-session');
 const flash=reqiure('express-flash');
+const session=reqiure('express-session');
+
 const client=reqiure('./database');
 const http=require('http');
 //This allows me to read the data.json file
