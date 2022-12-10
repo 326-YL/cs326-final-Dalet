@@ -30,7 +30,7 @@ app.use(
     saveUnitialized:false
   }))
 
-app.use(passport.session);
+app.use(passport.session());
 app.use(passport.initialize);
 
 app.use(flash());
