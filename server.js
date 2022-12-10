@@ -7,7 +7,6 @@ const session=reqiure('express-session');
 const flash=reqiure('express-flash');
 const client=reqiure('./database');
 const http=require('http');
-const bcrypt=require('bcrypt');
 //This allows me to read the data.json file
 const fs = require('fs');
 
