@@ -18,7 +18,7 @@
     "nodemon": "^2.0.20"
   },
   "repository": {
-    "type":"git",
+    "type": "git",
     "url": "git+https://github.com/326-YL/cs326-final-Dalet.git"
   },
   "keywords": [
