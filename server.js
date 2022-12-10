@@ -23,7 +23,7 @@ initializePassport(passport);
 
 //to include all assets (css files and images)
 app.use(express.static(path.join(__dirname,'public')));
-//app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true}));
 app.use(
   session({ 
     secret:"secret",
