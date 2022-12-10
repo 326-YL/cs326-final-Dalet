@@ -12,7 +12,7 @@ const http=require('http');
 const fs = require('fs');
 const passport=require("passport");
 const initializePassport=require("./passportConfig");
-app.set('trust proxy', 1);
+
 const app = express();
 
 initializePassport(passport);
@@ -24,6 +24,7 @@ initializePassport(passport);
 //to include all assets (css files and images)
 app.use(express.static(path.join(__dirname,'public')));
 app.use(express.urlencoded({extended:true}));
+app.set('trust proxy', 1);
 app.use(
   session({ 
     secret:"secret",
