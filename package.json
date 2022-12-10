@@ -18,6 +18,7 @@
     "nodemon": "^2.0.20"
   },
   "repository": {
+    "type":"git",
     "url": "git+https://github.com/326-YL/cs326-final-Dalet.git"
   },
   "keywords": [
@@ -35,7 +36,6 @@
     "express": "^4.18.2",
     "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
-    "flash": "^1.1.0",
     "install": "^0.13.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
