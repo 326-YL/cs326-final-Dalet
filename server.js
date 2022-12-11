@@ -325,12 +325,6 @@ app.get('/users/gameBoard/search',isNotAuthenticated,(req,res)=>{
   console.log(keyword);
   console.log(limit);
   //const sql=`SELECT *FROM consoles WHERE brand=`
-  
-  
-  
-  
-  
-  
   client.query(`SELECT * FROM consoles WHERE brand=$1 Limit ${parseInt(limit)};`,[brand],
      (err,result)=>{
         if(err) throw err;
@@ -345,13 +339,47 @@ app.get('/users/gameBoard/search',isNotAuthenticated,(req,res)=>{
         console.log(data.record);
         res.render('gameBoard',{data:data});
      })
+})
+app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
+  let gameID=req.query.gameID;
+  let username=req.user.username;
+  let email=req.user.email;
+  let record=req.user.record;
+
+  await client.query(`CREATE TABLE IF NOT EXISTS users_games (
+    id SERIAL,
+    username VARCHAR(255),
+    gameID VARCHAR(255)
+    PRIMARY KEY(id)
+    );`);
+    client.query(`INSERT INTO users_games(username,gameID) VALUES ($1, $2);`, 
+          [username,gameID],(err,result)=>{
+           if(err) throw err;
+
+           console.log(result.rows);
+
+           data={
+            username:username,
+            email:email,
+            record:record,
+           }
+           res.render('gameBoard',{data:data});
+      });
 
 
-  
+
+
+
+
 
 
 
 })
+
+
+
+
+
 /*
 app.post('/users/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:

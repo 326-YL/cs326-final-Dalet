@@ -53,28 +53,20 @@
     <a href="/users/logout">logout</a>
     <p>my video games </p>
 
-    <p>my rank</p>
 
     <form action="/users/gameBoard/show-list" method="POST">
-      <div id="show-list">
-         <table>
+      <table>
+         <!--<% if(typeof data.record!='undefined') { %> 
+           <% let record=data.record %>
+         <% for(var i=0; i < record.length; i++) { %>
             <tr>
-               <th>
-                 favorite
-               </th>
-               <th>
-                  title
-               </th>
-                  
-               <th>
-                  play?
-               </th>
+              <td><%= record[i].brand %></td>
+              <td><%= record[i].name%> </td>
+              <td><img src="<%= record[i].imgurl%>" width=150" height="150s"> </td>
             </tr>
-            <tr>
-
-            </tr>
-         </table>
-      </div>
+         <% } %>
+         <% } %>-->
+      </table>
    </form>
    <form action="/users/gameBoard/search" method="GET">
       <div id="search-game">
@@ -115,7 +107,7 @@
       <% } %>-->
    </table>
       <div id="add-game">
-         <input type="submit" value="add" />
+         <form action="/users/gameBoard/add" method="GET">
          <table >
             <% if(typeof data.record!='undefined') { %> 
               <% let record=data.record %>
@@ -126,11 +118,14 @@
                  <td><strong></strong><%= record[i].name%></strong> </td>
                  <% let imgurl='https://'+record[i].imgurl %>
                  <td><img src="<%=imgurl%>" width="150" height="150"> </td>
-                 <td><input type="submit" name="game" value="<%= record[i].cid%>" /></td>
+                 <input type="text" name="gameID" value="<%= record[i].cid%>" hidden/>
+                 <td><input type="submit" name="add" value="add" /></td>
                </tr>
             <% } %>
             <% } %>
          </table>
+         <input type="text" name="record" value="<%= data.record>" hidden/>
+         </form>
       </div>
       <div id="update-game">
          <input type="submit" value="update" />
