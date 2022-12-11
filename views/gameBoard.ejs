@@ -99,13 +99,17 @@
           <input type="submit" value="search"/>
       </div>
    </form>
-   <ul>
+   <table>
       <% if(typeof data.record!='undefined') { %> 
-          <% data.record.forEach(e=>{ %>
-              <li><%= e%></li>
-          <% }) %>
+        <% let record=data.record %>
+      <% for(var i=0; i < record.length; i++) { %>
+         <tr>
+           <td><%= record[i].brand %></td>
+           <td><%= record[i].name%> </td>
+         </tr>
       <% } %>
-   </ul>
+      <% } %>
+   </table>
       <div id="add-game">
          <input type="submit" value="create" />
 

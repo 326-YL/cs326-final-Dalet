@@ -331,17 +331,14 @@ app.get('/users/gameBoard/search',isNotAuthenticated,(req,res)=>{
   
   
   
-  client.query(`SELECT * FROM consoles WHERE brand=$1;`,[brand],
+  client.query(`SELECT * FROM consoles WHERE brand=$1 Limit=${parseInt(limit)};`,[brand],
      (err,result)=>{
         if(err) throw err;
-        console.log(result.rows[limit]);
-        let record=[];
-        for(let i=0;i<limit;i++){
-           record.push(result.rows[i]);
-        }
-        data[record]=record;
+        console.log(result.rows);
+        data[record]=record.rows;
         data[username]=username;
         data[email]=email;
+        console.log(data.record);
         res.render('gameBoard',{data:data});
      })
 
