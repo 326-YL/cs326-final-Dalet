@@ -209,7 +209,8 @@ app.post('/signup', async function(req,res) {
               throw err;
             }
             console.log("fater insert");
-            console.log(result.rows);
+            let results=client.query(`select count(*) from users;`);
+            console.log(results);
             req.flash('meg',"succussfully sign up your account now,please login");
             res.redirect('/');
 
