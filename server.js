@@ -15,10 +15,10 @@ initializePassport(passport);
 const client=require("./database").client;
 const app = express();
 
+let data={
 
 
-
-
+}
 //MAIN PAGE ROUTES
 
 //to include all assets (css files and images)
@@ -282,6 +282,7 @@ app.get('/users/gameBoard',isNotAuthenticated,async(req,res)=>{
   const username=req.user.username;
   const email=req.user.email;
   const pw=req.user.password;
+
  
    /*client.query(`SELECT email FROM users_info WHERE username=$1`,[username],(err,result)=>{
     if(err){
@@ -292,7 +293,7 @@ app.get('/users/gameBoard',isNotAuthenticated,async(req,res)=>{
    // let email= result.rows[0].email;
 
   })*/
-  let data={
+  data={
     username:username,
     email:email
   }
@@ -312,7 +313,10 @@ app.get('/users/logout',(req,res)=>{
   
 });
 
-app.get('/users/gameBoard/search',(req,res)=>{
+app.get('/users/gameBoard/search',isNotAuthenticated,(req,res)=>{
+  console.log(req.user.username);
+  let username=req.user.username;
+  let email=req.user.email;
 
   let brand=req.query.brand;
   let keyword=req.query.keyword
@@ -335,7 +339,10 @@ app.get('/users/gameBoard/search',(req,res)=>{
         for(let i=0;i<limit;i++){
            record.push(result.rows[i]);
         }
-        res.render('gameBoard',record);
+        data[record]=record;
+        data[username]=username;
+        data[email]=email;
+        res.render('gameBoard',[data,record]);
      })
 
 

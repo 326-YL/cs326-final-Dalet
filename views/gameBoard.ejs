@@ -34,6 +34,7 @@
 
 
 
+
    })
 </script>
  </head>
@@ -99,8 +100,8 @@
       </div>
    </form>
    <ul>
-      <% if(typeof record !='undefined') { %> 
-          <% record.forEach(e=>{ %>
+      <% if(typeof data.record!='undefined') { %> 
+          <% data.record.forEach(e=>{ %>
               <li><%= e%></li>
           <% }) %>
       <% } %>
