@@ -116,8 +116,9 @@
                  <td><%= record[i].cid%></td>
                  <td><%= record[i].brand %></td>
                  <td><%= record[i].name%> </td>
-                 <td><img src="<%= record[i].imgurl %>"> </td>
-                 <td><input type="checkbox" value="<%= record[i].cid%>" /></td>
+                 <% let imgurl='https://'+record[i].imgurl %>
+                 <td><img src="<%=imgurl%>"> </td>
+                 <td><input type="checkbox" name="game" value="<%= record[i].cid%>" /></td>
                </tr>
             <% } %>
             <% } %>
