@@ -333,9 +333,9 @@ app.get('/users/gameBoard/search',(req,res)=>{
         console.log(result.rows[limit]);
         let data=[];
         for(let i=0;i<limit;i++){
-           data.push(result.rows[i]);
+           record.push(result.rows[i]);
         }
-        res.render('/users/gameBoard',data);
+        res.render('/users/gameBoard',record);
      })
 
 

@@ -98,16 +98,13 @@
           <input type="submit" value="search"/>
       </div>
    </form>
-
    <ul>
-      <% if(typeof data !='undefined') { %> 
-          <% data.forEach(e=>{ %>
+      <% if(typeof record !='undefined') { %> 
+          <% record.forEach(e=>{ %>
               <li><%= e%></li>
           <% }) %>
       <% } %>
-  </ul>
-
-
+   </ul>
       <div id="add-game">
          <input type="submit" value="create" />
 
