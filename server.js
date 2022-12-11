@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 const session=require('express-session');
 const flash=require('express-flash');
 const express = require('express');
-const ejsLint = require('ejs-lint');
 const router = express.Router();
 const http=require('http');
 //This allows me to read the data.json file
