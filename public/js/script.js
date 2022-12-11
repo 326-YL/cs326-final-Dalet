@@ -283,7 +283,7 @@ async function explore_onload() {
     };
 }
 
-document.getElementById("greyBackground").addEventListener("click", (e) => { 
+/*document.getElementById("greyBackground").addEventListener("click", (e) => { 
     if(e.target === document.getElementById("greyBackground")){ 
       login(0);
     } 
@@ -311,7 +311,7 @@ function login(val) {
     } else if (val===1) {
         
     }
-}
+}*/
 
 
 async function getData() {

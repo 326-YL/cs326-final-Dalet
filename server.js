@@ -37,27 +37,28 @@ app.use(passport.initialize());
 app.use(flash());
 
 //add the router
-app.use('/', router);
+//app.use('/', router);
+app.set("view engine","ejs");
 
 //Index page
-router.get('/',function(req,res){
+app.get('/',function(req,res){
   //sends index.html to the client
   res.sendFile(path.join(__dirname+'/public/index.html'));
 });
 
-router.get('/index',function(req,res){
+app.get('/index',function(req,res){
   //redirects to above route
   res.redirect('/')
 });
 
 //collection page
-router.get('/collection',function(req,res){
+app.get('/collection',function(req,res){
   //sends collection.html to the client
   res.sendFile(path.join(__dirname+'/public/collection.html'));
 });
 
 //explore page
-router.get('/explore',function(req,res){
+app.get('/explore',function(req,res){
   //sends explore.html to the client
   res.sendFile(path.join(__dirname+'/public/explore.html'));
 });
@@ -74,7 +75,7 @@ router.get('/explore',function(req,res){
 });*/
 
 //Data for the collection.html
-router.get('/thedata', async function(req, res) {
+app.get('/thedata', async function(req, res) {
   //This connects to database
   //const client = await pool.connect();
 
@@ -136,7 +137,7 @@ router.get('/thedata', async function(req, res) {
 });
 
 //Data for the explore.html
-router.get('/thedatatoo', async function(req, res) {
+app.get('/thedatatoo', async function(req, res) {
   //This connects to database
   //const client = await pool.connect();
 
@@ -169,7 +170,7 @@ router.get('/thedatatoo', async function(req, res) {
 
 
 //Signup database POST
-app.post('/signup', async function(req,res) {
+app.post('/users/signUp', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
   const { uname, pword} = req.body;
@@ -210,7 +211,7 @@ app.post('/signup', async function(req,res) {
             if(err){
               throw err;
             }
-            console.log("fater insert");
+            
             req.flash('meg',"succussfully sign up your account now,please login");
             res.redirect('/');
 
@@ -224,6 +225,33 @@ app.post('/signup', async function(req,res) {
 });
 
 //Login database POST
+app.post("/users/login",passport.authenticate('local',{
+   successRedirect:"/",
+   failureRedirect:"/",
+   failureFlash:true
+})
+);
+function isUserAuthenticated(req,res,next){
+  if(req.isAutheticated()){
+    return res.redirect("/");
+  }
+  next();
+}
+function isNotAuthenticated(req,res,next){
+  if(req.isAutheticated()){
+    return next();
+  }
+  res.redirect("/");
+}
+app.get('/users/signup',(req,res)=>{
+  res.render("signUp");
+})
+
+app.get('/users/login',(req,res)=>{
+  res.render("login");
+})
+
+/*
 app.post('/users/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
@@ -251,10 +279,10 @@ app.post('/users/login', async function(req,res) {
   //client.release();
 });
 
-
+*/
 
 //Adding all the data from the data.json to the database
-router.get('/createConsoleTable', async (req, res) => {
+app.get('/createConsoleTable', async (req, res) => {
   try {
     //This connects to database
     //const client = await pool.connect();
@@ -309,7 +337,7 @@ router.get('/createConsoleTable', async (req, res) => {
 });
 
 //This simply shows all the data inside 'consoles' database
-router.get('/showconsole', async (req, res) => {
+app.get('/showconsole', async (req, res) => {
   try {
     //This connects to database
     //const client = await pool.connect();
@@ -330,7 +358,7 @@ router.get('/showconsole', async (req, res) => {
 });
 
 //This simply shows all the data inside 'users' database
-router.get('/showusers', async (req, res) => {
+app.get('/showusers', async (req, res) => {
   try {
     //This connects to database
     const client = await pool.connect();
@@ -372,7 +400,7 @@ router.get('/showuserownconsole', async (req, res) => {
 });
 
 //This creates a table 'userownconsole' and adds sample data into it
-router.get('/createUserOwnConsole', async (req, res) => {
+app.get('/createUserOwnConsole', async (req, res) => {
   try {
     //This connects to database
     //const client = await pool.connect();
@@ -409,7 +437,7 @@ router.get('/createUserOwnConsole', async (req, res) => {
 //create operation after users login their account , get endpoint 'create'
 //in database, this will be an insertion operation, it will fetch the url params query string
 // and convert it into object
-router.get('/user/:id/create',async(req,res)=>{
+app.get('/user/:id/create',async(req,res)=>{
   //req.query return the url as json object
   /**this is just a test code */
   if(req.params.id===123){
@@ -438,7 +466,7 @@ router.get('/user/:id/create',async(req,res)=>{
 //create operation after users login their account , get endpoint 'create'
 //in database, this will be an insertion operation, it will fetch the url params query string
 // and convert it into object
-router.get('/user/:id/create',async(req,res)=>{
+app.get('/user/:id/create',async(req,res)=>{
   //req.query return the url as json object
   /**this is just a test code */
   if(req.params.id===123){
