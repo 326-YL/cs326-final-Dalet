@@ -213,10 +213,10 @@ app.post('/users/signUp', async function(req,res) {
            (err,result)=>{
              console.log(err);
              console.log("the result here:");
-             console.log(result.rows);
+             //console.log(result.rows);
       });
       //This turns getUser into an array
-      console.log(getUser.rows[0]['count']);
+      //console.log(getUser.rows[0]['count']);
       //const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
       if (getUser===undefined) {
         client.query(`INSERT INTO users (username,email,password) VALUES ('${uname}', '${email},'${hashword}');`,
@@ -225,7 +225,7 @@ app.post('/users/signUp', async function(req,res) {
               throw err;
             }
             req.flash('meg',"succussfully sign up your account now,please login");
-            res.redirect('/');
+            res.redirect('/users/login');
         });
       }
   }catch(e){
