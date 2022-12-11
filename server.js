@@ -207,12 +207,12 @@ app.post('/users/signUp', async function(req,res) {
       PRIMARY KEY(uid)
       );`);
       //This grabs all usernames that are the same as uname (Hopefully none)
-      let results= await client.query(`select * from users;`);
-      console.log(results.rows);
+      //let results= await client.query(`select * from users;`);
+      //console.log(results.rows);
       const getUser =client.query(`SELECT COUNT(*) FROM users WHERE username=$1;`,[uname],
            (err,result)=>{
              console.log(err);
-             console.log("the result here:");
+             //console.log("the result here:");
              //console.log(result.rows);
       });
       //This turns getUser into an array
