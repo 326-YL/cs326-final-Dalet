@@ -167,6 +167,7 @@ router.get('/thedatatoo', async function(req, res) {
 
 //This allows me to get the data from body easily
 
+
 //Signup database POST
 app.post('/signup', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
@@ -198,6 +199,7 @@ app.post('/signup', async function(req,res) {
              console.log(result.rows)
       });
       //This turns getUser into an array
+      console.log(getUser);
       const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
       if (isAvailableCheck.length === 0 && isAvailableCheck!==null) {
         client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${hashword}');`,
