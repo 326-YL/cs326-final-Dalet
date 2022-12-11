@@ -174,7 +174,7 @@ app.post('/users/signUp', async function(req,res) {
   //website.com?uname='_'&pword='_'
   const {uname,email,pword,pword2} = req.body;
   let result=client.query(`SELECT * FROM users_info`,(err,re)=>{
-    return res.status(200).send(re.rows);
+    console.log(re.rows);
   });
         //console.log(result.rows);
   console.log(
