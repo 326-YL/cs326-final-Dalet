@@ -251,7 +251,7 @@ function isNotAuthenticated(req,res,next){
   }
   res.redirect("/");
 }
-app.get('/users/signup',(req,res)=>{
+app.get('/users/signUp',(req,res)=>{
   res.render("signUp");
 })
 
