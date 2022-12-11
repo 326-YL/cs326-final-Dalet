@@ -175,7 +175,7 @@ app.post('/users/signUp', async function(req,res) {
   //website.com?uname='_'&pword='_'
   const {uname,email,pword,pword2} = req.body;
   console.log(
-    {uname,email,password,password2}
+    {uname,email,pword,pword2}
   )
   //This connects to database
   //const client = await pool.connect();
