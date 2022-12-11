@@ -179,7 +179,7 @@ app.post('/users/signUp', async function(req,res) {
   //This connects to database
   //const client = await pool.connect();
   //validate inputs
-  let errors=[];
+  let errors=[],nameRepeat='',emailRepeat='';
   if(!uname||!email||!pword||!pword2){
     errors.push({message:'fields can not be empty!'})
     //return res.json({'message':'need username, password'});
@@ -191,14 +191,32 @@ app.post('/users/signUp', async function(req,res) {
   if(pword!==pword2){
     errors.push({message:'second password does not match the first one'})
   }
-  if(errors.length>0){
+  const getUser =client.query(`SELECT COUNT(*) FROM users WHERE username=$1;`,[uname],
+           (err,result)=>{
+             console.log(err);
+             console.log("the result here:");
+  });
+  if(getUser!==undefined){
+    nameRepeat="the username is already in use, please try again;"
+    res.render('signUp',{nameRepeat})
+  }
+  const getEmail=client.query(`SELECT COUNT(*) FROM users WHERE email=$1;`,[email],
+           (err,result)=>{
+             console.log(err);
+             console.log("the result here:");
+  });
+  if(getEmail!==undefined){
+    emailRepeat="the username is already in use, please try again;"
+    res.render('signUp',{emailRepeat})
+  }
+  if(errors.length>0 && nameRepeat.length>0 && emailRepeat.length>0){
     console.log("errors:");``
     console.log(errors);
     res.render('signUp',{errors});
   }else{
-  //hash the users'password
    try{
      let hashword=await bcrypt.hash(pword,10);
+     console.log("what row here?");
      await client.query(`CREATE TABLE IF NOT EXISTS users (
       uid SERIAL,
       username VARCHAR(255),
@@ -209,25 +227,21 @@ app.post('/users/signUp', async function(req,res) {
       //This grabs all usernames that are the same as uname (Hopefully none)
       //let results= await client.query(`select * from users;`);
       //console.log(results.rows);
-      const getUser =client.query(`SELECT COUNT(*) FROM users WHERE username=$1;`,[uname],
-           (err,result)=>{
-             console.log(err);
-             //console.log("the result here:");
-             //console.log(result.rows);
-      });
+      
       //This turns getUser into an array
-      //console.log(getUser.rows[0]['count']);
+
       //const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
-      if (getUser===undefined) {
-        client.query(`INSERT INTO users (username,email,password) VALUES ('${uname}', '${email},'${hashword}');`,
+      client.query(`INSERT INTO users (username,email,password) VALUES ('${uname}', '${email},'${hashword}');`,
           (err,result)=>{
             if(err){
               throw err;
             }
-            req.flash('meg',"succussfully sign up your account now,please login");
-            res.redirect('/users/login');
-        });
-      }
+          console.log("insert");
+          req.flash('meg',"succussfully sign up your account now,please login");
+          console.log("going to jump to login")
+          res.redirect('/users/login');
+        });    
+      
   }catch(e){
     console.log(e);
   }
@@ -262,7 +276,6 @@ app.get('/users/signUp',(req,res)=>{
 app.get('/users/login',(req,res)=>{
   res.render("login");
 })
-
 /*
 app.post('/users/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:

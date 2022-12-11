@@ -1,10 +1,10 @@
 const LocalStrategy=require("passport-local").Strategy;
-const {client}=require("./database");
+const {client}=require("./database").client;
 const bcrypt=require("bcrypt");
 function initialize(passport){
- const autheticateUser=(username,password,done)=>{
+    const autheticateUser=(username,password,done)=>{
 
-     client.query(
+        client.query(
         'SELECT *FROM users WHERE username=$1',[username],(err,result)=>{
            if(err){
             throw err;
