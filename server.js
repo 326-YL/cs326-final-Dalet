@@ -191,25 +191,7 @@ app.post('/users/signUp', async function(req,res) {
   if(pword!==pword2){
     errors.push({message:'second password does not match the first one'})
   }
-  const getUser =client.query(`SELECT COUNT(*) FROM game_users WHERE username=$1;`,[uname],
-           (err,result)=>{
-             console.log(err);
-             console.log("the result here:");
-  });
-  if(getUser!==undefined){
-    nameRepeat="the username is already in use, please try again;"
-    res.render('signUp',{nameRepeat})
-  }
-  const getEmail=client.query(`SELECT COUNT(*) FROM game_users WHERE email=$1;`,[email],
-           (err,result)=>{
-             console.log(err);
-             console.log("the result here:");
-  });
-  if(getEmail!==undefined){
-    emailRepeat="the username is already in use, please try again;"
-    res.render('signUp',{emailRepeat})
-  }
-  if(errors.length>0 && nameRepeat.length>0 && emailRepeat.length>0){
+  if(errors.length>0){
     console.log("errors:");``
     console.log(errors);
     res.render('signUp',{errors});
@@ -224,6 +206,24 @@ app.post('/users/signUp', async function(req,res) {
       email VARCHAR(255),
       PRIMARY KEY(uid)
       );`);
+      const getUser =client.query(`SELECT COUNT(*) FROM game_users WHERE username=$1;`,[uname],
+           (err,result)=>{
+             console.log(err);
+             console.log("the result here:");
+  });
+  if(getUser!==undefined){
+    nameRepeat="the username is already in use, please try again;"
+    res.render('signUp',{nameRepeat})
+  }
+  const getEmail=client.query(`SELECT COUNT(*) FROM game_users WHERE email=$1;`,[email],
+           (err,result)=>{
+             console.log(err);
+             console.log("the result here:");
+  });
+    if(getEmail!==undefined){
+      emailRepeat="the username is already in use, please try again;"
+      res.render('signUp',{emailRepeat})
+    }
       //This grabs all usernames that are the same as uname (Hopefully none)
       //let results= await client.query(`select * from users;`);
       //console.log(results.rows);
