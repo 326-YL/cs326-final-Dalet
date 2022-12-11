@@ -312,8 +312,22 @@ app.get('/users/logout',(req,res)=>{
   
 });
 
-app.post('/users/gameBoard/search',(req,res)=>{
+app.get('/users/gameBoard/search',(req,res)=>{
+
+  let brand=req.query.brand;
+  let keyword=req.query.keyword;
+  keyword="%"+keyword+"%";
+  let limit=req.query.limit;
   
+  client.query(`SELECT * FROM consoles WHERE brand=$1 AND name like $2 limit $3`,[brand],[keyword],[limit],
+     (err,result)=>{
+        if(err) throw err;
+        console.log(result.rows);
+
+        res.render('/users/gameBoard');
+     })
+
+
   
 
 
@@ -353,7 +367,8 @@ app.post('/users/login', async function(req,res) {
 app.get('/createConsoleTable', async (req, res) => {
   try {
     //This connects to database
-    //const client2 = await pool.connect();
+    //const client2 = await poo
+    l.connect();
     console.log("in");
     //SQL that deletes consoles database, if it exists
     await client.query("DROP TABLE IF EXISTS consoles");

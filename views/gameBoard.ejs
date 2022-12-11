@@ -67,25 +67,35 @@
          </table>
       </div>
    </form>
-   <form action="/users/gameBoard/search" method="POST">
+   <form action="/users/gameBoard/search" method="GET">
       <div id="search-game">
-          <input type="submit" value="search"/>
+
+          
+          <label for="Microsoft">Microsoft</label>
           <input type="checkbox" 
-                 name="category" 
-                 value="Shooters"
+                 name="brand" 
+                 value="Microsoft"
           /> 
+          <label for="Sony">Sony</label>
           <input type="checkbox" 
-                 name="category"
-                 value="Simulation and sports"
+                 name="brand"
+                 value="Sony"
           />
+          <label for="Nintendo">Nintendo</label>
           <input type="checkbox"
-                 name="category"
-                 value="Action-adventure"
+                 name="brand"
+                 value="Nintendo"
           />
-          <label for="quantity">limit:</label>
+          <label for="keyword">keyword</label>
           <input type="text"
-                 name="quantity"
+                 name="keyword"
           />
+         
+          <label for="limit">limit:</label>
+          <input type="text"
+                 name="limit"
+          />
+          <input type="submit" value="search"/>
       </div>
    </form>
 
