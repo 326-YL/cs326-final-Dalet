@@ -342,7 +342,7 @@ app.get('/users/gameBoard/search',isNotAuthenticated,(req,res)=>{
         data[record]=record;
         data[username]=username;
         data[email]=email;
-        res.render('gameBoard',[data,record]);
+        res.render('gameBoard',{data:data});
      })
 
 
