@@ -327,7 +327,7 @@ app.get('/users/gameBoard/search',(req,res)=>{
   
   
   
-  client.query(`SELECT * FROM consoles WHERE brand=${brand} AND name=${keyword} limit ${limit}`,
+  client.query(`SELECT * FROM consoles WHERE brand=${brand} AND name=${keyword} limit ${limit};`,
      (err,result)=>{
         if(err) throw err;
         console.log(result.rows[0]);
