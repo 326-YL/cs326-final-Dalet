@@ -10,7 +10,7 @@
     <h1>sign up a new account</h1>
     <ul>
         <% if(typeof errors !='undefined') { %> 
-            <% errors.forEach(e)=>{ %>
+            <% errors.forEach(e=>{ %>
                 <li><%= e.message %></li>
             <% }) %>
         <% } %>
