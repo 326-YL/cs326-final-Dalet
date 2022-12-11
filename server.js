@@ -277,7 +277,7 @@ app.get('/users/login',(req,res)=>{
   res.render("login");
 });
 app.get('/users/gameBoard',(req,res)=>{
-  res.render("gameBoard",{user:req.user.name});
+  res.render("gameBoard",{user:req.user.username});
 });
 app.get('/users/logout',(req,res)=>{
   req.logOut();
