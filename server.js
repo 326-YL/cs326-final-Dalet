@@ -280,13 +280,13 @@ app.get('/users/gameBoard',(req,res)=>{
   res.render("gameBoard",{user:req.user.username});
 });
 app.get('/users/logout',(req,res)=>{
-  req.logout(function(err){
-    if(err){
-      return next(err);
-    }
-    req.flash('success_msg',"log out");
-    res.redirect("/users/login")
+  req.logout(req.user, err => {
+    if(err) return next(err);
+    res.redirect("/");
   });
+    //req.flash('success_msg',"log out");
+    //res.redirect("/users/login")
+ // });
   
 });
 
