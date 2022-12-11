@@ -16,7 +16,7 @@ function initialize(passport){
             throw err;
            }
            console.log("select in");
-           console.log(result.rows);
+           //console.log(result.rows);
            if(result.rows.length>0){
             const user=result.rows[0];
             bcrypt.compare(password,user.password,(err,isMatch)=>{
@@ -24,12 +24,15 @@ function initialize(passport){
                     throw err;
                 }
                 if(isMatch){
+                    console.log("ismatch")
                     return done(null,user);
                 }else{
+                    console.log("isnot match")
                     return done(null,false,{message:"password is invalid"});
                 }
             });
            }else{
+            console.log("not user");
             return done(null,false,{message:"account is not registered"});
            }
 
