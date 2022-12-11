@@ -208,9 +208,10 @@ app.post('/signup', async function(req,res) {
             if(err){
               throw err;
             }
+            console.log("fater insert");
             console.log(result.rows);
             req.flash('meg',"succussfully sign up your account now,please login");
-            res.redirect('/users/login');
+            res.redirect('/');
 
         });
       }
