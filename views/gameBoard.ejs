@@ -8,10 +8,22 @@
 
  <body>
 
-    <h1> <%=user %> </h1>
+    <p> <%=user %> </p>
     <a href="/users/logout">logout</a>
-    
+    <p>my video games </p>
 
+    <form action="/users/gameBoard/" method="POST">
+      <div>
+          <input type="submit" value="search"/>
+          <input type="checkbox" 
+                 id="category"
+                 name="Shooters"
+          />  
+          <input type="submit" value="create" />
+          <input type="submit" value="update" />
+          <input type="submit" value="delete" />
+      </div>
+  </form>
     
  </body>
 </html>

@@ -282,7 +282,9 @@ app.get('/users/gameBoard',(req,res)=>{
 app.get('/users/logout',(req,res)=>{
   req.logout(req.user, err => {
     if(err) return next(err);
-    res.redirect("/");
+    req.flash('success_msg',"log out");
+    res.redirect("/")
+
   });
     //req.flash('success_msg',"log out");
     //res.redirect("/users/login")
