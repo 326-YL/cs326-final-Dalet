@@ -7,6 +7,7 @@ const express = require('express');
 
 const router = express.Router();
 const http=require('http');
+<<<<<<< HEAD
 //This allows me to read the data.json file
 const fs = require('fs');
 const passport=require("passport");
@@ -17,6 +18,16 @@ const app = express();
 initializePassport(passport);
 
 
+=======
+const loadObject= require('./public/js/engine');
+const { send } = require('process');
+const gameFile='./vedioGame.json'
+const production="https://git.heroku.com/damp-reaches-70694.com"
+const development='http://localhost:8000/'
+let url = (process.env.NODE_ENV ? production : development);
+//const bcrypt =require('bcrypt');
+const session=require("express-session");
+>>>>>>> d4a506a (added)
 
 //MAIN PAGE ROUTES
 
