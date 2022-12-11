@@ -316,16 +316,21 @@ app.get('/users/gameBoard/search',(req,res)=>{
 
   let brand=req.query.brand;
   let keyword=req.query.keyword
-  let limit=req.query.limit;
+  let limit=parseInt(req.query.limit);
   console.log(brand);
   console.log(keyword);
   console.log(limit);
+  //const sql=`SELECT *FROM consoles WHERE brand=`
+  
+  
+  
+  
+  
   
   client.query(`SELECT * FROM consoles WHERE brand=${brand} AND name=${keyword} limit ${limit}`,
      (err,result)=>{
         if(err) throw err;
-        console.log(result.rows);
-
+        console.log(result.rows[0]);
         res.render('/users/gameBoard');
      })
 
