@@ -12,17 +12,51 @@
     <a href="/users/logout">logout</a>
     <p>my video games </p>
 
-    <form action="/users/gameBoard/" method="POST">
-      <div>
+    <p>my rank <%=rank %></p>
+
+    <form action="/users/gameBoard" method="POST">
+      <div id="show-list">
+         <table>
+            <tr>
+               <th>
+                 favorite
+               </th>
+               <th>
+                  title
+               </th>
+                  
+               <th>
+                  play?
+               </th>
+            </tr>
+            <tr>
+
+            </tr>
+         </table>
+
+      </div>
+      <div id="search-game">
           <input type="submit" value="search"/>
           <input type="checkbox" 
-                 id="category"
-                 name="Shooters"
+                 
+                 value="Shooters"
+          /> 
+          <input type="checkbox" 
+                 value="Simulation and sports"
+          />
+          <input type="checkbox" 
+                 value="Action-adventure"
           />  
-          <input type="submit" value="create" />
-          <input type="submit" value="update" />
-          <input type="submit" value="delete" />
       </div>
+      <div id="add-game">
+         <input type="submit" value="create" />
+
+      </div>
+      <div id="update-game">
+         <input type="submit" value="update" />
+      </div>
+          
+         
   </form>
     
  </body>
