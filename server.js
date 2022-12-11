@@ -176,17 +176,14 @@ app.post('/users/signUp', async function(req,res) {
   console.log(
     {uname,email,pword,pword2}
   )
-  //This connects to database
-  //const client = await pool.connect();
-  //validate inputs
   let errors=[],nameRepeat='',emailRepeat='';
   if(!uname||!email||!pword||!pword2){
     errors.push({message:'fields can not be empty!'})
-    //return res.json({'message':'need username, password'});
+    
   };
   if(pword.length<8){
     errors.push({message:'password length must be greater then 8'})
-    //return res.json({'message':'password length must be greater then 8'});
+    
   };
   if(pword!==pword2){
     errors.push({message:'second password does not match the first one'})
@@ -199,14 +196,14 @@ app.post('/users/signUp', async function(req,res) {
    try{
      let hashword=await bcrypt.hash(pword,10);
      console.log("what row here?");
-     await client.query(`CREATE TABLE IF NOT EXISTS game_users (
-      uid SERIAL,
+     await client.query(`CREATE TABLE IF NOT EXISTS users_info (
+      id SERIAL,
       username VARCHAR(255),
-      password VARCHAR(255),
       email VARCHAR(255),
-      PRIMARY KEY(uid)
+      password VARCHAR(255),
+      PRIMARY KEY(id)
       );`);
-      const getUser =client.query(`SELECT COUNT(*) FROM game_users WHERE username=$1;`,[uname],
+      const getUser =client.query(`SELECT COUNT(*) FROM users_info WHERE username=$1;`,[uname],
            (err,result)=>{
              console.log(err);
              console.log("the result here:");
@@ -215,7 +212,7 @@ app.post('/users/signUp', async function(req,res) {
     nameRepeat="the username is already in use, please try again;"
     res.render('signUp',{nameRepeat})
   }
-  const getEmail=client.query(`SELECT COUNT(*) FROM game_users WHERE email=$1;`,[email],
+  const getEmail=client.query(`SELECT COUNT(*) FROM users_info WHERE email=$1;`,[email],
            (err,result)=>{
              console.log(err);
              console.log("the result here:");
@@ -224,23 +221,19 @@ app.post('/users/signUp', async function(req,res) {
       emailRepeat="the username is already in use, please try again;"
       res.render('signUp',{emailRepeat})
     }
-      //This grabs all usernames that are the same as uname (Hopefully none)
-      //let results= await client.query(`select * from users;`);
-      //console.log(results.rows);
-      
-      //This turns getUser into an array
-
-      //const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
-      client.query(`INSERT INTO game_users (username,email,password) VALUES ('${uname}', '${email},'${hashword}');`,
+    else{
+    client.query(`INSERT INTO users_info(username,password,email) VALUES ($1, $2,$3)
+          RETURNING id,password`, [uname,email,hashword],
           (err,result)=>{
             if(err){
               throw err;
             }
-          console.log("insert");
-          req.flash('meg',"succussfully sign up your account now,please login");
-          console.log("going to jump to login")
-          res.redirect('/users/login');
-        });    
+            console.log("insert");
+            req.flash('meg',"succussfully sign up your account now,please login");
+            console.log("going to jump to login")
+            res.redirect('/users/login');
+        });
+    }    
       
   }catch(e){
     console.log(e);
