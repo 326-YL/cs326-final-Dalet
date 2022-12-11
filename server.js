@@ -278,16 +278,18 @@ app.get('/users/signUp',isUserAuthenticated,(req,res,)=>{
 app.get('/users/login',isUserAuthenticated,(req,res)=>{
   res.render("login");
 });
-app.get('/users/gameBoard',isNotAuthenticated,(req,res)=>{
+app.get('/users/gameBoard',isNotAuthenticated,async(req,res)=>{
   const username=req.user.username;
-  let email;
-  client.query(`SELECT email FROM users_info WHERE username=$1`,[username],(err,result)=>{
+  const email=req.user.email;
+  const pw=req.user.password;
+ 
+   client.query(`SELECT email FROM users_info WHERE username=$1`,[username],(err,result)=>{
     if(err){
       throw err;
     }
     console.log("fetch email here:");
     console.log(result.rows[0]);
-    email=result.rows[0].email;
+   // let email= result.rows[0].email;
 
   })
   let data={
