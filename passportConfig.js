@@ -4,8 +4,10 @@ const bcrypt=require("bcrypt");
 function initialize(passport){
     const autheticateUser=(username,password,done)=>{
         console.log(username);
-        console.log(passport);
-        let result=client.query(`select * from users_info`);
+        console.log(password);
+        let result=client.query(`SELECT * FROM users_info`,(err,re)=>{
+            console.log(re.rows);
+          });
         //console.log(result.rows);
         client.query(
           `SELECT * FROM users_info WHERE username=$1`,[username],(err,result)=>{
