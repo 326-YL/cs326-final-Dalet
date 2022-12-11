@@ -192,7 +192,7 @@ app.post('/users/signUp', async function(req,res) {
   if(pword!==pword2){
     errors.push({'message':'second password does not match the first one'})
   }
-  if(errors.length!==0){
+  if(errors.length>0){
     res.render('signUp',{errors});
   }else{
   //hash the users'password
