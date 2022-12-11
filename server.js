@@ -331,7 +331,7 @@ app.get('/users/gameBoard/search',(req,res)=>{
      (err,result)=>{
         if(err) throw err;
         console.log(result.rows[limit]);
-        let data=[];
+        let record=[];
         for(let i=0;i<limit;i++){
            record.push(result.rows[i]);
         }
