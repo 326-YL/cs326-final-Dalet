@@ -4,13 +4,14 @@ const cookieParser = require('cookie-parser');
 const session=require('express-session');
 const flash=require('express-flash');
 const express = require('express');
-initializePassport(passport);
+
 const router = express.Router();
 const http=require('http');
 //This allows me to read the data.json file
 const fs = require('fs');
 const passport=require("passport");
 const initializePassport=require("./passportConfig");
+initializePassport(passport);
 const client=require("./database").client;
 const app = express();
 
