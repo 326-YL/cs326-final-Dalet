@@ -76,7 +76,7 @@ const pool = new Pool({
 });
 
 //Data for the collection.html
-router.get('/thedata', async function(req, res) {
+app.get('/thedata', async function(req, res) {
   //This connects to database
   const client2 = await pool.connect();
 
@@ -350,21 +350,22 @@ app.post('/users/login', async function(req,res) {
 */
 
 //Adding all the data from the data.json to the database
-router.get('/createConsoleTable', async (req, res) => {
+app.get('/createConsoleTable', async (req, res) => {
   try {
     //This connects to database
-    const client2 = await pool.connect();
-
+    //const client2 = await pool.connect();
+    console.log("in");
     //SQL that deletes consoles database, if it exists
-    await client2.query("DROP TABLE IF EXISTS consoles");
+    await client.query("DROP TABLE IF EXISTS consoles");
 
     //Gets an array of objects
     const nintendo = JSON.parse(fs.readFileSync('./console_data/n-data.json'));
+    console.log(nintendo);
     const sony = JSON.parse(fs.readFileSync('./console_data/sony-data.json'));
     const microsoft = JSON.parse(fs.readFileSync('./console_data/ms-data.json'));
 
     //Creates a table if it doesn't exist
-    await client2.query(`CREATE TABLE IF NOT EXISTS consoles (
+    await client.query(`CREATE TABLE IF NOT EXISTS consoles (
       cid SERIAL,
       brand varchar(255),
       type varchar(255),
@@ -377,21 +378,21 @@ router.get('/createConsoleTable', async (req, res) => {
     for (let i = 0; i < nintendo.length; i++) {
       const con = nintendo[i];
       //Inserts into the 'console' database data from 'data'
-      await client2.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       VALUES ('Nintendo', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
     }
     //Loops through the array of objects
     for (let i = 0; i < sony.length; i++) {
       const con = sony[i];
       //Inserts into the 'console' database data from 'data'
-      await client2.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       VALUES ('Sony', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
     }
     //Loops through the array of objects
     for (let i = 0; i < microsoft.length; i++) {
       const con = microsoft[i];
       //Inserts into the 'console' database data from 'data'
-      await client2.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       VALUES ('Microsoft', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
     }
 
@@ -408,10 +409,10 @@ router.get('/createConsoleTable', async (req, res) => {
 app.get('/showconsole', async (req, res) => {
   try {
     //This connects to database
-    const client2 = await pool.connect();
+    //const client2 = await pool.connect();
 
     //SQL that gets everything from 'consoles' database
-    const result = await client2.query("SELECT * FROM consoles");
+    const result = await client.query("SELECT * FROM consoles");
 
     //This turns result into an array
     const results = { 'results': (result) ? result.rows : null};
@@ -426,13 +427,13 @@ app.get('/showconsole', async (req, res) => {
 });
 
 //This simply shows all the data inside 'users' database
-router.get('/showusers', async (req, res) => {
+ app.get('/showusers', async (req, res) => {
   try {
     //This connects to database
-    const client2 = await pool.connect();
+    //const client2 = await pool.connect();
 
     //SQL that gets everything from 'users' database
-    const result = await client2.query("SELECT * FROM users");
+    const result = await client.query("SELECT * FROM users");
 
     //This turns result into an array
     const results = { 'results': (result) ? result.rows : null};
@@ -450,10 +451,10 @@ router.get('/showusers', async (req, res) => {
 router.get('/showuserownconsole', async (req, res) => {
   try {
     //This connects to database
-    const client2 = await pool.connect();
+    //const client2 = await pool.connect();
 
     //SQL that gets everything from 'userownconsole' database
-    const result = await client2.query("SELECT * FROM userownconsole");
+    const result = await client.query("SELECT * FROM userownconsole");
 
     //This turns result into an array
     const results = { 'results': (result) ? result.rows : null};
