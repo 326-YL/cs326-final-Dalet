@@ -269,14 +269,14 @@ function isNotAuthenticated(req,res,next){
   }
   res.redirect("/");
 }
-app.get('/users/signUp',(req,res)=>{
+app.get('/users/signUp',isUserAuthenticated,(req,res,)=>{
   res.render("signUp");
 });
 
-app.get('/users/login',(req,res)=>{
+app.get('/users/login',isUserAuthenticated,(req,res)=>{
   res.render("login");
 });
-app.get('/users/gameBoard',(req,res)=>{
+app.get('/users/gameBoard',isNotAuthenticated,(req,res)=>{
   res.render("gameBoard",{user:req.user.username});
 });
 app.get('/users/logout',(req,res)=>{
@@ -292,6 +292,13 @@ app.get('/users/logout',(req,res)=>{
   
 });
 
+app.post('/users/gameBoard/search',(req,res)=>{
+  
+  
+
+
+
+})
 /*
 app.post('/users/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:

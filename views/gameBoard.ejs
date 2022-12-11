@@ -14,7 +14,7 @@
 
     <p>my rank <%=rank %></p>
 
-    <form action="/users/gameBoard" method="POST">
+    <form action="/users/gameBoard/show-list" method="POST">
       <div id="show-list">
          <table>
             <tr>
@@ -35,6 +35,8 @@
          </table>
 
       </div>
+   </form>
+   <form action="/users/gameBoard/search" method="POST">
       <div id="search-game">
           <input type="submit" value="search"/>
           <input type="checkbox" 
@@ -48,6 +50,8 @@
                  value="Action-adventure"
           />  
       </div>
+   </form>
+   
       <div id="add-game">
          <input type="submit" value="create" />
 
@@ -57,7 +61,7 @@
       </div>
           
          
-  </form>
+  
     
  </body>
 </html>
