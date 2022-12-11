@@ -101,7 +101,7 @@
 
    <ul>
       <% if(typeof data !='undefined') { %> 
-          <% errors.forEach(e=>{ %>
+          <% data.forEach(e=>{ %>
               <li><%= e%></li>
           <% }) %>
       <% } %>
