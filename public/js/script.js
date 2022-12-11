@@ -87,7 +87,7 @@ async function explore_gallery_render(_arr, func) {
  */
 async function load_explore_filter(filter) {
     const request = window.location.hostname !== "127.0.0.1"
-        ? await fetch('https://damp-reaches-70694.herokuapp.com/thedatatoo')
+        ? await fetch('https://pacific-beach-91707.herokuapp.com/thedatatoo')
         : {
             ok: true,
             status: 202,
