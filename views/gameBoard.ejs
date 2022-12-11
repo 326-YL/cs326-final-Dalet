@@ -101,13 +101,27 @@
          <tr>
            <td><%= record[i].brand %></td>
            <td><%= record[i].name%> </td>
+           <td><img src="<%= record[i].img-url %>"> </td>
          </tr>
       <% } %>
       <% } %>
    </table>
       <div id="add-game">
-         <input type="submit" value="create" />
-
+         <input type="submit" value="add" />
+         <table>
+            <% if(typeof data.record!='undefined') { %> 
+              <% let record=data.record %>
+            <% for(var i=0; i < record.length; i++) { %>
+               <tr>
+                 <td><%= record[i].cid%></td>
+                 <td><%= record[i].brand %></td>
+                 <td><%= record[i].name%> </td>
+                 <td><img src="<%= record[i].imgurl %>"> </td>
+                 <input type="submit" value="" />
+               </tr>
+            <% } %>
+            <% } %>
+         </table>
       </div>
       <div id="update-game">
          <input type="submit" value="update" />
