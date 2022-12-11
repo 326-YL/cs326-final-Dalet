@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const session=require('express-session');
 const flash=require('express-flash');
 const express = require('express');
+initializePassport(passport);
 const router = express.Router();
 const http=require('http');
 //This allows me to read the data.json file
@@ -13,7 +14,7 @@ const initializePassport=require("./passportConfig");
 const client=require("./database").client;
 const app = express();
 
-initializePassport(passport);
+
 
 
 
@@ -258,13 +259,13 @@ app.post("/users/login",passport.authenticate('local',{
 })
 );
 function isUserAuthenticated(req,res,next){
-  if(req.isAutheticated()){
+  if(req.isAuthenticated()){
     return res.redirect("/");
   }
   next();
 }
 function isNotAuthenticated(req,res,next){
-  if(req.isAutheticated()){
+  if(req.isAuthenticated()){
     return next();
   }
   res.redirect("/");
