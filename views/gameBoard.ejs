@@ -95,16 +95,16 @@
       </div>
    </form>
    <table>
-      <% if(typeof data.record!='undefined') { %> 
+      <!--<% if(typeof data.record!='undefined') { %> 
         <% let record=data.record %>
       <% for(var i=0; i < record.length; i++) { %>
          <tr>
            <td><%= record[i].brand %></td>
            <td><%= record[i].name%> </td>
-           <td><img src="<%= record[i].imgurl%>"> </td>
+           <td><img src="<%= record[i].imgurl%>" width=150" height="150s"> </td>
          </tr>
       <% } %>
-      <% } %>
+      <% } %>-->
    </table>
       <div id="add-game">
          <input type="submit" value="add" />
@@ -117,7 +117,7 @@
                  <td><%= record[i].brand %></td>
                  <td><%= record[i].name%> </td>
                  <td><img src="<%= record[i].imgurl %>"> </td>
-                 <input type="submit" value="" />
+                 <td><input type="checkbox" value="<%= record[i].cid%>" /></td>
                </tr>
             <% } %>
             <% } %>
