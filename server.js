@@ -279,7 +279,18 @@ app.get('/users/login',isUserAuthenticated,(req,res)=>{
   res.render("login");
 });
 app.get('/users/gameBoard',isNotAuthenticated,(req,res)=>{
-  res.render("gameBoard",{user:req.user.username});
+  const username=req.user.username;
+  let email;
+  client.query(`SELECT email FROM users_info WHERE username=$1`,[username],(err,result)=>{
+    if(err){
+      throw err;
+    }
+    console.log("fetch email here:");
+    console.log(result.rows[0]);
+    email=result.rows[0].email;
+
+  })
+  res.render("gameBoard",{user:username,email:email});
 });
 app.get('/users/logout',(req,res)=>{
   req.logout(req.user, err => {
