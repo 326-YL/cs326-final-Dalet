@@ -9,6 +9,14 @@
  <body>
     <h1>login into account</h1>
 
+    <ul>
+        <% if(typeof errors !=='undefined'){ %>
+            <% errors.forEach(e)=>{ %>
+                <li><%= e.message %></li>
+            <% } %>
+        <% } %>
+    </ul>
+
     <form action="/users/login" method="POST">
         <div>
             <label for="name">username:</label>

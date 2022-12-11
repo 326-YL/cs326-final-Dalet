@@ -182,17 +182,19 @@ app.post('/users/signUp', async function(req,res) {
   //validate inputs
   let errors=[];
   if(!uname||!email||!pword||!pword2){
-    errors.push({'message':'fields can not be empty!'})
+    errors.push({message:'fields can not be empty!'})
     //return res.json({'message':'need username, password'});
   };
   if(pword.length<8){
-    errors.push({'message':'password length must be greater then 8'})
+    errors.push({message:'password length must be greater then 8'})
     //return res.json({'message':'password length must be greater then 8'});
   };
   if(pword!==pword2){
-    errors.push({'message':'second password does not match the first one'})
+    errors.push({message:'second password does not match the first one'})
   }
   if(errors.length>0){
+    console.log("errors:");``
+    console.log(errors);
     res.render('signUp',{errors});
   }else{
   //hash the users'password
