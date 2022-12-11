@@ -4,7 +4,15 @@
  <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
+<style>
+   table, th, td {
+      border:1px solid black;
+   }
 
+
+
+
+</style>
 
 <script>
    window.addEventListener('load', function(){
@@ -108,17 +116,17 @@
    </table>
       <div id="add-game">
          <input type="submit" value="add" />
-         <table>
+         <table >
             <% if(typeof data.record!='undefined') { %> 
               <% let record=data.record %>
             <% for(var i=0; i < record.length; i++) { %>
                <tr>
-                 <td><%= record[i].cid%></td>
-                 <td><%= record[i].brand %></td>
-                 <td><%= record[i].name%> </td>
+                 <td><strong></strong><%= record[i].cid%></strong></td>
+                 <td><strong><%= record[i].brand %></strong></td>
+                 <td><strong></strong><%= record[i].name%></strong> </td>
                  <% let imgurl='https://'+record[i].imgurl %>
-                 <td><img src="<%=imgurl%>"> </td>
-                 <td><input type="checkbox" name="game" value="<%= record[i].cid%>" /></td>
+                 <td><img src="<%=imgurl%>" width="150" height="150"> </td>
+                 <td><input type="submit" name="game" value="<%= record[i].cid%>" /></td>
                </tr>
             <% } %>
             <% } %>
