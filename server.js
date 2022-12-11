@@ -290,7 +290,8 @@ app.get('/users/gameBoard',isNotAuthenticated,(req,res)=>{
     email=result.rows[0].email;
 
   })
-  res.render("gameBoard",{user:username,email:email});
+  let data=[{user:username},{email:email}];
+  res.render("gameBoard",data);
 });
 app.get('/users/logout',(req,res)=>{
   req.logout(req.user, err => {
