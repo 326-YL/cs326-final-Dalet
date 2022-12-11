@@ -334,8 +334,9 @@ app.get('/users/gameBoard/search',isNotAuthenticated,(req,res)=>{
   client.query(`SELECT * FROM consoles WHERE brand=$1 Limit ${parseInt(limit)};`,[brand],
      (err,result)=>{
         if(err) throw err;
+        
         console.log(result.rows);
-        data[record]=record.rows;
+        data[record]=result.rows;
         data[username]=username;
         data[email]=email;
         console.log(data.record);
