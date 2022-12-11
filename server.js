@@ -173,7 +173,9 @@ app.post('/users/signUp', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
   const {uname,email,pword,pword2} = req.body;
-  let result=client.query(`select * from users_info`);
+  let result=client.query(`SELECT * FROM users_info`,(err,re)=>{
+    console.log(re.rows);
+  });
         console.log(result.rows);
   console.log(
     {uname,email,pword,pword2}
@@ -210,6 +212,7 @@ app.post('/users/signUp', async function(req,res) {
            (err,result)=>{
              console.log(err);
              console.log("the result here:");
+             console.log(result.rows[0]);
   });
   if(getUser!==undefined){
     nameRepeat="the username is already in use, please try again;"
@@ -218,7 +221,7 @@ app.post('/users/signUp', async function(req,res) {
   const getEmail=client.query(`SELECT COUNT(*) FROM users_info WHERE email=$1;`,[email],
            (err,result)=>{
              console.log(err);
-             console.log("the result here:");
+             
   });
     if(getEmail!==undefined){
       emailRepeat="the username is already in use, please try again;"
@@ -231,6 +234,8 @@ app.post('/users/signUp', async function(req,res) {
             if(err){
               throw err;
             }
+            console.log("the result here:");
+            console.log(result.rows[0]);
             console.log("insert");
             req.flash('meg',"succussfully sign up your account now,please login");
             console.log("going to jump to login")
