@@ -8,7 +8,10 @@
 
 <script>
    window.addEventListener('load', function(){
-     document.getElementById('')
+     let state={ };
+     const uname=document.getElementById('uname').textContent;
+     console.log(uname);
+
 
 
 
@@ -36,8 +39,8 @@
  </head>
 
  <body>
-      <p id="uname"> <%=data.username %> </p>
-      <p id="email"> <%=data.email %> </p>
+      <p id="uname"> user: <%=data.username %> </p>
+      <p id="email"> email: <%=data.email %> </p>
     <a href="/users/logout">logout</a>
     <p>my video games </p>
 
@@ -68,15 +71,21 @@
       <div id="search-game">
           <input type="submit" value="search"/>
           <input type="checkbox" 
-                 
+                 name="category" 
                  value="Shooters"
           /> 
           <input type="checkbox" 
+                 name="category"
                  value="Simulation and sports"
           />
-          <input type="checkbox" 
+          <input type="checkbox"
+                 name="category"
                  value="Action-adventure"
-          />  
+          />
+          <label for="quantity">limit:</label>
+          <input type="text"
+                 name="quantity"
+          />
       </div>
    </form>
 
