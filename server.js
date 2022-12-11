@@ -173,18 +173,27 @@ app.get('/thedatatoo', async function(req, res) {
 app.post('/users/signUp', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
-  const { uname, pword} = req.body;
+  const { uname, email,pword,pword2} = req.body;
   //This connects to database
   //const client = await pool.connect();
   //validate inputs
-  if(!uname||!pword){
-    return res.json({'message':'need username, password'});
+  let errors=[];
+  if(!uname||!email||!pword||!pword2){
+    errors.push({'message':'fields can not be empty!'})
+    //return res.json({'message':'need username, password'});
   };
   if(pword.length<8){
-    return res.json({'message':'password length must be greater then 8'});
+    errors.push({'message':'password length must be greater then 8'})
+    //return res.json({'message':'password length must be greater then 8'});
   };
+  if(pword!==pword2){
+    errors.push({'message':'second password does not match the first one'})
+  }
+  if(errors.length!==0){
+    res.render('signUp',{errors});
+  }else{
   //hash the users'password
-  try{
+   try{
      let hashword=await bcrypt.hash(pword,10);
      await client.query(`CREATE TABLE IF NOT EXISTS users (
       uid SERIAL,
@@ -203,23 +212,22 @@ app.post('/users/signUp', async function(req,res) {
              console.log(result.rows);
       });
       //This turns getUser into an array
-      console.log(getUser);
+      console.log(getUser.rows[0]['count']);
       //const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
       if (getUser===undefined) {
-        client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${hashword}');`,
+        client.query(`INSERT INTO users (username,email,password) VALUES ('${uname}', '${email},'${hashword}');`,
           (err,result)=>{
             if(err){
               throw err;
             }
-            
             req.flash('meg',"succussfully sign up your account now,please login");
             res.redirect('/');
-
         });
       }
   }catch(e){
     console.log(e);
   }
+ }
   //Returns us home.
   //client.release();
 });
