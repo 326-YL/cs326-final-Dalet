@@ -233,8 +233,7 @@ app.post('/users/signUp', async function(req,res) {
             console.log("going to jump to login")
             res.redirect('/users/login');
         });
-    }    
-      
+    }         
   }catch(e){
     console.log(e);
   }
@@ -245,8 +244,8 @@ app.post('/users/signUp', async function(req,res) {
 
 //Login database POST
 app.post("/users/login",passport.authenticate('local',{
-   successRedirect:"/",
-   failureRedirect:"/",
+   successRedirect:"/users/gameBoard",
+   failureRedirect:"/users/login",
    failureFlash:true
 })
 );
@@ -264,11 +263,20 @@ function isNotAuthenticated(req,res,next){
 }
 app.get('/users/signUp',(req,res)=>{
   res.render("signUp");
-})
+});
 
 app.get('/users/login',(req,res)=>{
   res.render("login");
-})
+});
+app.get('/users/gameBoard',(req,res)=>{
+  res.render("gameBoard",{user:req.user.name});
+});
+app.get('/users/logout',(req,res)=>{
+  req.logOut();
+  req.flash('success_msg',"log out");
+  res.redirect("/users/login")
+});
+
 /*
 app.post('/users/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
