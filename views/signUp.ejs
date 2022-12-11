@@ -10,10 +10,10 @@
     <h1>sign up a new account</h1>
     <ul>
         <% if(typeof errors !=='undefined'){ %>
-          <li><%=errors.message%></li>
-           
-        
-        <%}%>
+            <% errors.forEach(e)=>{ %>
+                <li><%= e.message %></li>
+            <% } %>
+        <% } %>
     </ul>
     <form action="/users/signUp" method="POST">
         <div>
