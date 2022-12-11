@@ -330,8 +330,11 @@ app.get('/users/gameBoard/search',(req,res)=>{
   client.query(`SELECT * FROM consoles WHERE brand=$1;`,[brand],
      (err,result)=>{
         if(err) throw err;
-        console.log(result.rows[0]);
-        let data=result.rows[limit];
+        console.log(result.rows[limit]);
+        let data=[];
+        for(let i=0;i<limit;i++){
+           data.push(result.rows[i]);
+        }
         res.render('/users/gameBoard',data);
      })
 
