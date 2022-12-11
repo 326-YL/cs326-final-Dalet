@@ -173,7 +173,10 @@ app.get('/thedatatoo', async function(req, res) {
 app.post('/users/signUp', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
-  const { uname, email,pword,pword2} = req.body;
+  const {uname,email,pword,pword2} = req.body;
+  console.log(
+    {uname,email,pword,pword2}
+  )
   //This connects to database
   //const client = await pool.connect();
   //validate inputs
