@@ -294,6 +294,7 @@ app.get('/users/gameBoard',isNotAuthenticated,(req,res)=>{
     'username':username,
     'email':email
   }
+  console.log('data'+ [data]);
   res.render("gameBoard",{data:data});
 });
 app.get('/users/logout',(req,res)=>{
