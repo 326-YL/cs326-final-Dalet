@@ -229,7 +229,7 @@ app.post('/users/signUp', async function(req,res) {
     }
     else{
     client.query(`INSERT INTO users_info(username,password,email) VALUES ($1, $2,$3)
-          RETURNING id,password`, [uname,email,hashword],
+          RETURNING id,password`, [uname,hashword,email],
           (err,result)=>{
             if(err){
               throw err;
