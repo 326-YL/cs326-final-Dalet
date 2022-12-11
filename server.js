@@ -315,11 +315,13 @@ app.get('/users/logout',(req,res)=>{
 app.get('/users/gameBoard/search',(req,res)=>{
 
   let brand=req.query.brand;
-  let keyword=req.query.keyword;
-  keyword="%"+keyword+"%";
+  let keyword=req.query.keyword
   let limit=req.query.limit;
+  console.log(brand);
+  console.log(keyword);
+  console.log(limit);
   
-  client.query(`SELECT * FROM consoles WHERE brand=$1 AND name like $2 limit $3`,[brand],[keyword],[limit],
+  client.query(`SELECT * FROM consoles WHERE brand=${brand} AND name=${keyword} limit ${limit}`,
      (err,result)=>{
         if(err) throw err;
         console.log(result.rows);
