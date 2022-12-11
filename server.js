@@ -283,7 +283,7 @@ app.get('/users/gameBoard',isNotAuthenticated,async(req,res)=>{
   const email=req.user.email;
   const pw=req.user.password;
  
-   client.query(`SELECT email FROM users_info WHERE username=$1`,[username],(err,result)=>{
+   /*client.query(`SELECT email FROM users_info WHERE username=$1`,[username],(err,result)=>{
     if(err){
       throw err;
     }
@@ -291,7 +291,7 @@ app.get('/users/gameBoard',isNotAuthenticated,async(req,res)=>{
     console.log(result.rows[0]);
    // let email= result.rows[0].email;
 
-  })
+  })*/
   let data={
     username:username,
     email:email
