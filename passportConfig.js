@@ -1,7 +1,6 @@
 const LocalStrategy=require("passport-local").Strategy;
 const {client}=require("./database");
 const bcrypt=require("bcrypt");
-
 function initialize(passport){
  const autheticateUser=(username,password,done)=>{
 
