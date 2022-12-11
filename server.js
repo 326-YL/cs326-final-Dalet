@@ -291,11 +291,11 @@ app.get('/users/gameBoard',isNotAuthenticated,(req,res)=>{
 
   })
   let data={
-    'username':username,
-    'email':email
+    username:username,
+    email:email
   }
-  console.log('data'+ [data]);
-  res.render("gameBoard",{data:data});
+  console.log([data]);
+  res.render("gameBoard",{data});
 });
 app.get('/users/logout',(req,res)=>{
   req.logout(req.user, err => {
