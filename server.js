@@ -38,7 +38,7 @@ app.use(passport.initialize());
 app.use(flash());
 
 //add the router
-//app.use('/', router);
+app.use('/', router);
 app.set("view engine","ejs");
 
 //Index page
@@ -67,21 +67,21 @@ app.get('/explore',function(req,res){
 //DATA / DATABASE RELATED ROUTES
 
 //This access database, 'pool' refers to a datapool (I'd imagine)
-//const { Pool } = require('pg');
-/*const pool = new Pool({
+const { Pool } = require('pg');
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
-});*/
+});
 
 //Data for the collection.html
-app.get('/thedata', async function(req, res) {
+router.get('/thedata', async function(req, res) {
   //This connects to database
-  //const client = await pool.connect();
+  const client2 = await pool.connect();
 
   //Queries the database
-  const result = await client.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
+  const result = await client2.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
   userownconsole.cid = consoles.cid WHERE uid=1`);
   const results = (result) ? result.rows : null;
 
@@ -134,16 +134,16 @@ app.get('/thedata', async function(req, res) {
   newArr[3].games = [["mario-64-game.webp", "Super Mario 64", "W"]];
 
   res.send(JSON.stringify(newArr));
-  //client.release();
+  client2.release();
 });
 
 //Data for the explore.html
-app.get('/thedatatoo', async function(req, res) {
+router.get('/thedatatoo', async function(req, res) {
   //This connects to database
-  //const client = await pool.connect();
+  const client2= await pool.connect();
 
   //Queries the database
-  const result = await client.query(`SELECT * FROM consoles`);
+  const result = await client2.query(`SELECT * FROM consoles`);
   const results = (result) ? result.rows : null;
 
   let newArr = [
@@ -164,7 +164,7 @@ app.get('/thedatatoo', async function(req, res) {
   });
 
   res.send(JSON.stringify(newArr));
-  //client.release();
+  client2.release();
 });
 
 //This allows me to get the data from body easily
@@ -350,13 +350,13 @@ app.post('/users/login', async function(req,res) {
 */
 
 //Adding all the data from the data.json to the database
-app.get('/createConsoleTable', async (req, res) => {
+router.get('/createConsoleTable', async (req, res) => {
   try {
     //This connects to database
-    //const client = await pool.connect();
+    const client2 = await pool.connect();
 
     //SQL that deletes consoles database, if it exists
-    await client.query("DROP TABLE IF EXISTS consoles");
+    await client2.query("DROP TABLE IF EXISTS consoles");
 
     //Gets an array of objects
     const nintendo = JSON.parse(fs.readFileSync('./console_data/n-data.json'));
@@ -364,7 +364,7 @@ app.get('/createConsoleTable', async (req, res) => {
     const microsoft = JSON.parse(fs.readFileSync('./console_data/ms-data.json'));
 
     //Creates a table if it doesn't exist
-    await client.query(`CREATE TABLE IF NOT EXISTS consoles (
+    await client2.query(`CREATE TABLE IF NOT EXISTS consoles (
       cid SERIAL,
       brand varchar(255),
       type varchar(255),
@@ -377,21 +377,21 @@ app.get('/createConsoleTable', async (req, res) => {
     for (let i = 0; i < nintendo.length; i++) {
       const con = nintendo[i];
       //Inserts into the 'console' database data from 'data'
-      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      await client2.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       VALUES ('Nintendo', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
     }
     //Loops through the array of objects
     for (let i = 0; i < sony.length; i++) {
       const con = sony[i];
       //Inserts into the 'console' database data from 'data'
-      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      await client2.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       VALUES ('Sony', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
     }
     //Loops through the array of objects
     for (let i = 0; i < microsoft.length; i++) {
       const con = microsoft[i];
       //Inserts into the 'console' database data from 'data'
-      await client.query(`INSERT INTO consoles (brand,type,name,imgurl) 
+      await client2.query(`INSERT INTO consoles (brand,type,name,imgurl) 
       VALUES ('Microsoft', '${con['console']}', '${con['name']}', '${con['img-url']}');`);
     }
 
@@ -408,17 +408,17 @@ app.get('/createConsoleTable', async (req, res) => {
 app.get('/showconsole', async (req, res) => {
   try {
     //This connects to database
-    //const client = await pool.connect();
+    const client2 = await pool.connect();
 
     //SQL that gets everything from 'consoles' database
-    const result = await client.query("SELECT * FROM consoles");
+    const result = await client2.query("SELECT * FROM consoles");
 
     //This turns result into an array
     const results = { 'results': (result) ? result.rows : null};
 
     //Displays results array onto page
     res.send(results);
-    //client.release();
+    client2.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -426,20 +426,20 @@ app.get('/showconsole', async (req, res) => {
 });
 
 //This simply shows all the data inside 'users' database
-app.get('/showusers', async (req, res) => {
+router.get('/showusers', async (req, res) => {
   try {
     //This connects to database
-    const client = await pool.connect();
+    const client2 = await pool.connect();
 
     //SQL that gets everything from 'users' database
-    const result = await client.query("SELECT * FROM users");
+    const result = await client2.query("SELECT * FROM users");
 
     //This turns result into an array
     const results = { 'results': (result) ? result.rows : null};
 
     //Displays results array onto page
     res.send(results);
-    //client.release();
+    client2.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -450,17 +450,17 @@ app.get('/showusers', async (req, res) => {
 router.get('/showuserownconsole', async (req, res) => {
   try {
     //This connects to database
-    //const client = await pool.connect();
+    const client2 = await pool.connect();
 
     //SQL that gets everything from 'userownconsole' database
-    const result = await client.query("SELECT * FROM userownconsole");
+    const result = await client2.query("SELECT * FROM userownconsole");
 
     //This turns result into an array
     const results = { 'results': (result) ? result.rows : null};
 
     //Displays results array onto page
     res.send(results);
-    //client.release();
+    client2.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -468,35 +468,35 @@ router.get('/showuserownconsole', async (req, res) => {
 });
 
 //This creates a table 'userownconsole' and adds sample data into it
-app.get('/createUserOwnConsole', async (req, res) => {
+router.get('/createUserOwnConsole', async (req, res) => {
   try {
     //This connects to database
-    //const client = await pool.connect();
+    const client2 = await pool.connect();
 
     //SQL That creates the table if it doesn't exist
-    await client.query(`CREATE TABLE IF NOT EXISTS userownconsole (
+    await client2.query(`CREATE TABLE IF NOT EXISTS userownconsole (
       uid INT,
       cid INT,
       PRIMARY KEY(uid,cid)
       );`);
 
     //SQL that inserts sample data into table that was created
-    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 1);`);
-    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 21);`);
-    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 315);`);
+    await client2.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 1);`);
+    await client2.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 21);`);
+    await client2.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 315);`);
 
     //SQL that grabs a random item as a sample
-    const result = await client.query("SELECT * FROM consoles WHERE name='Nintendo Wii U Premium Console [NA]'");
+    const result = await client2.query("SELECT * FROM consoles WHERE name='Nintendo Wii U Premium Console [NA]'");
 
     //This turns result into an array
     const results = (result) ? result.rows : null;
 
     //SQL that inserts the random item into the table, as a test
-    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, ${results[0].cid});`);
+    await client2.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, ${results[0].cid});`);
 
     //Displays final test on page (Will not work twice, shouldn't work anymore)
     res.send(results);
-    //client.release();
+    client2.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
