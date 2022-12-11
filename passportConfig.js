@@ -2,13 +2,14 @@ const LocalStrategy=require("passport-local").Strategy;
 const {client}=require("./database").client;
 const bcrypt=require("bcrypt");
 function initialize(passport){
-    const autheticateUser=(username,password,done)=>{
-
-        client.query(
-        'SELECT *FROM users_info WHERE username=$1',[username],(err,result)=>{
+    const autheticateUser=async (username,password,done)=>{
+        await client.query(
+          'SELECT * FROM users_info WHERE username=$1',[username],(err,result)=>{
            if(err){
+
             throw err;
            }
+           console.log("select in");
            console.log(result.rows);
            if(result.rows.length>0){
             const user=result.rows[0];
