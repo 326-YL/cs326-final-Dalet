@@ -331,7 +331,8 @@ app.get('/users/gameBoard/search',(req,res)=>{
      (err,result)=>{
         if(err) throw err;
         console.log(result.rows[0]);
-        res.render('/users/gameBoard');
+        let data=result.rows[limit];
+        res.render('/users/gameBoard',data);
      })
 
 

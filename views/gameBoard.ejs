@@ -99,6 +99,14 @@
       </div>
    </form>
 
+   <ul>
+      <% if(typeof data !='undefined') { %> 
+          <% errors.forEach(e=>{ %>
+              <li><%= e%></li>
+          <% }) %>
+      <% } %>
+  </ul>
+
 
       <div id="add-game">
          <input type="submit" value="create" />
