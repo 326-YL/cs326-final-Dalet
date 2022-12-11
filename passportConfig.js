@@ -5,7 +5,7 @@ function initialize(passport){
     const autheticateUser=(username,password,done)=>{
 
         client.query(
-        'SELECT *FROM users WHERE username=$1',[username],(err,result)=>{
+        'SELECT *FROM users_info WHERE username=$1',[username],(err,result)=>{
            if(err){
             throw err;
            }
@@ -44,7 +44,7 @@ function initialize(passport){
        passport.serializeUser((user,done)=>done(null,user.id));
        passport.deserializeUser((id,done)=>{
         client.query(
-            'SELECT*FROM users WHERE uid=$1',[id],(err,result)=>{
+            'SELECT*FROM users_info WHERE id=$1',[id],(err,result)=>{
                if(err){
                 throw err;
                }
