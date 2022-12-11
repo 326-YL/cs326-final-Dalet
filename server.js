@@ -191,7 +191,7 @@ app.post('/users/signUp', async function(req,res) {
   if(pword!==pword2){
     errors.push({message:'second password does not match the first one'})
   }
-  const getUser =client.query(`SELECT COUNT(*) FROM users WHERE username=$1;`,[uname],
+  const getUser =client.query(`SELECT COUNT(*) FROM game_users WHERE username=$1;`,[uname],
            (err,result)=>{
              console.log(err);
              console.log("the result here:");
@@ -200,7 +200,7 @@ app.post('/users/signUp', async function(req,res) {
     nameRepeat="the username is already in use, please try again;"
     res.render('signUp',{nameRepeat})
   }
-  const getEmail=client.query(`SELECT COUNT(*) FROM users WHERE email=$1;`,[email],
+  const getEmail=client.query(`SELECT COUNT(*) FROM game_users WHERE email=$1;`,[email],
            (err,result)=>{
              console.log(err);
              console.log("the result here:");
@@ -217,7 +217,7 @@ app.post('/users/signUp', async function(req,res) {
    try{
      let hashword=await bcrypt.hash(pword,10);
      console.log("what row here?");
-     await client.query(`CREATE TABLE IF NOT EXISTS users (
+     await client.query(`CREATE TABLE IF NOT EXISTS game_users (
       uid SERIAL,
       username VARCHAR(255),
       password VARCHAR(255),
@@ -231,7 +231,7 @@ app.post('/users/signUp', async function(req,res) {
       //This turns getUser into an array
 
       //const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
-      client.query(`INSERT INTO users (username,email,password) VALUES ('${uname}', '${email},'${hashword}');`,
+      client.query(`INSERT INTO game_users (username,email,password) VALUES ('${uname}', '${email},'${hashword}');`,
           (err,result)=>{
             if(err){
               throw err;
