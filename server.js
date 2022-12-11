@@ -173,6 +173,8 @@ app.post('/users/signUp', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
   //website.com?uname='_'&pword='_'
   const {uname,email,pword,pword2} = req.body;
+  let result=client.query(`select * from users_info`);
+        console.log(result.rows);
   console.log(
     {uname,email,pword,pword2}
   )
@@ -203,6 +205,7 @@ app.post('/users/signUp', async function(req,res) {
       password VARCHAR(255),
       PRIMARY KEY(id)
       );`);
+
       const getUser =client.query(`SELECT COUNT(*) FROM users_info WHERE username=$1;`,[uname],
            (err,result)=>{
              console.log(err);
