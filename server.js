@@ -184,7 +184,7 @@ app.post('/signup', async function(req,res) {
   };
   //hash the users'password
   try{
-    let hashword=await bcrypt.hash(pword,10);
+     let hashword=await bcrypt.hash(pword,10);
      await client.query(`CREATE TABLE IF NOT EXISTS users (
       uid SERIAL,
       username VARCHAR(255),
@@ -193,6 +193,8 @@ app.post('/signup', async function(req,res) {
       PRIMARY KEY(uid)
       );`);
       //This grabs all usernames that are the same as uname (Hopefully none)
+      let results= await client.query(`select * from users limit 2;`);
+      console.log(results.rows);
       const getUser =client.query(`SELECT COUNT(*) FROM users WHERE username=$1;`,[uname],
            (err,result)=>{
              console.log(err);
@@ -209,8 +211,7 @@ app.post('/signup', async function(req,res) {
               throw err;
             }
             console.log("fater insert");
-            let results=client.query(`select count(*) from users;`);
-            console.log(results);
+            console.log(result.rows);
             req.flash('meg',"succussfully sign up your account now,please login");
             res.redirect('/');
 
