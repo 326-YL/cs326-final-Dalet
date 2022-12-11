@@ -193,7 +193,7 @@ app.post('/signup', async function(req,res) {
       PRIMARY KEY(uid)
       );`);
       //This grabs all usernames that are the same as uname (Hopefully none)
-      const getUser = client.query(`SELECT username FROM users WHERE username=$1;`,[uname],
+      const getUser = client.query(`SELECT COUNT(*) FROM users WHERE username=$1;`,[uname],
            (err,result)=>{
              console.log(err);
              console.log("the result here:");
@@ -202,7 +202,7 @@ app.post('/signup', async function(req,res) {
       //This turns getUser into an array
       console.log(getUser);
       //const isAvailableCheck = (getUser!==undefined) ? getUser.rows : null;
-      if (getUser===undefined) {
+      if (getUser===0) {
         client.query(`INSERT INTO users (username,password) VALUES ('${uname}', '${hashword}');`,
           (err,result)=>{
             if(err){
