@@ -381,10 +381,11 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
       )
     }
 
-    client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
+    client.query(`SELECT name FROM consoles WHERE cid=$1;`,[id],
        (err,result)=>{
         if(err) throw err;
         console.log(result.rows[0].name);
+        console.log(result.rows[0].name)
         title=result.rows[0].name;
        }
     )
@@ -400,6 +401,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
             record:records,
            }
            res.render('gameBoard',{data:data});
+           return;
 
         }
        }
