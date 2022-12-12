@@ -426,8 +426,10 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
 app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
   let username=req.user.username;
   console.log(username);
-  let { record }=req.body;
-  console.log({record});
+  let { rec }=req.body;
+  let record=JSON.parse({rec}.record);
+  console.log(record);
+  console.log({rec});
 
   let list=[];
   client.query(`SELECT * FROM users_consoles_games WHERE username=$1;`,[username],(err,result)=>{
