@@ -345,7 +345,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   let username=req.user.username;
   let email=req.user.email;
   let record=[];
-  record=req.user.games;
+  record=req.query.games;
   console.log(id);
   console.log(username);
   console.log(email);
