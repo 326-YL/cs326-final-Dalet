@@ -359,13 +359,12 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
     PRIMARY KEY(id)
     );`);
     //let title='';
-    let brand='';
     console.log("in");
     client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
        (err,result)=>{
         if(err) throw err;
         console.log(result.rows[0]);
-        brand=result.rows[0].brand;
+        console.log(result.rows[0].brand);
        }
     )
     let records=[];
