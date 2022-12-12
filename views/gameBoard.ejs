@@ -90,8 +90,8 @@
                  <td><strong></strong><%= record[i].name%></strong> </td>
                  <% let imgurl='https://'+record[i].imgurl %>
                  <td><img src="<%=imgurl%>" width="150" height="150"> </td>
-                 <input type="text" name="gameID" value="<%= record[i].cid%>" hidden/>
-                 <td><input type="submit" name="add" value="add" /></td>
+                 <input type="text" name="record" value="<%= record[i]%>" hidden/>
+                 <td><input type="submit" name="add" value="i" /></td>
                </tr>
             <% } %>
             <% } %>

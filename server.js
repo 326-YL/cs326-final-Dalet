@@ -341,10 +341,12 @@ app.get('/users/gameBoard/search',isNotAuthenticated,(req,res)=>{
      })
 })
 app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
+  let i=req.query.i;
   let gameID=req.query.gameID;
   let username=req.user.username;
   let email=req.user.email;
-  let record=req.user.record;
+  //let record=req.user.record;
+  let record=req.query.record;
   console.log(gameID);
   console.log(username);
   console.log(email);
