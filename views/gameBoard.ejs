@@ -4,26 +4,110 @@
  <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
+<style>
+   table, th, td {
+      border:1px solid black;
+   }
+   body{
+      background-color: rgb(184, 237, 237);
+   }
+</style>
+
+<script>
+   window.addEventListener('load', function(){
+     let state={ };
+     const uname=document.getElementById('uname').textContent;
+     console.log(uname);
+   })
+</script>
  </head>
 
  <body>
-
-    <p> <%=user %> </p>
+      <p id="uname"> user: <%=data.username %> </p>
+      <p id="email"> email: <%=data.email %> </p>
     <a href="/users/logout">logout</a>
-    <p>my video games </p>
 
-    <form action="/users/gameBoard/" method="POST">
-      <div>
-          <input type="submit" value="search"/>
+
+    <form action="/users/gameBoard/show-list" method="POST">
+      <input type="submit" name="showList" value="show my list"/>
+      
+      <% let rc=JSON.stringify(data.record) %>
+      <input type="text" name="record" value="<%=rc%>" hidden/> 
+      
+   </form>
+
+   <table>
+      <% if(typeof data.list!=='undefined') { %> 
+        <% let list=data.list%>
+      <% for(var i=0; i < list.length; i++) { %>
+         <tr>
+           <td><%= list[i].id%></td>
+           <td><%= list[i].name%> </td>
+         </tr>
+      <% } %>
+      <% } %>
+   </table>
+   <form action="/users/gameBoard/search" method="GET">
+      <div id="search-game">
+
+          
+          <label for="Microsoft">Microsoft</label>
           <input type="checkbox" 
-                 id="category"
-                 name="Shooters"
-          />  
-          <input type="submit" value="create" />
-          <input type="submit" value="update" />
-          <input type="submit" value="delete" />
+                 name="brand" 
+                 value="Microsoft"
+          /> 
+          <label for="Sony">Sony</label>
+          <input type="checkbox" 
+                 name="brand"
+                 value="Sony"
+          />
+          <label for="Nintendo">Nintendo</label>
+          <input type="checkbox"
+                 name="brand"
+                 value="Nintendo"
+          />     
+          <label for="limit">limit:</label>
+          <input type="text"
+                 name="limit"
+          />
+          <input type="submit" value="search"/>
       </div>
-  </form>
-    
+   </form>
+   <table>
+      <!--<% if(typeof data.record!='undefined') { %> 
+        <% let record=data.record %>
+      <% for(var i=0; i < record.length; i++) { %>
+         <tr>
+           <td><%= record[i].brand %></td>
+           <td><%= record[i].name%> </td>
+           <td><img src="<%= record[i].imgurl%>" width=150" height="150s"> </td>
+         </tr>
+      <% } %>
+      <% } %>-->
+   </table>
+      <div id="add-game">
+         <form action="/users/gameBoard/add" method="GET">
+         <table >
+            <% if(typeof data.record!='undefined') { %> 
+              <% let record=data.record %>
+            <% for(var i=0; i < record.length; i++) { %>
+               <tr>
+                 <td><strong></strong><%= record[i].cid%></strong></td>
+                 <td><strong><%= record[i].brand %></strong></td>
+                 
+                 <td><strong></strong><%= record[i].name%></strong> </td>
+                 <td><input type="text" name="games" value="<%=record[i].cid%>" hidden/></td>
+                 <% let imgurl='https://'+record[i].imgurl %>
+                 <td><img src="<%=imgurl%>" width="150" height="150"> </td>
+                 <td><input type="submit" name="id" value="<%=record[i].cid%>" /></td>
+               </tr>
+            <% } %>
+            <% } %>
+         </table>
+         </form>
+      </div>
+      <div id="update-game">
+         <input type="submit" value="update" />
+      </div>   
  </body>
 </html>

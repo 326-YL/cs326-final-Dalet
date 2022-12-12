@@ -4,19 +4,21 @@ const cookieParser = require('cookie-parser');
 const session=require('express-session');
 const flash=require('express-flash');
 const express = require('express');
+
 const router = express.Router();
 const http=require('http');
 //This allows me to read the data.json file
 const fs = require('fs');
 const passport=require("passport");
 const initializePassport=require("./passportConfig");
+initializePassport(passport);
 const client=require("./database").client;
 const app = express();
 
-initializePassport(passport);
+let data={
 
 
-
+}
 //MAIN PAGE ROUTES
 
 //to include all assets (css files and images)
@@ -36,7 +38,7 @@ app.use(passport.initialize());
 app.use(flash());
 
 //add the router
-//app.use('/', router);
+app.use('/', router);
 app.set("view engine","ejs");
 
 //Index page
@@ -65,21 +67,21 @@ app.get('/explore',function(req,res){
 //DATA / DATABASE RELATED ROUTES
 
 //This access database, 'pool' refers to a datapool (I'd imagine)
-//const { Pool } = require('pg');
-/*const pool = new Pool({
+const { Pool } = require('pg');
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
-});*/
+});
 
 //Data for the collection.html
 app.get('/thedata', async function(req, res) {
   //This connects to database
-  //const client = await pool.connect();
+  const client2 = await pool.connect();
 
   //Queries the database
-  const result = await client.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
+  const result = await client2.query(`SELECT * FROM userownconsole INNER JOIN consoles ON 
   userownconsole.cid = consoles.cid WHERE uid=1`);
   const results = (result) ? result.rows : null;
 
@@ -132,16 +134,16 @@ app.get('/thedata', async function(req, res) {
   newArr[3].games = [["mario-64-game.webp", "Super Mario 64", "W"]];
 
   res.send(JSON.stringify(newArr));
-  //client.release();
+  client2.release();
 });
 
 //Data for the explore.html
-app.get('/thedatatoo', async function(req, res) {
+router.get('/thedatatoo', async function(req, res) {
   //This connects to database
-  //const client = await pool.connect();
+  const client2= await pool.connect();
 
   //Queries the database
-  const result = await client.query(`SELECT * FROM consoles`);
+  const result = await client2.query(`SELECT * FROM consoles`);
   const results = (result) ? result.rows : null;
 
   let newArr = [
@@ -162,7 +164,7 @@ app.get('/thedatatoo', async function(req, res) {
   });
 
   res.send(JSON.stringify(newArr));
-  //client.release();
+  client2.release();
 });
 
 //This allows me to get the data from body easily
@@ -258,26 +260,45 @@ app.post("/users/login",passport.authenticate('local',{
 })
 );
 function isUserAuthenticated(req,res,next){
-  if(req.isAutheticated()){
+  if(req.isAuthenticated()){
     return res.redirect("/");
   }
   next();
 }
 function isNotAuthenticated(req,res,next){
-  if(req.isAutheticated()){
+  if(req.isAuthenticated()){
     return next();
   }
   res.redirect("/");
 }
-app.get('/users/signUp',(req,res)=>{
+app.get('/users/signUp',isUserAuthenticated,(req,res,)=>{
   res.render("signUp");
 });
 
-app.get('/users/login',(req,res)=>{
+app.get('/users/login',isUserAuthenticated,(req,res)=>{
   res.render("login");
 });
-app.get('/users/gameBoard',(req,res)=>{
-  res.render("gameBoard",{user:req.user.username});
+app.get('/users/gameBoard',isNotAuthenticated,async(req,res)=>{
+  const username=req.user.username;
+  const email=req.user.email;
+  const pw=req.user.password;
+
+ 
+   /*client.query(`SELECT email FROM users_info WHERE username=$1`,[username],(err,result)=>{
+    if(err){
+      throw err;
+    }
+    console.log("fetch email here:");
+    console.log(result.rows[0]);
+   // let email= result.rows[0].email;
+
+  })*/
+  data={
+    username:username,
+    email:email
+  }
+  console.log([data]);
+  res.render("gameBoard",{data});
 });
 app.get('/users/logout',(req,res)=>{
   req.logout(req.user, err => {
@@ -292,6 +313,171 @@ app.get('/users/logout',(req,res)=>{
   
 });
 
+app.get('/users/gameBoard/search',isNotAuthenticated,(req,res)=>{
+  console.log(req.user.username);
+  let username=req.user.username;
+  let email=req.user.email;
+
+  let brand=req.query.brand;
+  let keyword=req.query.keyword
+  let limit=parseInt(req.query.limit);
+  console.log(brand);
+  console.log(keyword);
+  console.log(limit);
+  //const sql=`SELECT *FROM consoles WHERE brand=`
+  client.query(`SELECT * FROM consoles WHERE brand=$1 Limit ${parseInt(limit)};`,[brand],
+     (err,result)=>{
+        if(err) throw err;
+        
+        console.log(result.rows);
+
+        data={
+          username:username,
+          email:email,
+          record:result.rows
+        }
+        console.log(data.record);
+        res.render('gameBoard',{data:data});
+     })
+})
+app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
+  let id=req.query.id;
+  let username=req.user.username;
+  let email=req.user.email;
+  let record=[];
+  let title='';
+  record=req.query.games;
+  console.log(id);
+  console.log(username);
+  console.log(email);
+  console.log(record);
+
+  await client.query(`CREATE TABLE IF NOT EXISTS ucGames (
+    id SERIAL,
+    username VARCHAR(255),
+    gameID VARCHAR(255),
+    name VARCHAR(255),
+    PRIMARY KEY(id)
+    );`);
+   
+    console.log("in");
+    /*client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
+       (err,result)=>{
+        if(err) throw err;
+        console.log(result.rows[0]);
+        console.log("name");
+        console.log(result.rows[0].name);
+        title=result.rows[0].name;
+       }
+    )*/
+    let records=[];
+    for(let i=0;i<record.length;i++){
+
+      client.query(`SELECT * FROM consoles WHERE cid=$1;`,[record[i]],
+       (err,result)=>{
+        if(err) throw err;
+        console.log(result.rows[0]);
+        records.push(result.rows[0]);
+       }
+      )
+    }
+
+    client.query(`SELECT name FROM consoles WHERE cid=$1;`,[id],
+       (err,result)=>{
+        if(err) throw err;
+        console.log(result.rows[0].name);
+        console.log(result.rows[0].name)
+        title=result.rows[0].name;
+        console.log("title:"+ title);
+       }
+    )
+    
+    /*client.query(`SELECT * FROM  ucGames WHERE username=$1 AND gameID=$2;`,[username,id],
+       (err,result)=>{
+        if(err) throw err;
+
+        
+        
+       }
+    )*/
+    client.query(`INSERT INTO ucGames (username, gameID,name) VALUES ($1, $2, $3);`, 
+          [username,id,title],(err,result)=>{
+            console.log("in2");
+           if(err) throw err;
+
+           console.log(result.rows);
+
+           data={
+            username:username,
+            email:email,
+            record:records,
+           }
+           res.render('gameBoard',{data:data});
+      });
+
+
+    });
+
+
+app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
+  let username=req.user.username;
+  console.log(username);
+  let rec=[];
+  let{record}=req.body;
+  
+  if({record}.record!==undefined){
+    
+    record=JSON.parse({record}.record);
+    console.log(record);
+  }
+
+
+  let list=[];
+  client.query(`SELECT * FROM ucGames WHERE username=$1;`,[username],(err,result)=>{
+     if(err) throw err;
+     console.log(result.rows);
+     
+     for(let i=0;i<result.rows.length;i++){
+       list.push(result.rows[i].gameid);
+       console.log("list here");
+       list.push(result.rows[i].gameid)
+       console.log(list[i]);
+     }
+     let names=[];
+     for(let i=0;i<list.length;i++){
+        client.query(`SELECT name FROM consoles WHERE cid=$1;`,[list[i]],(err,result)=>{
+         if(err) throw err;
+         console.log(result.rows[i])
+         names.push(result.rows[i]);
+        });
+     };
+     
+     let newL=[];
+     for(let i=0;i<list.length;i++){
+      newL.push({id:list[i],name:names[i]});
+     }
+     data={
+
+      username:req.user.username,
+      email:req.user.email,
+      record:record,
+      list:newL
+     }
+
+     res.render('gameBoard',{data:data});
+
+
+    });
+  
+  
+
+
+
+
+
+
+
+})
 /*
 app.post('/users/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
@@ -326,13 +512,15 @@ app.post('/users/login', async function(req,res) {
 app.get('/createConsoleTable', async (req, res) => {
   try {
     //This connects to database
-    //const client = await pool.connect();
-
+    //const client2 = await poo
+    l.connect();
+    console.log("in");
     //SQL that deletes consoles database, if it exists
     await client.query("DROP TABLE IF EXISTS consoles");
 
     //Gets an array of objects
     const nintendo = JSON.parse(fs.readFileSync('./console_data/n-data.json'));
+    console.log(nintendo);
     const sony = JSON.parse(fs.readFileSync('./console_data/sony-data.json'));
     const microsoft = JSON.parse(fs.readFileSync('./console_data/ms-data.json'));
 
@@ -381,7 +569,7 @@ app.get('/createConsoleTable', async (req, res) => {
 app.get('/showconsole', async (req, res) => {
   try {
     //This connects to database
-    //const client = await pool.connect();
+    //const client2 = await pool.connect();
 
     //SQL that gets everything from 'consoles' database
     const result = await client.query("SELECT * FROM consoles");
@@ -391,7 +579,7 @@ app.get('/showconsole', async (req, res) => {
 
     //Displays results array onto page
     res.send(results);
-    //client.release();
+    client2.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -399,10 +587,10 @@ app.get('/showconsole', async (req, res) => {
 });
 
 //This simply shows all the data inside 'users' database
-app.get('/showusers', async (req, res) => {
+ app.get('/showusers', async (req, res) => {
   try {
     //This connects to database
-    const client = await pool.connect();
+    //const client2 = await pool.connect();
 
     //SQL that gets everything from 'users' database
     const result = await client.query("SELECT * FROM users");
@@ -412,7 +600,7 @@ app.get('/showusers', async (req, res) => {
 
     //Displays results array onto page
     res.send(results);
-    //client.release();
+    client2.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -423,7 +611,7 @@ app.get('/showusers', async (req, res) => {
 router.get('/showuserownconsole', async (req, res) => {
   try {
     //This connects to database
-    //const client = await pool.connect();
+    //const client2 = await pool.connect();
 
     //SQL that gets everything from 'userownconsole' database
     const result = await client.query("SELECT * FROM userownconsole");
@@ -441,35 +629,35 @@ router.get('/showuserownconsole', async (req, res) => {
 });
 
 //This creates a table 'userownconsole' and adds sample data into it
-app.get('/createUserOwnConsole', async (req, res) => {
+router.get('/createUserOwnConsole', async (req, res) => {
   try {
     //This connects to database
-    //const client = await pool.connect();
+    const client2 = await pool.connect();
 
     //SQL That creates the table if it doesn't exist
-    await client.query(`CREATE TABLE IF NOT EXISTS userownconsole (
+    await client2.query(`CREATE TABLE IF NOT EXISTS userownconsole (
       uid INT,
       cid INT,
       PRIMARY KEY(uid,cid)
       );`);
 
     //SQL that inserts sample data into table that was created
-    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 1);`);
-    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 21);`);
-    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 315);`);
+    await client2.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 1);`);
+    await client2.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 21);`);
+    await client2.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, 315);`);
 
     //SQL that grabs a random item as a sample
-    const result = await client.query("SELECT * FROM consoles WHERE name='Nintendo Wii U Premium Console [NA]'");
+    const result = await client2.query("SELECT * FROM consoles WHERE name='Nintendo Wii U Premium Console [NA]'");
 
     //This turns result into an array
     const results = (result) ? result.rows : null;
 
     //SQL that inserts the random item into the table, as a test
-    await client.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, ${results[0].cid});`);
+    await client2.query(`INSERT INTO userownconsole (uid, cid) VALUES (1, ${results[0].cid});`);
 
     //Displays final test on page (Will not work twice, shouldn't work anymore)
     res.send(results);
-    //client.release();
+    client2.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);

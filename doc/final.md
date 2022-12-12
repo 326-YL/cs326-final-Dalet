@@ -3,7 +3,7 @@
   Game Shelf website<br>
   Semester: Fall 2022<br>
   Team: Ben McCann (naginipython), Sam High (SammyPie), Yangyang Lin (Yangyang Lin)
-  Website: https://damp-reaches-70694.herokuapp.com/
+  Website: (https://pacific-beach-91707.herokuapp.com)
 </font>**<br>
 
 <font size="4" >
