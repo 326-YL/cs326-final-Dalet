@@ -345,6 +345,10 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   let username=req.user.username;
   let email=req.user.email;
   let record=req.user.record;
+  console.log(gameID);
+  console.log(username);
+  console.log(email);
+  console.log(record);
 
   await client.query(`CREATE TABLE IF NOT EXISTS users_games (
     id SERIAL,
@@ -352,8 +356,10 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
     gameID VARCHAR(255)
     PRIMARY KEY(id)
     );`);
-    client.query(`INSERT INTO users_games(username,gameID) VALUES ($1, $2);`, 
+    console.log("in");
+    client.query(`INSERT INTO users_games (username,gameID) VALUES ($1, $2);`, 
           [username,gameID],(err,result)=>{
+            console.log("in2");
            if(err) throw err;
 
            console.log(result.rows);
@@ -367,19 +373,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
       });
 
 
-
-
-
-
-
-
-
-})
-
-
-
-
-
+    });
 /*
 app.post('/users/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
