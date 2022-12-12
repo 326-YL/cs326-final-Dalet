@@ -27,7 +27,7 @@
 
     <form action="/users/gameBoard/show-list" method="POST">
       <input type="submit" name="showList" value="show my list"/>
-      <% let rc=JSON.stringify(data.records) %>
+      <% let rc=JSON.stringify(data.record) %>
       <input type="text" name="record" value="<%=rc%>" hidden/>  
    </form>
 
