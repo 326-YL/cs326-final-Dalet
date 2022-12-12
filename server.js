@@ -344,10 +344,12 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   let id=req.query.id;
   let username=req.user.username;
   let email=req.user.email;
-  let record=req.user.games;
+  let record=[];
+  record=req.user.games;
   console.log(id);
   console.log(username);
   console.log(email);
+  console.log(record);
 
   await client.query(`CREATE TABLE IF NOT EXISTS users_consoles_games (
     id SERIAL,
