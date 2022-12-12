@@ -4,6 +4,7 @@
   Semester: Fall 2022<br>
   Team: Ben McCann (naginipython), Sam High (SammyPie), Yangyang Lin (Yangyang Lin)
   Website: (https://pacific-beach-91707.herokuapp.com)
+  video demo link:https://www.youtube.com/watch?v=dgZ9o_iCHoE&list=PLPBsrhVJ4n1URC__ci5_DoKCySNafoewJ&index=1
 </font>**<br>
 
 <font size="4" >
