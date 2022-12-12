@@ -23,7 +23,7 @@
    <img src="img/loginPage.png" style="height:300px;width:350px">
    (User Page)
    <img src="img/userPage.png" style="height:300px;width:600px">
-   <img src="img/userPage2.png" style="height:300px;width:600px">
+   <img src="img/userpage2.png" style="height:300px;width:600px">
    <img src="img/userPage3.png" style="height:300px;width:600px">
    (Sign Up Page)
    <img src="img/signupPage2.png" style="height:300px;width:350px">
