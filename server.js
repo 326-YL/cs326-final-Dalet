@@ -351,7 +351,8 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   console.log(id);
   console.log(username);
   console.log(email);
-  console.log(record);
+  console.log(name);
+  console.log(brand);
 
   await client.query(`CREATE TABLE IF NOT EXISTS users_console_games (
     id SERIAL,
@@ -373,7 +374,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
 
        }
     )*/
-    client.query(`INSERT INTO users_games (username,gameID) VALUES ($1, $2);`, 
+    client.query(`INSERT INTO users_consoles_games (username,gameID) VALUES ($1, $2);`, 
           [username,id],(err,result)=>{
             console.log("in2");
            if(err) throw err;
