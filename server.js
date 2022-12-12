@@ -431,7 +431,7 @@ app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
     let {rec}=req.body;
   
   if({rec}!==undefined){
-  let record=JSON.parse({rec}.record);
+  console.log({rec});
   console.log(record);
   console.log({rec});
   }
