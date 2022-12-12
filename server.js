@@ -426,13 +426,14 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
 app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
   let username=req.user.username;
   console.log(username);
-  
+  let record=[];
   if(req.body!==undefined){
     let {rec}=req.body;
   console.log({rec}.rec);  
   if({rec}.rec!==undefined){
-  console.log({rec});
-  console.log({rec});
+    record={rec}.rec;
+    record=JSON.parse(record);
+    console.log(record);
   }
 }
 
