@@ -351,11 +351,11 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   console.log(email);
   console.log(record);
 
-  await client.query(`CREATE TABLE IF NOT EXISTS users_console_games (
+  await client.query(`CREATE TABLE IF NOT EXISTS ucGames (
     id SERIAL,
     username VARCHAR(255),
     gameID VARCHAR(255),
-    brand VARCHAR(255),
+    name VARCHAR(255),
     PRIMARY KEY(id)
     );`);
     let title='';
@@ -388,7 +388,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
         title=result.rows[0].name;
        }
     )
-    client.query(`SELECT * FROM  users_console_games WHERE username=$1 AND gameID=$2;`,[username,id],
+    client.query(`SELECT * FROM  ucGames WHERE username=$1 AND gameID=$2;`,[username,id],
        (err,result)=>{
         if(err) throw err;
 
@@ -404,7 +404,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
         }
        }
     )
-    client.query(`INSERT INTO users_console_games (username, gameID,name) VALUES ($1, $2, $3);`, 
+    client.query(`INSERT INTO ucGames (username, gameID,name) VALUES ($1, $2, $3);`, 
           [username,id,title],(err,result)=>{
             console.log("in2");
            if(err) throw err;
@@ -437,7 +437,7 @@ app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
 
 
   let list=[];
-  client.query(`SELECT * FROM users_console_games WHERE username=$1;`,[username],(err,result)=>{
+  client.query(`SELECT * FROM ucGames WHERE username=$1;`,[username],(err,result)=>{
      if(err) throw err;
      console.log(result.rows);
      
