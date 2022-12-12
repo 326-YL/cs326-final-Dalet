@@ -20,13 +20,13 @@
    <img src="img/ui-explore-2.png" style="height:300px;width:600px">
    (Explore Page, using search bar)<br>
    (Login Page)
-   <img src="img/loginPage.png" style="height:300px;width:600px">
+   <img src="img/loginPage.png" style="height:300px;width:350px">
    (User Page)
    <img src="img/userPage.png" style="height:300px;width:600px">
    <img src="img/userPage2.png" style="height:300px;width:600px">
    <img src="img/userPage3.png" style="height:300px;width:600px">
    (Sign Up Page)
-   <img src="img/signupPage2.png" style="height:300px;width:600px">
+   <img src="img/signupPage2.png" style="height:300px;width:350px">
   
   <b>APIs</b>: We unfortunately did not include any external APIs which can retieve the articles from external database,  We had plans for a news article API for the home page, as well as a game database API, but we were unable to implemement them. We do have internal routes sending data from the server database to our website, and also doing the crud operation for users, like search, add, and also in the routes '/thedata' and 'thedatatoo'<br><br>
   <b>Database</b>: Our website has 4 databases; Users, csGames, Consoles, and Userownconsole. The User's database contains a automatically incrementing uid, username, and password. The consoles database contains cid (auto inc.), brand, kind, name, and img_url. Every console has a brand behind them, which we use for categorizing them, as well as a 'kind', which we use to generalize what the console is and what kind of games it can play. For instance, one can go to Ninteno > NES > NES Top Loader [NA]. Lastly, we have a img_url which contains an image for nearly every console. The Userownconsole is a database containing uid and cid, and every entry contains a user's id and a console id, with the idea to join databases to get a full database for the case needed. The primary case will be used on the collection page, where we INNER JOIN with the uid to get the data for a user's owned consoles.<br>
