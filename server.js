@@ -345,6 +345,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   let username=req.user.username;
   let email=req.user.email;
   let record=[];
+  let title='';
   record=req.query.games;
   console.log(id);
   console.log(username);
@@ -358,7 +359,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
     name VARCHAR(255),
     PRIMARY KEY(id)
     );`);
-    let title='';
+   
     console.log("in");
     /*client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
        (err,result)=>{
@@ -387,33 +388,19 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
         console.log(result.rows[0].name);
         console.log(result.rows[0].name)
         title=result.rows[0].name;
-        console.log("title:"+title);
+        console.log("title:"+ title);
        }
     )
-    client.query(`SELECT * FROM  ucGames WHERE username=$1 AND gameID=$2;`,[username,id],
+    
+    /*client.query(`SELECT * FROM  ucGames WHERE username=$1 AND gameID=$2;`,[username,id],
        (err,result)=>{
         if(err) throw err;
 
-        if(result.rows.length===0){
-          
-          client.query(`INSERT INTO ucGames (username, gameID,name) VALUES ($1, $2, $3);`, 
-          [username,id,title],(err,result)=>{
-            console.log("in2");
-           if(err) throw err;
-
-           console.log(result.rows);
-
-           data={
-            username:username,
-            email:email,
-            record:records,
-           }
-           res.render('gameBoard',{data:data});
-         });
-        }
+        
+        
        }
-    )
-    /*client.query(`INSERT INTO ucGames (username, gameID,name) VALUES ($1, $2, $3);`, 
+    )*/
+    client.query(`INSERT INTO ucGames (username, gameID,name) VALUES ($1, $2, $3);`, 
           [username,id,title],(err,result)=>{
             console.log("in2");
            if(err) throw err;
@@ -426,7 +413,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
             record:records,
            }
            res.render('gameBoard',{data:data});
-      });*/
+      });
 
 
     });
