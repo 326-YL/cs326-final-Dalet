@@ -387,6 +387,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
         console.log(result.rows[0].name);
         console.log(result.rows[0].name)
         title=result.rows[0].name;
+        console.log("title:"+title);
        }
     )
     client.query(`SELECT * FROM  ucGames WHERE username=$1 AND gameID=$2;`,[username,id],
