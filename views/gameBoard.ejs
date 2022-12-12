@@ -27,8 +27,10 @@
 
     <form action="/users/gameBoard/show-list" method="POST">
       <input type="submit" name="showList" value="show my list"/>
+      <% if(data.record!==undefined) { %> 
       <% let rc=JSON.stringify(data.record) %>
-      <input type="text" name="record" value="<%=rc%>" hidden/>  
+      <input type="text" name="record" value="<%=rc%>" hidden/> 
+      <%}%> 
    </form>
 
    <table>
