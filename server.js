@@ -438,22 +438,36 @@ app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
      console.log(result.rows);
      
      for(let i=0;i<result.rows.length;i++){
-       list.push(result.rows[i]);
+       list.push(result.rows[i].gameid);
        console.log("list here");
+       list.push(result.rows[i].gameid)
        console.log(list[i]);
      }
-     let username=req.user.username;
-     let email=req.user.email;
+     let names=[];
+     for(let i=0;i<list.length;i++){
+        client.query(`SELECT name FROM consoles WHERE cid=$1;`,[list[i]],(err,result)=>{
+         if(err) throw err;
+         names.push(result.rows[i].name);
+        });
+     };
      
-     data={
-      username:username,
-      email:email,
-      record:record,
-      list:list
-      
+     let newL=[];
+     for(let i=0;i<list.length;i++){
+      newL.push({id:list[i],name:names[i]});
      }
+     data={
+
+      username:req.user.username,
+      email:req.user.email,
+      record:record,
+      list:newL
+     }
+
      res.render('gameBoard',{data:data});
-  })
+
+
+    });
+  
   
 
 
