@@ -447,7 +447,8 @@ app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
      for(let i=0;i<list.length;i++){
         client.query(`SELECT name FROM consoles WHERE cid=$1;`,[list[i]],(err,result)=>{
          if(err) throw err;
-         names.push(result.rows[i].name);
+         console.log(result.rows[i])
+         names.push(result.rows[i]);
         });
      };
      
