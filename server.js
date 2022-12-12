@@ -444,9 +444,17 @@ app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
      for(let i=0;i<result.rows.length;i++){
        list.push(result.rows[i]);
      }
+     let username=req.user.username;
+     let email=req.user.email;
+     
      data={
-
+      username:username,
+      email:email,
+      record:record,
+      list:list
+      
      }
+     res.render('gameBoard',{data:data});
   })
   
 
