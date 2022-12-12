@@ -388,6 +388,22 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
         console.log(records);
        }
     )
+    client.query(`SELECT * FROM  users_consoles_games WHERE username=$1 AND gameID=$2;`,[username,id],
+       (err,result)=>{
+        if(err) throw err;
+
+        if(result.rows.length>0){
+          
+          data={
+            username:username,
+            email:email,
+            record:records,
+           }
+           res.render('gameBoard',{data:data});
+
+        }
+       }
+    )
     client.query(`INSERT INTO users_consoles_games (username, gameID,brand) VALUES ($1, $2, $3);`, 
           [username,id,brand],(err,result)=>{
             console.log("in2");
