@@ -354,7 +354,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   console.log(name);
   console.log(brand);
 
-  await client.query(`CREATE TABLE IF NOT EXISTS users_console_games (
+  await client.query(`CREATE TABLE IF NOT EXISTS users_consoles_games (
     id SERIAL,
     username VARCHAR(255),
     gameID VARCHAR(255),
@@ -374,7 +374,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
 
        }
     )*/
-    client.query(`INSERT INTO users_consoles_games (username,gameID) VALUES ($1, $2);`, 
+    /*client.query(`INSERT INTO users_consoles_games (username, gameID) VALUES ($1, $2);`, 
           [username,id],(err,result)=>{
             console.log("in2");
            if(err) throw err;
@@ -387,7 +387,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
             record:record,
            }
            res.render('gameBoard',{data:data});
-      });
+      });*/
 
 
     });

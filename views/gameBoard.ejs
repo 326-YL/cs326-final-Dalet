@@ -87,9 +87,9 @@
                <tr>
                  <td><strong></strong><%= record[i].cid%></strong></td>
                  <td><strong><%= record[i].brand %></strong></td>
-                 <td><input type="text" name="brand" value="<%=record[i].brand%>" hidden/></td>
+                 <input type="text" name="brand" value="<%=record[i].brand%>" hidden/>
                  <td><strong></strong><%= record[i].name%></strong> </td>
-                 <td><input type="text" name="name" value="<%=record[i].name%>" hidden/></td>
+                 <input type="text" name="name" value="<%=record[i].name%>" hidden/>
                  <% let imgurl='https://'+record[i].imgurl %>
                  <td><img src="<%=imgurl%>" width="150" height="150"> </td>
                  <td><input type="submit" name="id" value="<%=record[i].cid%>" /></td>
