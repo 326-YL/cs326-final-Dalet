@@ -344,6 +344,8 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   let id=req.query.id;
   let username=req.user.username;
   let email=req.user.email;
+  let name=req.query.name;
+  let brand=req.query.brand;
   //let record=req.user.record;
   let record=req.query.record;
   console.log(id);
@@ -351,15 +353,28 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   console.log(email);
   console.log(record);
 
-  await client.query(`CREATE TABLE IF NOT EXISTS users_games (
+  await client.query(`CREATE TABLE IF NOT EXISTS users_console_games (
     id SERIAL,
     username VARCHAR(255),
-    gameID VARCHAR(255)
+    gameID VARCHAR(255),
+    brand VARCHAR(255),
     PRIMARY KEY(id)
     );`);
+    //let title='';
+    //let brand='';
     console.log("in");
+    /*client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
+       (err,result)=>{
+        if(err) throw err;
+        console.log(result.rows[0]);
+        title=result.rows[0].name;
+        brand=result.rows[]
+          
+
+       }
+    )*/
     client.query(`INSERT INTO users_games (username,gameID) VALUES ($1, $2);`, 
-          [username,gameID],(err,result)=>{
+          [username,id],(err,result)=>{
             console.log("in2");
            if(err) throw err;
 
