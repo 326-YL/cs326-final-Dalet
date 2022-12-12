@@ -364,6 +364,7 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
        (err,result)=>{
         if(err) throw err;
         console.log(result.rows[0]);
+        console.log("brand");
         console.log(result.rows[0].brand);
        }
     )
