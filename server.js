@@ -344,15 +344,10 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   let id=req.query.id;
   let username=req.user.username;
   let email=req.user.email;
-  let name=req.query.name;
-  let brand=req.query.brand;
-  //let record=req.user.record;
-  let record=req.query.record;
+  let record=req.user.games;
   console.log(id);
   console.log(username);
   console.log(email);
-  console.log(name);
-  console.log(brand);
 
   await client.query(`CREATE TABLE IF NOT EXISTS users_consoles_games (
     id SERIAL,
@@ -362,20 +357,37 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
     PRIMARY KEY(id)
     );`);
     //let title='';
-    //let brand='';
+    let brand='';
     console.log("in");
-    /*client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
+    client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
        (err,result)=>{
         if(err) throw err;
         console.log(result.rows[0]);
-        title=result.rows[0].name;
-        brand=result.rows[]
-          
-
+        brand=result.rows[0].brand;
        }
-    )*/
-    /*client.query(`INSERT INTO users_consoles_games (username, gameID) VALUES ($1, $2);`, 
-          [username,id],(err,result)=>{
+    )
+    let records=[];
+    for(let i=0;i<record.length;i++){
+
+      client.query(`SELECT * FROM consoles WHERE cid=$1;`,[record[i]],
+       (err,result)=>{
+        if(err) throw err;
+        console.log(result.rows[0]);
+        records.push(result.rows[0]);
+       }
+      )
+    }
+
+    client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
+       (err,result)=>{
+        if(err) throw err;
+        console.log(result.rows[0]);
+        brand=result.rows[0].brand;
+        console.log(records);
+       }
+    )
+    client.query(`INSERT INTO users_consoles_games (username, gameID,brand) VALUES ($1, $2, $3);`, 
+          [username,id,brand],(err,result)=>{
             console.log("in2");
            if(err) throw err;
 
@@ -384,10 +396,10 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
            data={
             username:username,
             email:email,
-            record:record,
+            record:records,
            }
            res.render('gameBoard',{data:data});
-      });*/
+      });
 
 
     });
