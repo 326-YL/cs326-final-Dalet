@@ -394,20 +394,9 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
        (err,result)=>{
         if(err) throw err;
 
-        if(result.rows.length>0){
+        if(result.rows.length===0){
           
-          data={
-            username:username,
-            email:email,
-            record:records,
-           }
-           res.render('gameBoard',{data:data});
-           return;
-
-        }
-       }
-    )
-    client.query(`INSERT INTO ucGames (username, gameID,name) VALUES ($1, $2, $3);`, 
+          client.query(`INSERT INTO ucGames (username, gameID,name) VALUES ($1, $2, $3);`, 
           [username,id,title],(err,result)=>{
             console.log("in2");
            if(err) throw err;
@@ -420,7 +409,24 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
             record:records,
            }
            res.render('gameBoard',{data:data});
-      });
+         });
+        }
+       }
+    )
+    /*client.query(`INSERT INTO ucGames (username, gameID,name) VALUES ($1, $2, $3);`, 
+          [username,id,title],(err,result)=>{
+            console.log("in2");
+           if(err) throw err;
+
+           console.log(result.rows);
+
+           data={
+            username:username,
+            email:email,
+            record:records,
+           }
+           res.render('gameBoard',{data:data});
+      });*/
 
 
     });
@@ -446,6 +452,8 @@ app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
      
      for(let i=0;i<result.rows.length;i++){
        list.push(result.rows[i]);
+       console.log("list here");
+       console.log(list[i]);
      }
      let username=req.user.username;
      let email=req.user.email;
