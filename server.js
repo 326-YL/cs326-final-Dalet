@@ -341,7 +341,7 @@ app.get('/users/gameBoard/search',isNotAuthenticated,(req,res)=>{
      })
 })
 app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
-  let i=req.query.i;
+  let i=req.query.index;
   let gameID=req.query.gameID;
   let username=req.user.username;
   let email=req.user.email;
