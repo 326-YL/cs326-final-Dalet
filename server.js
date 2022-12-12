@@ -426,16 +426,15 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
 app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
   let username=req.user.username;
   console.log(username);
-  let record=[];
-  if(req.body!==undefined){
-    let {rec}=req.body;
-  console.log({rec}.rec);  
-  if({rec}.rec!==undefined){
-    record={rec}.rec;
-    record=JSON.parse(record);
+  let rec=[];
+  let{record}=req.body;
+  
+  if({record}.record!==undefined){
+    
+    record=JSON.parse({record}.record);
     console.log(record);
   }
-}
+
 
   let list=[];
   client.query(`SELECT * FROM users_consoles_games WHERE username=$1;`,[username],(err,result)=>{
