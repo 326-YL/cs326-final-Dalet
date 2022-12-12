@@ -351,23 +351,24 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
   console.log(email);
   console.log(record);
 
-  await client.query(`CREATE TABLE IF NOT EXISTS users_consoles_games (
+  await client.query(`CREATE TABLE IF NOT EXISTS users_console_games (
     id SERIAL,
     username VARCHAR(255),
     gameID VARCHAR(255),
     brand VARCHAR(255),
     PRIMARY KEY(id)
     );`);
-    //let title='';
+    let title='';
     console.log("in");
-    client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
+    /*client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
        (err,result)=>{
         if(err) throw err;
         console.log(result.rows[0]);
-        console.log("brand");
-        console.log(result.rows[0].brand);
+        console.log("name");
+        console.log(result.rows[0].name);
+        title=result.rows[0].name;
        }
-    )
+    )*/
     let records=[];
     for(let i=0;i<record.length;i++){
 
@@ -383,12 +384,11 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
     client.query(`SELECT * FROM consoles WHERE cid=$1;`,[id],
        (err,result)=>{
         if(err) throw err;
-        console.log(result.rows[0]);
-        brand=result.rows[0].brand;
-        console.log(records);
+        console.log(result.rows[0].name);
+        title=result.rows[0].name;
        }
     )
-    client.query(`SELECT * FROM  users_consoles_games WHERE username=$1 AND gameID=$2;`,[username,id],
+    client.query(`SELECT * FROM  users_console_games WHERE username=$1 AND gameID=$2;`,[username,id],
        (err,result)=>{
         if(err) throw err;
 
@@ -404,8 +404,8 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
         }
        }
     )
-    client.query(`INSERT INTO users_consoles_games (username, gameID,brand) VALUES ($1, $2, $3);`, 
-          [username,id,brand],(err,result)=>{
+    client.query(`INSERT INTO users_console_games (username, gameID,name) VALUES ($1, $2, $3);`, 
+          [username,id,title],(err,result)=>{
             console.log("in2");
            if(err) throw err;
 
@@ -437,7 +437,7 @@ app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
 
 
   let list=[];
-  client.query(`SELECT * FROM users_consoles_games WHERE username=$1;`,[username],(err,result)=>{
+  client.query(`SELECT * FROM users_console_games WHERE username=$1;`,[username],(err,result)=>{
      if(err) throw err;
      console.log(result.rows);
      
