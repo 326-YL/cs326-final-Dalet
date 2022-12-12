@@ -23,23 +23,24 @@
       <p id="uname"> user: <%=data.username %> </p>
       <p id="email"> email: <%=data.email %> </p>
     <a href="/users/logout">logout</a>
-    <p>my video games </p>
 
 
     <form action="/users/gameBoard/show-list" method="POST">
-      <table>
-         <!--<% if(typeof data.record!='undefined') { %> 
-           <% let record=data.record %>
-         <% for(var i=0; i < record.length; i++) { %>
-            <tr>
-              <td><%= record[i].brand %></td>
-              <td><%= record[i].name%> </td>
-              <td><img src="<%= record[i].imgurl%>" width=150" height="150s"> </td>
-            </tr>
-         <% } %>
-         <% } %>-->
-      </table>
+      <input type="submit" name="showList" value="show my list"/>
+      <input type="text" name="record" value="<%=data.record%>" hidden/>  
    </form>
+
+   <table>
+      <% if(typeof data.list!='undefined') { %> 
+        <% let list=data.list%>
+      <% for(var i=0; i < list.length; i++) { %>
+         <tr>
+           <td><%= list[i].cid%></td>
+           <td><%= list[i].brand%> </td>
+         </tr>
+      <% } %>
+      <% } %>
+   </table>
    <form action="/users/gameBoard/search" method="GET">
       <div id="search-game">
 

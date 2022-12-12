@@ -405,6 +405,35 @@ app.get('/users/gameBoard/add',isNotAuthenticated,async(req,res)=>{
 
 
     });
+
+
+app.post("/users/gameBoard/show-list",isNotAuthenticated,async(req,res)=>{
+  let username=req.user.username;
+  console.log(username);
+  let { record }=req.body;
+  console.log({record});
+
+  let list=[];
+  client.query(`SELECT * FROM users_consoles_games WHERE username=$1;`,[username],(err,result)=>{
+     if(err) throw err;
+     console.log(result.rows);
+     
+     for(let i=0;i<result.rows.length;i++){
+       list.push(result.rows[i]);
+     }
+     data={
+
+     }
+  })
+  
+
+
+
+
+
+
+
+})
 /*
 app.post('/users/login', async function(req,res) {
   //This gets the data from POST submit, usually was in form of:
